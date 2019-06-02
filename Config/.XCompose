@@ -1,0 +1,141 @@
+include "%L"
+
+# Custom additions: Mathematical symbols
+<Multi_key> <Multi_key> <exclam> <equal>		: "≠"	U2260		# NOT EQUAL TO
+<Multi_key> <Multi_key> <slash> <equal>		: "≠"	U2260		# NOT EQUAL TO
+<Multi_key> <Multi_key> <less> <equal>		: "≤"	U2264		# LESS-THAN OR EQUAL TO
+<Multi_key> <Multi_key> <greater> <equal>		: "≥"	U2265		# GREATER-THAN OR EQUAL TO
+<Multi_key> <Multi_key> <exclam> <less> <greater>   : "≸"	U2278		# NEITHER LESS-THAN NOR GREATER-THAN
+# MUCH is usually enough for me.  No need for VERY.
+<Multi_key> <Multi_key> <plus> <less>        	: "≪"	U226A		# MUCH LESS-THAN
+<Multi_key> <Multi_key> <plus> <greater> 		: "≫"	U226B		# MUCH GREATER-THAN
+
+<Multi_key> <Multi_key> <plus> <plus> <less>        : "⋘"	U22D8		# VERY MUCH LESS-THAN
+<Multi_key> <Multi_key> <plus> <plus> <greater>  	: "⋙"	U22D9		# VERY MUCH GREATER-THAN
+<Multi_key> <Multi_key> <3> <greater> 		: "⋙"	U22D9		# VERY MUCH GREATER-THAN
+<Multi_key> <Multi_key> <3> <less>			: "⋘"	U22D8		# VERY MUCH LESS-THAN
+<Multi_key> <Multi_key> <i> <n>			: "∈"	U2208		# ELEMENT OF
+<Multi_key> <Multi_key> <exclam> <i> <n>		: "∉"	U2209		# NOT AN ELEMENT OF
+<Multi_key> <Multi_key> <exclam> <i> <n>		: "∉"	U2209		# NOT AN ELEMENT OF (I have ∈ on my keyboard...)
+<Multi_key> <Multi_key> <n> <i>			: "∋"	U220B		# CONTAINS AS MEMBER  (I hope this doesn't conflict)
+<Multi_key> <Multi_key> <exclam> <n> <i>		: "∌"	U220C		# DOES NOT CONTAIN AS MEMBER
+
+<Multi_key> <Multi_key> <exclam> <n> <i>		: "∌"	U220C		# DOES NOT CONTAIN AS MEMBER
+<Multi_key> <Multi_key> <asciitilde> <equal>			: "≅"	U2245		# APPROXIMATELY EQUAL TO (It actually means "congruent"!)
+<Multi_key> <Multi_key> <equal> <question>		: "≟"	U225f		# QUESTIONED EQUAL TO
+<Multi_key> <Multi_key> <equal> <d> 		: "≝"	U225D		# EQUAL TO BY DEFINITION
+<Multi_key> <Multi_key> <equal> <equal>		: "≡"	U2261		# IDENTICAL TO
+<Multi_key> <Multi_key> <colon> <equal> 		: "≔"  U2254		# COLON EQUALS
+<Multi_key> <Multi_key> <equal> <colon> 		: "≕"  U2255		# EQUALS COLON
+<Multi_key> <Multi_key> <exclam> <equal> <equal>	: "≢"	U2262		# NOT IDENTICAL TO
+# We already have ±
+<Multi_key> <Multi_key> <minus> <plus>		: "∓"	U2213		# MINUS OR PLUS SIGN
+<Multi_key> <Multi_key> <s> <q>			: "√"	U221A		# SQUARE ROOT
+# keystrokes might not make the most sense, but you know what they mean...
+<Multi_key> <Multi_key> <3> <s> <q>			: "∛"	U221B	        # CUBE ROOT
+
+<Multi_key> <Multi_key> <exclam> <exclam>	     :	"¬"	U00AC 		# NOT SIGN
+<Multi_key> <Multi_key> <c>              : "∘"   U2218           # RING OPERATOR (function composition)
+<Multi_key> <Multi_key> <x>             : "⨯"   U2A2F           # CROSS PRODUCT
+<Multi_key> <Multi_key> <period>        : "⋅"   U22C5           # DOT OPERATOR (dot product)
+<Multi_key> <Multi_key> <n> <u> <l> <l>                 : "∅"   U2205           # EMPTY SET (thanks jsled!)
+<Multi_key> <Multi_key> <0>                 : "∅"   U2205           # EMPTY SET
+<Multi_key> <Multi_key> <u>		: "∪"	U222A		# UNION
+<Multi_key> <Multi_key> <i>	: "∩"	U2229		# INTERSECTION
+<Multi_key> <Multi_key> <greater> <u>	: "⊂"	U2282		# SUBSET OF
+<Multi_key> <Multi_key> <exclam> <greater> <u>  : "⊄" U2284        # NOT A SUBSET OF
+<Multi_key> <Multi_key> <greater> <equal> <u> : "⊆" U2286		# PROPPER SUBSET OF
+<Multi_key> <Multi_key> <p> : "⊆" U2286		# SUBSET OF OR EQUAL TO
+<Multi_key> <Multi_key> <exclam> <greater> <equal> <u> : "⊈" U2286		# PROPPER SUBSET OF
+<Multi_key> <Multi_key> <exclam> <p> : "⊈" U2286		# SUBSET OF OR EQUAL TO
+
+<Multi_key> <Multi_key> <s>	<s>	: "⊃"	U2283		# SUPERSET OF
+<Multi_key> <Multi_key> <p> <s> <s> : "⊇" U2287	# SUPERSET OF OR EQUAL TO
+<Multi_key> <Multi_key> <exclam> <s>	<s>	: "⊅"	U2285		# Not SUPERSET OF
+<Multi_key> <Multi_key> <exclam> <p> <s> <s> : "⊇" U2287	# SUPERSET OF OR EQUAL TO
+<Multi_key> <Multi_key> <exclam> <p> <s> <s> : "⊉" U2287	# SUPERSET OF OR EQUAL TO
+
+<Multi_key> <Multi_key> <E>                     : "∃"  U2203           # THERE EXISTS
+# We can't use ! E E, because ! E maps to E-WITH-UNDERDOT.
+<Multi_key> <Multi_key> <exclam> <E> <E>             : "∄"   U2204           # THERE DOES NOT EXIST
+<Multi_key> <Multi_key> <A>                    : "∀"  U2200           # FOR ALL
+<Multi_key> <Multi_key> <Q> <E> <D>     : "∎"   U220E           # END OF PROOF
+<Multi_key> <Multi_key> <q> <e> <d>     : "∎"   U220E           # END OF PROOF
+<Multi_key> <Multi_key> <8>                     : "∞"  U221E           # INFINITY
+<Multi_key> <Multi_key> <t> <h> <e>	   	: "∴"	U2234  		# THEREFORE
+<Multi_key> <Multi_key> <b> <e>	   	: "∵"	U2235  		# BECAUSE
+<Multi_key> <Multi_key> <u>                : "µ"   U00B5      # MICRO SIGN
+# See also U03A3 (Greek capital sigma)
+<Multi_key> <Multi_key>  <s> <u> <m>	: "∑"	U2211		# N-ARY SUMMATION
+# OK, absolutely cannot believe we made it this long without NABLA or INTEGRAL
+# or PARTIAL DIFFERENTIAL
+<Multi_key> <Multi_key> <i> <n> <t>	: "∫"	U222B		# INTEGRAL
+<Multi_key> <Multi_key> <d>   : "∂" U2202		# PARTIAL DIFFERENTIAL
+<Multi_key> <Multi_key> <bar> <C>                   : "ℂ"   U2102           # DOUBLE-STRUCK CAPITAL C (set of complex numbers)
+<Multi_key> <Multi_key> <bar> <N>                   : "ℕ"   U2115           # DOUBLE-STRUCK CAPITAL N (natural number)
+<Multi_key> <Multi_key> <bar> <P>                   : "ℙ"   U2119           # DOUBLE-STRUCK CAPITAL P 
+<Multi_key> <Multi_key> <bar> <Q>                   : "ℚ"   U211A           # DOUBLE-STRUCK CAPITAL Q (set of rational numbers)
+<Multi_key> <Multi_key> <bar> <R>                   : "ℝ"   U211D           # DOUBLE-STRUCK CAPITAL R (set of real numbers)
+<Multi_key> <Multi_key> <bar> <Z>                   : "ℤ"   U2124           # DOUBLE-STRUCK CAPITAL Z (set of integers)
+
+# Custom additions: Greek letters.  Mapping corresponds to Emacs Greek
+# input method.  Aristotle Pagaltzis informs me that this is the
+# standard Greek keyboard layout, which is good.
+<Multi_key> <Multi_key> <Multi_key>  <a>		: "α"	U03B1		# GREEK SMALL LETTER ALPHA
+<Multi_key> <Multi_key> <Multi_key>  <b>		: "β"	U03B2		# GREEK SMALL LETTER BETA
+<Multi_key> <Multi_key> <Multi_key>  <c>		: "ψ"	U03C8		# GREEK SMALL LETTER PSI
+<Multi_key> <Multi_key> <Multi_key>  <d>		: "δ"	U03B4		# GREEK SMALL LETTER DELTA
+<Multi_key> <Multi_key> <Multi_key>  <e>		: "ε"	U03B5		# GREEK SMALL LETTER EPSILON
+<Multi_key> <Multi_key> <Multi_key>  <f>		: "φ"	U03C6		# GREEK SMALL LETTER PHI
+<Multi_key> <Multi_key> <Multi_key>  <g>		: "γ"	U03B3		# GREEK SMALL LETTER GAMMA
+<Multi_key> <Multi_key> <Multi_key>  <h>		: "η"	U03B7		# GREEK SMALL LETTER ΕΤΑ
+<Multi_key> <Multi_key> <Multi_key>  <i>		: "ι"	U03B9		# GREEK SMALL LETTER ΙΟΤΑ
+<Multi_key> <Multi_key> <Multi_key>  <j>		: "ξ"	U03BE		# GREEK SMALL LETTER XI
+<Multi_key> <Multi_key> <Multi_key>  <k>		: "κ"	U03BA		# GREEK SMALL LETTER KAPPA
+<Multi_key> <Multi_key> <Multi_key>  <l>		: "λ"	U03BB		# GREEK SMALL LETTER LAMBDA
+<Multi_key> <Multi_key> <Multi_key>  <m>		: "μ"	U03BC		# GREEK SMALL LETTER MU
+<Multi_key> <Multi_key> <Multi_key>  <n>		: "ν"	U03BD		# GREEK SMALL LETTER NU
+<Multi_key> <Multi_key> <Multi_key>  <o>		: "ο"	U03BF		# GREEK SMALL LETTER OMICRON
+<Multi_key> <Multi_key> <Multi_key>  <p>		: "π"	U03C0		# GREEK SMALL LETTER PI
+<Multi_key> <Multi_key> <Multi_key>  <r>		: "ρ"	U03C1		# GREEK SMALL LETTER RHO
+<Multi_key> <Multi_key> <Multi_key>  <s>		: "σ"	U03C3		# GREEK SMALL LETTER SIGMA
+<Multi_key> <Multi_key> <Multi_key>  <t>		: "τ"	U03C4		# GREEK SMALL LETTER TAU
+<Multi_key> <Multi_key> <Multi_key>  <u>		: "θ"	U03B8		# GREEK SMALL LETTER THETA
+<Multi_key> <Multi_key> <Multi_key>  <v>		: "ω"	U03C9		# GREEK SMALL LETTER OMEGA
+<Multi_key> <Multi_key> <Multi_key>  <w>		: "ς"	U03C2		# GREEK SMALL LETTER FINAL SIGMA
+<Multi_key> <Multi_key> <Multi_key>  <x>		: "χ"	U03C7		# GREEK SMALL LETTER CHI
+<Multi_key> <Multi_key> <Multi_key>  <y>		: "υ"	U03C5		# GREEK SMALL LETTER UPSILON
+<Multi_key> <Multi_key> <Multi_key>  <z>		: "ζ"	U03B6		# GREEK SMALL LETTER ZETA
+
+# Capital greek letters.
+<Multi_key> <Multi_key> <Multi_key>  <A>		: "Α"	U0391		# GREEK CAPITAL LETTER ALPHA
+<Multi_key> <Multi_key> <Multi_key>  <B>		: "Β"	U0392		# GREEK CAPITAL LETTER BETA
+<Multi_key> <Multi_key> <Multi_key>  <C>		: "Ψ"	U03A8		# GREEK CAPITAL LETTER PSI
+<Multi_key> <Multi_key> <Multi_key>  <D>		: "Δ"	U0394		# GREEK CAPITAL LETTER DELTA
+<Multi_key> <Multi_key> <Multi_key>  <E>		: "Ε"	U0395		# GREEK CAPITAL LETTER EPSILON
+<Multi_key> <Multi_key> <Multi_key>  <F>		: "Φ"	U03A6		# GREEK CAPITAL LETTER PHI
+<Multi_key> <Multi_key> <Multi_key>  <G>		: "Γ"	U0393		# GREEK CAPITAL LETTER GAMMA
+<Multi_key> <Multi_key> <Multi_key>  <H>		: "Η"	U0397		# GREEK CAPITAL LETTER ΕΤΑ
+<Multi_key> <Multi_key> <Multi_key>  <I>		: "Ι"	U0399		# GREEK CAPITAL LETTER ΙΟΤΑ
+<Multi_key> <Multi_key> <Multi_key>  <J>		: "Ξ"	U039E		# GREEK CAPITAL LETTER XI
+<Multi_key> <Multi_key> <Multi_key>  <K>		: "Κ"	U039A		# GREEK CAPITAL LETTER KAPPA
+<Multi_key> <Multi_key> <Multi_key>  <L>		: "Λ"	U039B		# GREEK CAPITAL LETTER LAMBDA
+<Multi_key> <Multi_key> <Multi_key>  <M>		: "Μ"	U039C		# GREEK CAPITAL LETTER MU
+<Multi_key> <Multi_key> <Multi_key>  <N>		: "Ν"	U039D		# GREEK CAPITAL LETTER NU
+<Multi_key> <Multi_key> <Multi_key>  <O>		: "Ο"	U039F		# GREEK CAPITAL LETTER OMICRON
+<Multi_key> <Multi_key> <Multi_key>  <P>		: "Π"	U03A0		# GREEK CAPITAL LETTER PI
+<Multi_key> <Multi_key> <Multi_key>  <R>		: "Ρ"	U03A1		# GREEK CAPITAL LETTER RHO
+<Multi_key> <Multi_key> <Multi_key>  <S>		: "Σ"	U03A3		# GREEK CAPITAL LETTER SIGMA
+<Multi_key> <Multi_key> <Multi_key>  <T>		: "Τ"	U03A4		# GREEK CAPITAL LETTER TAU
+<Multi_key> <Multi_key> <Multi_key>  <U>		: "Θ"	U0398		# GREEK CAPITAL LETTER THETA
+<Multi_key> <Multi_key> <Multi_key>  <V>		: "Ω"	U03A9		# GREEK CAPITAL LETTER OMEGA
+<Multi_key> <Multi_key> <Multi_key>  <X>		: "Χ"	U03A7		# GREEK CAPITAL LETTER CHI
+<Multi_key> <Multi_key> <Multi_key>  <Y>		: "Υ"	U03A5		# GREEK CAPITAL LETTER UPSILON
+<Multi_key> <Multi_key> <Multi_key>  <Z>		: "Ζ"	U0396		# GREEK CAPITAL LETTER ZETA
+<Multi_key> <Multi_key> <o> <minus> <plus>		: "♀"	U2640		# FEMALE SIGN
+<Multi_key> <Multi_key> <o> <minus> <greater>	: "♂"	U2642		# MALE SIGN
+<Multi_key> <Multi_key> <Left>		: "←"	leftarrow	# LEFTWARDS ARROW
+<Multi_key> <Multi_key> <Up>	: "↑"	uparrow		# UPWARDS ARROW
+<Multi_key> <Multi_key> <Right>		: "→"	rightarrow	# RIGHTWARDS ARROW
+<Multi_key> <Multi_key> <Down> 			: "↓"	downarrow	# DOWNWARDS ARROW
+<Multi_key> <Multi_key><Multi_key> <Left> <Right>	: "↔"	U2194           # LEFT RIGHT ARROW (kragen's)

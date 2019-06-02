@@ -1,0 +1,30 @@
+conky.config = {
+    alignment = 'top_left',
+    out_to_console = false,
+    background = false,
+    border_width = 0,
+    cpu_avg_samples = 4,
+    use_xft = true,
+    font = 'xft:Bitstream Ubuntu Mono:size=10:antialias=true',
+    gap_x = $X + $WIDTH / 2 + 57,
+    gap_y = $Y,
+    maximum_width = $WIDTH / 2 - 57,
+    minimum_width = $WIDTH / 2 - 57,
+    no_buffers = true,
+    extra_newline = false,
+    double_buffer = true,
+    own_window = true,
+    own_window_class = 'ConkyBase',
+    own_window_type = 'dock',
+    update_interval = 4.0,
+    lua_load = '~/SystemConfig/Config/Conky/format.lua',
+    color0 = "88F2FF",
+    color1 = "00FF00",
+    color2 = "00AAAA",
+    color3 = "FFFFFF",
+    color4 = "FFAAAA",
+    color5 = "AAAAAA",
+}
+
+
+conky.text = [[|${color0}${lua_parse format %02.0f $cpu}%($freq_g GHz)|${color1}$mem ($memperc%)|${color2}${fs_used /} (${fs_used_perc}%)|${color3}${execi 60 weather.sh }|${color4}${execi 32 sensors -u |grep -Po temp[0-9]+_input.* |cut -d" " -f2  | awk '{sum+=$0}END{printf "%3.1f°C", sum/NR}'}]]

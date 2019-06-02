@@ -1,0 +1,42 @@
+#!/bin/bash
+nitrogen --restore
+
+if [ -n "$DESKTOP_SESSION" ];then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
+fi
+
+[ -x /usr/bin/xsetroot ] && xsetroot -cursor_name left_ptr
+
+export QT_STYLE_OVERRIDE=gtk2
+
+[ -x /usr/bin/lxqt-policykit-agent ] && lxqt-policykit-agent &
+
+xset s 1200 1500
+
+export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
+export XSECURELOCK_SHOW_DATETIME=1
+export XSECURELOCK_WAIT_TIME_MS=12000
+[ -x /usr/bin/xss-lock ] && xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
+#[ -x /usr/bin/xautolock ] && xautolock -time 30 -detectsleep -locker "systemctl suspend" &
+#[ -x /usr/bin/xsecurelock ] && xsecurelock -time 30 -detectsleep -locker "systemctl suspend" &
+
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
+
+[ -x /usr/bin/conky ] && conky -dc ~/.config/conky/.conkyrc &>/dev/null && conky -dc ~/.config/conky/time &>/dev/null
+
+trayer --edge top --align right  --height 19 --widthtype pixel --width 90 --SetPartialStrut true --transparent true --alpha 0 --tint 0 --monitor primary &
+
+xfce4-clipman &>/dev/null &
+
+[ -x /usr/bin/pasystray ] && pasystray --notify=all &
+[ -x /usr/bin/nm-applet ] && nm-applet >/dev/null &
+[ -x /usr/bin/blueman-applet ] && blueman-applet >/dev/null &
+
+
+#pyinotify-runner &
+#sync-clip &
+
+$TERMINAL &
+
+mpxmanager &> /tmp/mpxmanager.out

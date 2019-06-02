@@ -1,0 +1,19 @@
+conky.config = {
+    alignment = 'top_left',
+    background = false,
+    border_width = 0,
+    use_xft = true,
+    font = 'xft:Bitstream Ubuntu Mono:size=10:antialias=true',
+    gap_x = $X + $WIDTH / 2 - 186,
+    gap_y = $Y,
+    maximum_width = 240,
+    minimum_width = 240,
+    extra_newline = false,
+    double_buffer = true,
+    own_window = true,
+    own_window_class = 'ConkyTime',
+    own_window_type = 'dock',
+    update_interval = .5,
+}
+
+conky.text=[[${alignr}${execpi 10 ibam-custom.sh -c}$color|${color FCD862}${time %a %b %d %H:%M:%S}]]
