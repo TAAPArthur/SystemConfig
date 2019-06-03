@@ -1,0 +1,31 @@
+{
+    "install_hooks":{
+        "steam": "sudo chown nonfree $(which steam); sudo chmod u+s $(which steam)",
+        "conky": "~/SystemConfig/Conky/conky-install.sh"
+    },
+    "scripts":[
+        "grep -q '\\[taap\\]' /etc/pacman.conf|| sudo echo -e '[taap]\nSigLevel = Optional TrustAll\nServer = https://taaparthur.ddns.net/Database' | sudo tee -a /etc/pacman.conf",
+        "grep -q '\\[disastrousaur\\]' /etc/pacman.conf|| echo -e '[disastrousaur]\nServer = https://mirror.repohost.de/$repo/$arch' | sudo tee -a /etc/pacman.conf",
+        "sudo pacman-key --recv-keys CBAE582A876533FD && sudo pacman-key --lsign-key  CBAE582A876533FD",
+        "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;"
+    ],
+    "links":{
+        "~/SystemConfig/bin/*":"~/.local/bin/",
+        "~/SystemConfig/Config/dunsti/*":"~/.config/dunst/",
+        "~/SystemConfig/Config/.profile":"~/",
+        "~/SystemConfig/Config/.bash_profile":"~/",
+        "~/SystemConfig/Config/.bashrc":"~/",
+        "~/SystemConfig/Config/.XCompose":"~/",
+        "~/SystemConfig/Config/.xinitrc":"~/",
+        "~/SystemConfig/Config/.Xmodmap":"~/",
+        "~/Pictures/Self/Aye": "~/.face.icon",
+        "~/SystemConfig/Config/pyinotify-runner": "~/.config",
+        "~/SystemConfig/Config/Themes/gtk-*": "~/.config/",
+        "~/SystemConfig/Config/.vimrc":"~/"
+    },
+     "links_root":{
+        "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
+        "~/SystemConfig/Config/sddm.conf": "/etc/sddm.conf",
+        "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/"
+    }
+}
