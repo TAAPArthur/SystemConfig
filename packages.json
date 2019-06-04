@@ -1,9 +1,34 @@
 {
+        "bluetooth":[
+            "blueberry",
+            "blueman",
+            "bluez-plugins",
+            "bluez-tools",
+            "bluez-utils",
+            "pulseaudio-bluetooth",
+            "transcode"
+        ],
+        "bluray":[
+            "aacskeys",
+            "lib32-libudev0-shim",
+            "libaacs",
+            "libbluray-git",
+            "libdvdcss",
+            "libdvdnav"
+        ],
+        "compatibility":[
+            "exfat-utils"
+        ],
         "debugging":[
             "gdb",
             "valgrind"
         ],
         "desktop":[
+            "google-chrome",
+            "linux-headers",
+            "virtualbox",
+            "virtualbox-ext-oracle",
+            "virtualbox-guest-utils"
         ],
         "development":[
             "astyle",
@@ -16,26 +41,38 @@
             "help2man",
             "shellcheck"
         ],
+        "divers":[
+            "broadcom-wl-dkms",
+            "xf86-video-amdgpu",
+            "xf86-video-ati",
+            "xf86-video-intel"
+        ],
         "extended":[
             "audacity",
             "gedit",
             "gedit-plugins",
             "gimp",
             "gnumeric",
+            "gparted",
             "gummi",
             "pitivi",
             "retext",
+            "seahorse",
             "simple-scan",
+            "sqlitebrowser",
             "system-config-printer",
+            "tor-browser-en",
             "transmission-gtk",
             "vlc"
         ],
-        "extra":[
+        "gamming":[
             "dolphin-emu",
-            "tor-browser-en",
+            "playonlinux",
+            "snes9x-gtk",
             "wii-u-gc-adapter"
         ],
         "laptop":[
+            "ibam",
             "xautolock",
             "xss-lock"
         ],
@@ -43,13 +80,14 @@
             "steam"
         ],
         "normal":[
+            "abduco",
             "anamnesis",
             "bash-completion",
             "dmenu",
+            "dvtm",
             "firefox",
             "gnome-keyring",
             "libgnome-keyring",
-            "lxappearance-gtk3",
             "mpxmanager",
             "network-manager-applet",
             "networkmanager",
@@ -69,21 +107,45 @@
             "xorg-server-xvfb",
             "xorg-xinit",
             "xorg-xmodmap",
+            "xpra",
             "xreader",
             "xsane-xrandr",
             "xsecurelock"
         ],
         "pending":[
+            "arandr",
             "bind-tools",
             "imv",
             "qemu",
             "sxiv",
             "tcpdump",
+            "traceroute",
             "viewnior"
+        ],
+        "performance":[
+            "acpi",
+            "duc",
+            "gnome-disk-utility",
+            "hardinfo",
+            "hddtemp",
+            "hdparm",
+            "hwdetect",
+            "intel-ucode",
+            "lshw",
+            "powertop",
+            "smartmontools",
+            "sysstat",
+            "testdisk",
+            "tiobench",
+            "xsensors"
         ],
         "personal":[
             "ledger",
             "syncthing-gtk"
+        ],
+        "remote":[
+            "dbeaver",
+            "sshfs"
         ],
         "server":[
             "certbot",
@@ -103,36 +165,44 @@
             "trash-cli",
             "vim"
         ],
-        "stream":[
-            "libmicrodns",
-            "protobuf"
-        ],
         "sound":[
+            "alsa-utils",
             "lib32-alsa-plugins",
             "lib32-libpulse",
             "lsp-plugins",
             "omnivolctrl",
             "pamixer",
+            "paprefs",
             "pasystray-gtk3-git",
             "pavucontrol",
             "pulseaudio",
             "pulseaudio-alsa",
             "pulseeffects"
         ],
+        "stream":[
+            "libmicrodns",
+            "protobuf"
+        ],
         "theme":[
             "adwaita-qt4",
             "adwaita-qt5",
             "gnome-themes-extra",
+            "lxappearance-gtk3",
             "otf-ipafont",
             "qt5ct",
+            "ttf-dejavu",
             "ttf-liberation",
-            "ttf-ubuntu-font-family"
+            "ttf-ubuntu-font-family",
+            "xorg-fonts-misc",
+            "xorg-xfontsel"
         ],
         "utility":[
             "android-tools",
             "arch-install-scripts",
             "bc",
             "conky",
+            "cups",
+            "cups-pdf",
             "dmenu-pycalc",
             "dunst",
             "dzen2",
@@ -142,10 +212,10 @@
             "grub",
             "gt5",
             "gvfs",
-            "ibam",
             "iproute2",
             "jq",
             "libnotify",
+            "links",
             "maim",
             "pacgraph",
             "pkgfile",
@@ -154,6 +224,7 @@
             "system-manager",
             "task",
             "trash-cli",
+            "tree",
             "tzupdate",
             "wget",
             "xarchiver",
@@ -167,6 +238,7 @@
             "zip"
         ],
         "x-debugging":[
+            "evtest",
             "xorg-xev",
             "xorg-xprop",
             "xorg-xwininfo"
