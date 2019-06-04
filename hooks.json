@@ -11,7 +11,7 @@
     ],
     "links":{
         "~/SystemConfig/bin/*":"~/.local/bin/",
-        "~/SystemConfig/Config/dunsti/*":"~/.config/dunst/",
+        "~/SystemConfig/Config/dunst/*":"~/.config/dunst/",
         "~/SystemConfig/Config/.profile":"~/",
         "~/SystemConfig/Config/.bash_profile":"~/",
         "~/SystemConfig/Config/.bashrc":"~/",

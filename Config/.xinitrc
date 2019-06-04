@@ -23,6 +23,8 @@ export XSECURELOCK_WAIT_TIME_MS=12000
 
 [ -x /usr/bin/conky ] && conky -dc ~/.config/conky/.conkyrc &>/dev/null && conky -dc ~/.config/conky/time &>/dev/null
 
+dunst &
+
 trayer --edge top --align right  --height 19 --widthtype pixel --width 90 --SetPartialStrut true --transparent true --alpha 0 --tint 0 --monitor primary &
 
 xfce4-clipman &>/dev/null &
