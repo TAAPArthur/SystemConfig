@@ -17,8 +17,7 @@ export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_WAIT_TIME_MS=12000
 [ -x /usr/bin/xss-lock ] && xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
-#[ -x /usr/bin/xautolock ] && xautolock -time 30 -detectsleep -locker "systemctl suspend" &
-#[ -x /usr/bin/xsecurelock ] && xsecurelock -time 30 -detectsleep -locker "systemctl suspend" &
+[ -x /usr/bin/xautolock ] && xautolock -time 30 -detectsleep -locker "systemctl suspend" &
 
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
