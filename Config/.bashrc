@@ -3,6 +3,9 @@ shopt -s histappend
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     PATH=~/.local/bin:$PATH
 fi
+if [[ ":$PATH:" != *":$HOME/SystemConfig/bin:"* ]]; then
+    PATH=$PATH:~/SystemConfig/bin
+fi
 
 source /usr/share/doc/pkgfile/command-not-found.bash
 

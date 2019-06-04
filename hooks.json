@@ -10,8 +10,7 @@
         "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;"
     ],
     "links":{
-        "~/SystemConfig/bin/*":"~/.local/bin/",
-        "~/SystemConfig/Config/dunst/*":"~/.config/dunst/",
+        "~/SystemConfig/Config/dunst/dunstrc":"~/.config/dunst/",
         "~/SystemConfig/Config/.profile":"~/",
         "~/SystemConfig/Config/.bash_profile":"~/",
         "~/SystemConfig/Config/.bashrc":"~/",
@@ -19,8 +18,9 @@
         "~/SystemConfig/Config/.xinitrc":"~/",
         "~/SystemConfig/Config/.Xmodmap":"~/",
         "~/Pictures/Self/Aye": "~/.face.icon",
-        "~/SystemConfig/Config/pyinotify-runner": "~/.config",
-        "~/SystemConfig/Config/Themes/gtk-*": "~/.config/",
+        "~/SystemConfig/Config/MPXManager/config.c": "~/.mpxmanager/",
+        "~/SystemConfig/Config/pyinotify-runner": "~/.config/",
+        "~/SystemConfig/Config/Themes/gtk-3.0/settings.ini": "~/.config/gtk-3.0/",
         "~/SystemConfig/Config/.vimrc":"~/"
     },
      "links_root":{
