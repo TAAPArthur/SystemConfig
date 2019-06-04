@@ -25,7 +25,8 @@
     },
      "links_root":{
         "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
-        "~/SystemConfig/Config/sddm.conf": "/etc/sddm.conf",
+        "~/SystemConfig/Config/Systemd/tty-default-user.conf":"/etc/systemd/system/getty@tty1.service.d/",
+        "~/SystemConfig/Config/pam/login":"/etc/pam.d/login",
         "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/"
     }
 }

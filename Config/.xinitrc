@@ -1,10 +1,9 @@
 #!/bin/bash
 nitrogen --restore
 
-if [ -n "$DESKTOP_SESSION" ];then
-    eval $(gnome-keyring-daemon --start)
-    export SSH_AUTH_SOCK
-fi
+dbus-update-activation-environment --systemd DISPLAY
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
 
 [ -x /usr/bin/xsetroot ] && xsetroot -cursor_name left_ptr
 
