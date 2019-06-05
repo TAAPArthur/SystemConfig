@@ -14,4 +14,6 @@ fi
 
 sudo pacman -S git jq --needed
 
-su arthur -c "cd ~;[[ -d SystemConfig ]] || git clone https://github.com/TAAPArthur/SystemConfig.git;SystemConfig/system-manager.sh run-scripts"
+su arthur -c "cd ~;[[ -d SystemConfig ]] || git clone git@github.com:TAAPArthur/SystemConfig.git"
+su arthur -c "[[ -d /tmp/system-manager ]] || git clone git@github.com:TAAPArthur/system-manager.git; cd /tmp/system-manager; makepkg -sic"
+su arthur -c "system-manager run-scripts"
