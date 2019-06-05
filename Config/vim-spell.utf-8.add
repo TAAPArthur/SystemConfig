@@ -6,3 +6,12 @@ timestamp
 Restacking
 ewmh
 Env
+realpath
+readlink
+basename
+mkdir
+dirname
+ln
+sudo
+tostring
+serverfault

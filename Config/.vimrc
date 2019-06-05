@@ -20,11 +20,6 @@ Plugin 'ledger/vim-ledger'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-augroup project
-    autocmd!
-    autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
-augroup END
-autocmd FileType c let b:vcm_tab_complete = "omni"
 
 color default
 syntax enable
@@ -37,13 +32,20 @@ set shiftwidth=4
 set tabpagemax=100
 set shortmess=A
 set spellfile=~/SystemConfig/Config/vim-spell.utf-8.add
-set spell
-
-" code folding
-set foldlevelstart=99
-setlocal foldmethod=syntax
+set foldlevelstart=99 " code folding
 set tags=./tags;,tags;
 
+setlocal foldmethod=syntax
+
+augroup autoSpell
+    autocmd!
+    autocmd FileType c,markdown,vim setlocal spell
+augroup END
+augroup project
+    autocmd!
+    autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup END
+autocmd FileType c let b:vcm_tab_complete = "omni"
 
 let g:airline_powerline_fonts = 1
 
