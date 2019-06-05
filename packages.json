@@ -102,6 +102,10 @@
             "trash-cli",
             "vim"
         ],
+        "stream":[
+            "libmicrodns",
+            "protobuf"
+        ],
         "sound":[
             "lib32-alsa-plugins",
             "lib32-libpulse",
