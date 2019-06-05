@@ -48,6 +48,7 @@
             "dmenu",
             "firefox",
             "gnome-keyring",
+            "libgnome-keyring",
             "lxappearance-gtk3",
             "mpxmanager",
             "network-manager-applet",
