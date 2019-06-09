@@ -1,0 +1,12 @@
+echo "$1 $2"
+delta=$1
+if [[ "$1" = "r" ]] || [[ -z  "$2"  ]]; then 
+    [[ -z  $delta  ]] &&delta=.1
+    newValue=$(echo $(xrandr --verbose | grep -m 1 -i brightness | cut -f2 -d ' ') + $delta |bc)
+else
+    echo "setting abs brightness"
+    newValue=$2
+    [[ -z  $newValue  ]] &&newValue=.1
+fi
+echo $newValue
+xrandr --output LVDS --brightness $newValue
