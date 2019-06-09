@@ -7,25 +7,25 @@
         "grep -q '\\[taap\\]' /etc/pacman.conf|| sudo echo -e '[taap]\nSigLevel = Optional TrustAll\nServer = https://taaparthur.ddns.net/Database' | sudo tee -a /etc/pacman.conf",
         "grep -q '\\[disastrousaur\\]' /etc/pacman.conf|| echo -e '[disastrousaur]\nServer = https://mirror.repohost.de/$repo/$arch' | sudo tee -a /etc/pacman.conf",
         "sudo pacman-key --recv-keys CBAE582A876533FD && sudo pacman-key --lsign-key  CBAE582A876533FD",
-        "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;"
+        "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;",
+        "sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/"
     ],
     "links":{
-        "~/SystemConfig/Config/dunst/dunstrc":"~/.config/dunst/",
-        "~/SystemConfig/Config/.profile":"~/",
+        "~/SystemConfig/Config/.XCompose":"~/",
+        "~/SystemConfig/Config/.Xmodmap":"~/",
+        "~/SystemConfig/Config/.astylerc":"~/",
         "~/SystemConfig/Config/.bash_profile":"~/",
         "~/SystemConfig/Config/.bashrc":"~/",
-        "~/SystemConfig/Config/.XCompose":"~/",
+        "~/SystemConfig/Config/.profile":"~/",
+        "~/SystemConfig/Config/.vimrc":"~/",
         "~/SystemConfig/Config/.xinitrc":"~/",
-        "~/SystemConfig/Config/.Xmodmap":"~/",
-        "~/Pictures/Self/Aye": "~/.face.icon",
         "~/SystemConfig/Config/MPXManager/config.c": "~/.mpxmanager/",
-        "~/SystemConfig/Config/pyinotify-runner": "~/.config/",
         "~/SystemConfig/Config/Themes/gtk-3.0/settings.ini": "~/.config/gtk-3.0/",
-        "~/SystemConfig/Config/.vimrc":"~/"
+        "~/SystemConfig/Config/dunst/dunstrc":"~/.config/dunst/",
+        "~/SystemConfig/Config/pyinotify-runner": "~/.config/"
     },
      "links_root":{
         "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
-        "~/SystemConfig/Config/Systemd/tty-default-user.conf":"/etc/systemd/system/getty@tty1.service.d/",
         "~/SystemConfig/Config/pam/login":"/etc/pam.d/login",
         "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/"
     }
