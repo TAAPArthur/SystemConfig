@@ -11,12 +11,12 @@ export QT_STYLE_OVERRIDE=gtk2
 
 [ -x /usr/bin/lxqt-policykit-agent ] && lxqt-policykit-agent &
 
-xset s 1200 1500
+xset s 1200 180
 
 export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_WAIT_TIME_MS=12000
-[ -x /usr/bin/xss-lock ] && xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
+[ -x /usr/bin/xss-lock ] && xss-lock -n /usr/lib/xsecurelock/dimmer -- xsecurelock &
 [ -x /usr/bin/xautolock ] && xautolock -time 30 -detectsleep -locker "systemctl suspend" &
 
 [[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
