@@ -7,7 +7,7 @@ if [[ ":$PATH:" != *":$HOME/SystemConfig/bin:"* ]]; then
     PATH=$PATH:~/SystemConfig/bin
 fi
 
-source /usr/share/doc/pkgfile/command-not-found.bash
+[[ -f /usr/share/doc/pkgfile/command-not-found.bash ]] && source /usr/share/doc/pkgfile/command-not-found.bash
 
 
 pushd()
