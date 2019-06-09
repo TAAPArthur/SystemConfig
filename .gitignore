@@ -1,1 +1,2 @@
-*.sync-conflict*
+*.spl
+Config/vim-spell-programs.add

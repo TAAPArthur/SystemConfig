@@ -34,6 +34,7 @@ xfce4-clipman &>/dev/null &
 [ -x /usr/bin/blueman-applet ] && blueman-applet >/dev/null &
 
 
+[ -x vim ] && vim -c "mkspell! ~/SystemConfig/Config/vim-spell-programs.add" +qall
 #pyinotify-runner &
 #sync-clip &
 
