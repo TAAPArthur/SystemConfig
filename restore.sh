@@ -1,6 +1,16 @@
 #~/bin/bash
 set -xe
 
+if [[ "$1" == "update" || $1 == "-u" ]]; then
+    cd /tmp
+    [[ -d SystemConfig ]] && (cd SystemConfig && git pull) || git clone https://github.com/TAAPArthur/SystemConfig.git
+    cd SystemConfig
+    ./restore.sh
+    echo "Newest version is in $(pwd)/restore.sh"
+    exit 0
+fi
+
+
 if grep -q nonfree /etc/passwd;then
     usermod -G games,users,input,video nonfree
 else
@@ -22,5 +32,6 @@ su -p arthur -c "[[ -d /tmp/system-manager ]] || (git clone https://github.com/T
 pacman -U /tmp/system-manager/*.tar.xz --needed
 
 su arthur -P -c "system-manager init"
+su arthur -P -c "system-manager link-normal"
 su arthur --login -P -c "system-manager install"
-su arthur -P -c "system-manager link"
+su arthur -P -c "system-manager link-root"
