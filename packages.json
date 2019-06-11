@@ -15,20 +15,6 @@
             "libdvdcss",
             "libdvdnav"
         ],
-        "compatibility":[
-            "exfat-utils"
-        ],
-        "debugging":[
-            "gdb",
-            "valgrind"
-        ],
-        "desktop":[
-            "google-chrome",
-            "linux-headers",
-            "virtualbox",
-            "virtualbox-ext-oracle",
-            "virtualbox-guest-utils"
-        ],
         "development":[
             "astyle",
             "autopep8",
@@ -37,9 +23,11 @@
             "doxygen",
             "flake8",
             "gcc",
+            "gdb",
             "git",
             "help2man",
-            "shellcheck"
+            "shellcheck",
+            "valgrind"
         ],
         "divers":[
             "broadcom-wl-dkms",
@@ -56,11 +44,13 @@
             "gnumeric",
             "gparted",
             "gummi",
+            "ledger",
             "pitivi",
             "retext",
             "seahorse",
             "simple-scan",
             "sqlitebrowser",
+            "syncthing-gtk",
             "system-config-printer",
             "terminator",
             "tor-browser-en",
@@ -111,7 +101,10 @@
             "arandr",
             "bind-tools",
             "calf",
+            "dbeaver",
+            "google-chrome",
             "imv",
+            "linux-headers",
             "lxqt-policykit",
             "sxiv",
             "tcpdump",
@@ -136,14 +129,6 @@
             "tiobench",
             "xsensors"
         ],
-        "personal":[
-            "ledger",
-            "syncthing-gtk"
-        ],
-        "remote":[
-            "dbeaver",
-            "sshfs"
-        ],
         "server":[
             "certbot",
             "cronie",
@@ -164,22 +149,20 @@
         ],
         "sound":[
             "alsa-utils",
+            "libmicrodns",
             "lsp-plugins",
             "omnivolctrl",
             "pamixer",
             "paprefs",
             "pasystray-gtk3-git",
             "pavucontrol",
+            "protobuf",
             "pulseaudio",
             "pulseaudio-alsa",
             "pulseeffects"
         ],
-        "stream":[
-            "libmicrodns",
-            "protobuf"
-        ],
         "theme":[
-            "adwaita-qt5",
+            "adwaita-qt",
             "gnome-themes-extra",
             "lxappearance-gtk3",
             "otf-ipafont",
@@ -203,6 +186,7 @@
             "dunst",
             "dvtm",
             "espeak",
+            "exfat-utils",
             "expac",
             "graphviz",
             "grub",
@@ -213,7 +197,6 @@
             "jq",
             "libnotify",
             "links",
-            "links",
             "maim",
             "moreutils",
             "notification-daemon",
@@ -221,6 +204,7 @@
             "pkgfile",
             "pkgstats",
             "rofi",
+            "sshfs",
             "system-manager",
             "task",
             "trash-cli",
@@ -245,7 +229,10 @@
             "anbox-git",
             "anbox-image",
             "anbox-modules-dkms-git",
-            "qemu"
+            "qemu",
+            "virtualbox",
+            "virtualbox-ext-oracle",
+            "virtualbox-guest-utils"
         ],
         "x-debugging":[
             "evtest",

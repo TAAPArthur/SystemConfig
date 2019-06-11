@@ -26,7 +26,7 @@ echo "Remember to use visudo to allow wheel to use sudo"
 
 sudo pacman -S git vim jq --needed
 
-su arthur -c "cd ~;[[ -d SystemConfig ]] || git clone https://github.com/TAAPArthur/SystemConfig.git"
+su arthur -c "cd ~;[[ -d SystemConfig ]] && (cd SystemConfig && git pull) || git clone https://github.com/TAAPArthur/SystemConfig.git"
 cd /tmp
 su -p arthur -c "[[ -d /tmp/system-manager ]] || (git clone https://github.com/TAAPArthur/system-manager.git && cd /tmp/system-manager && makepkg -sc;)"
 pacman -U /tmp/system-manager/*.tar.xz --needed

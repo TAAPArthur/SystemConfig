@@ -1,18 +1,24 @@
 {
     "install_hooks":{
+        "conky": "~/SystemConfig/Conky/conky-install.sh",
+        "mpxmanager": "mpxmanager --recompile -g",
         "steam": "sudo chown nonfree $(which steam); sudo chmod u+s $(which steam)",
-        "conky": "~/SystemConfig/Conky/conky-install.sh"
+        "networkmanager":"sudo systemctl enable NetworkManager",
+        "vundle-git": "vim -c'VundleInstall' +qall"
     },
     "scripts":[
         "grep -q '\\[taap\\]' /etc/pacman.conf|| sudo echo -e '[taap]\nSigLevel = Optional TrustAll\nServer = https://taaparthur.ddns.net/Database' | sudo tee -a /etc/pacman.conf",
         "grep -q '\\[disastrousaur\\]' /etc/pacman.conf|| echo -e '[disastrousaur]\nServer = https://mirror.repohost.de/$repo/$arch' | sudo tee -a /etc/pacman.conf",
         "sudo pacman-key --recv-keys CBAE582A876533FD && sudo pacman-key --lsign-key  CBAE582A876533FD",
-        "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;",
-        "sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/"
+        "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;"
     ],
+    "custom":{
+        "auto_login":"mkdir -p /etc/systemd/system/; sudo mv ~/SystemConfig/Config/Systemd/tty-autologin.conf /etc/systemd/system/getty@tty1.service.d/",
+        "semi_auto_login":"mkdir -p /etc/systemd/system/; sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/",
+        "ssh-server":"sudo systemctl enable sshd.socket"
+    },
     "links":{
         "~/SystemConfig/Config/.XCompose":"~/",
-        "~/SystemConfig/Config/.Xmodmap":"~/",
         "~/SystemConfig/Config/.astylerc":"~/",
         "~/SystemConfig/Config/.bash_profile":"~/",
         "~/SystemConfig/Config/.bashrc":"~/",
