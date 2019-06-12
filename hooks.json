@@ -13,8 +13,8 @@
         "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;"
     ],
     "custom":{
-        "auto_login":"mkdir -p /etc/systemd/system/; sudo mv ~/SystemConfig/Config/Systemd/tty-autologin.conf /etc/systemd/system/getty@tty1.service.d/",
-        "semi_auto_login":"mkdir -p /etc/systemd/system/; sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/",
+        "auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sudo mv ~/SystemConfig/Config/Systemd/tty-autologin.conf /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf",
+        "semi_auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf",
         "ssh-server":"sudo systemctl enable sshd.socket"
     },
     "links":{
@@ -25,6 +25,7 @@
         "~/SystemConfig/Config/.profile":"~/",
         "~/SystemConfig/Config/.vimrc":"~/",
         "~/SystemConfig/Config/.xinitrc":"~/",
+        "~/SystemConfig/Config/.xserverrc":"~/",
         "~/SystemConfig/Config/MPXManager/config.c": "~/.mpxmanager/",
         "~/SystemConfig/Config/Themes/gtk-3.0/settings.ini": "~/.config/gtk-3.0/",
         "~/SystemConfig/Config/dunst/dunstrc":"~/.config/dunst/",
