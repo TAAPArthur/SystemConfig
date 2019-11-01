@@ -230,7 +230,7 @@
             "virtualbox-ext-oracle",
             "virtualbox-guest-utils"
         ],
-        "x-debugging":[
+        "x_debugging":[
             "evtest",
             "xorg-xev",
             "xorg-xprop",
