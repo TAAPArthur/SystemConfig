@@ -34,4 +34,4 @@ vim -c "mkspell! ~/SystemConfig/Config/vim-spell-programs.add" +qall
 [ -f ~/.xprofile ] && . ~/.xprofile
 NESTED_SHELL_LEVEL=
 [ -f /tmp/mpxmanager.out ] && mv /tmp/mpxmanager.out /tmp/mpxmanager.out.bk
-exec mpxmanager &>> /tmp/mpxmanager.out
+exec $WINDOW_MANAGER &>> /tmp/$WINDOW_MANAGER.out

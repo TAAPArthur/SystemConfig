@@ -14,6 +14,7 @@ fi
 
 # global variables
 export ABDUCO_CMD=bash
+export WINDOW_MANAGER=mpxmanager
 export BROWSER=firefox
 export BROWSER_SECONDARY=google-chrome-stable
 export EDITOR=vim
