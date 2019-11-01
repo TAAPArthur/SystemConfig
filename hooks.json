@@ -26,7 +26,7 @@
         "~/SystemConfig/Config/.vimrc":"~/",
         "~/SystemConfig/Config/.xinitrc":"~/",
         "~/SystemConfig/Config/.xserverrc":"~/",
-        "~/SystemConfig/Config/MPXManager/config.c": "~/.mpxmanager/",
+        "~/SystemConfig/Config/MPXManager/config.cpp": "~/.mpxmanager/",
         "~/SystemConfig/Config/Themes/gtk-3.0/settings.ini": "~/.config/gtk-3.0/",
         "~/SystemConfig/Config/dunst/dunstrc":"~/.config/dunst/",
         "~/SystemConfig/Config/pyinotify-runner": "~/.config/"
