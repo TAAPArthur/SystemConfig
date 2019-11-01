@@ -1,5 +1,5 @@
 #!/bin/bash
-shopt -s histappend 
+shopt -s histappend
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     PATH=~/.local/bin:$PATH
 fi
@@ -30,30 +30,38 @@ popd()
   builtin popd > /dev/null
 }
 
+#interactive shell specific aliases
 alias cd='pushd'
 alias bk='popd'
 alias tg='pushd_builtin'
-export PS1='\u@\h:\w\$ '
+alias highlight="grep --color -E -e '^|' -e"
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+attach() { SESSION_NAME="$1:" abduco -A $1; }
+export -f attach
 
-bind '\C-SPACE':menu-complete;
-
-export HISTCONTROL=ignoredups 
+export HISTCONTROL=ignoredups
 export HISTSIZE=
 export HISTFILESIZE=               # big big history
 export HISTTIMEFORMAT="[%F %T] "
 shopt -s histappend
 #export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 #export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-export PROMPT_COMMAND='history -a; printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+export PROMPT_COMMAND='_EXIT_CODE=$?;history -a;'
+export NESTED_SHELL_LEVEL=$((${NESTED_SHELL_LEVEL:--1}+1));
 
-export BROWSER=firefox
-export BROWSER_SECONDARY=google-chrome-stable
-export EDITOR=vim
-export FILE_MANAGER=pcmanfm
-export LEDGER_FILE=~/Documents/Accounting/ledger
-export PKG_MANAGER=pacaur
-export QT_STYLE_OVERRIDE=gtk2
-export TERMINAL=terminator
-export _JAVA_AWT_WM_NONREPARENTING=1
+red='\001\e[1;31m\002'
+grn='\001\e[1;32m\002'
+blu='\001\e[1;34m\002'
+cyn='\001\e[1;36m\002'
+end='\001\e[0m\002'
+[[ "$NESTED_SHELL_LEVEL" -eq 0 ]] || NESTED_SHELL_LEVEL_STR="$cyn\r$NESTED_SHELL_LEVEL$end"
+#interactive shell specific variables
+alias get-branch='branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) && echo -en "$grn""[$branch]"'
+export PS1='$(echo -en $NESTED_SHELL_LEVEL_STR)$(get-branch)'"$cyn$SESSION_NAME$blu\u@\h$end:"'$( [[ "$_EXIT_CODE" -eq 0 ]] && echo -en $grn || echo -en $red"($_EXIT_CODE)")'"\w$end$ "
 
-#PATH=~/.local/bin:$PATH
+bind '\C-SPACE':menu-complete;
+
+if [ -f $HOME/.profile ]; then
+    source $HOME/.profile
+fi
