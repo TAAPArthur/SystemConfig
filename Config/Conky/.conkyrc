@@ -1,12 +1,12 @@
 conky.config = {
-    alignment = 'top_left',
+    alignment = 'top_middle',
     out_to_console = false,
     background = false,
     border_width = 0,
     cpu_avg_samples = 4,
     use_xft = true,
-    font = 'xft:Bitstream Ubuntu Mono:size=10:antialias=true',
-    gap_x = $X + $WIDTH / 2 + 57,
+    font = 'Ubuntu Mono:size=10:antialias=true',
+    gap_x =  -479,
     gap_y = $Y,
     maximum_width = $WIDTH / 2 - 57,
     minimum_width = $WIDTH / 2 - 57,
@@ -27,4 +27,4 @@ conky.config = {
 }
 
 
-conky.text = [[|${color0}${lua_parse format %02.0f $cpu}%($freq_g GHz)|${color1}$mem ($memperc%)|${color2}${fs_used /} (${fs_used_perc}%)|${color3}${execi 60 weather.sh }|${color4}${execi 32 sensors -u |grep -Po temp[0-9]+_input.* |cut -d" " -f2  | awk '{sum+=$0}END{printf "%3.1f°C", sum/NR}'}]]
+conky.text = [[|${color0}${lua_parse format %02.0f $cpu}%($freq_g GHz)|${color1}$mem ($memperc%)|${color2}${fs_used /} (${fs_used_perc}%)|${color3}${execi 60 weather.sh }|${color4}${execi 120 sensors -u &>/dev/null && sensors -u |grep -Po temp[0-9]+_input.* |cut -d" " -f2  | awk '{sum+=$0}END{printf "%3.1f°C", sum/NR}'}]]
