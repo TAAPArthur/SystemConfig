@@ -1,9 +1,9 @@
 conky.config = {
-    alignment = 'top_middle',
+    alignment = 'top_left',
     background = false,
     use_xft = true,
     font = 'Ubuntu Mono:size=10:antialias=true',
-    gap_x = 93,
+    gap_x = $WIDTH/2 - 235,
     gap_y = $Y,
     maximum_width = 235,
     minimum_width = 235,
