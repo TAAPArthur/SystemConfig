@@ -1,4 +1,10 @@
 {
+        "basic":[
+            "dhcpcd",
+            "less",
+            "linux",
+            "systemd"
+        ],
         "bluetooth":[
             "blueberry",
             "blueman",
@@ -18,7 +24,6 @@
         "development":[
             "astyle",
             "autopep8",
-            "check",
             "cloc",
             "cscope",
             "ctags",
@@ -41,9 +46,7 @@
             "audacity",
             "firefox",
             "gimp",
-            "gnumeric",
             "gparted",
-            "gummi",
             "ledger",
             "pitivi",
             "seahorse",
@@ -64,7 +67,8 @@
             "playonlinux",
             "snes9x-gtk",
             "steam",
-            "wii-u-gc-adapter"
+            "wii-u-gc-adapter",
+            "xorg-xhost"
         ],
         "laptop":[
             "ibam",
@@ -93,14 +97,13 @@
             "vundle-git",
             "xorg-server",
             "xorg-server-xvfb",
-            "xorg-xinit",
             "xorg-xmodmap"
         ],
         "pending":[
             "arandr",
             "bind-tools",
             "calf",
-            "dbeaver",
+            "gummi",
             "google-chrome",
             "imv",
             "linux-headers",
@@ -120,6 +123,7 @@
             "hdparm",
             "hwdetect",
             "intel-ucode",
+            "iotop",
             "lshw",
             "powertop",
             "smartmontools",
@@ -196,6 +200,7 @@
             "libnotify",
             "links",
             "maim",
+            "man-db",
             "moreutils",
             "notification-daemon",
             "pacgraph",
@@ -211,7 +216,6 @@
             "tzupdate",
             "vim-spell-en",
             "wget",
-            "xarchiver",
             "xnee",
             "xorg-xinput",
             "xorg-xrandr",
@@ -233,8 +237,12 @@
             "virtualbox-ext-oracle",
             "virtualbox-guest-utils"
         ],
+        "vpn":[
+            "openconnect"
+        ],
         "x_debugging":[
             "evtest",
+            "xdotool",
             "xorg-xev",
             "xorg-xprop",
             "xorg-xwininfo"
