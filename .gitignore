@@ -1,2 +1,4 @@
 *.spl
 Config/vim-spell-programs.add
+.xprofile
+.profile
