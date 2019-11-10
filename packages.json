@@ -44,7 +44,6 @@
         ],
         "extended":[
             "audacity",
-            "firefox",
             "gimp",
             "gparted",
             "ledger",
@@ -54,12 +53,10 @@
             "sqlitebrowser",
             "syncthing-gtk",
             "system-config-printer",
-            "terminator",
             "tor-browser-en",
             "transmission-gtk",
             "vlc",
-            "xpra",
-            "xreader"
+            "xpra"
         ],
         "gamming":[
             "dolphin-emu",
@@ -77,10 +74,12 @@
             "xss-lock"
         ],
         "normal":[
+            "aurutils",
             "bash-completion",
             "conky",
             "dmenu",
             "dzen2",
+            "firefox",
             "gnome-keyring",
             "libgnome-keyring",
             "mpxmanager",
@@ -90,14 +89,16 @@
             "numlockx",
             "openssh",
             "pacaur",
-            "pcmanfm",
             "python-pip",
+            "terminator",
             "trayer",
             "vim",
             "vundle-git",
             "xorg-server",
             "xorg-server-xvfb",
-            "xorg-xmodmap"
+            "xorg-xinit",
+            "xorg-xmodmap",
+            "xreader"
         ],
         "pending":[
             "arandr",
@@ -111,8 +112,7 @@
             "sxiv",
             "tcpdump",
             "traceroute",
-            "viewnior",
-            "xinit-xsession"
+            "viewnior"
         ],
         "performance":[
             "acpi",
@@ -135,7 +135,6 @@
         "server":[
             "certbot",
             "cronie",
-            "grub",
             "lighttpd",
             "mariadb",
             "ntp",
@@ -190,8 +189,8 @@
             "espeak",
             "exfat-utils",
             "expac",
+            "global",
             "graphviz",
-            "grub",
             "gt5",
             "gvfs",
             "indent-sort",
