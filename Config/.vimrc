@@ -13,7 +13,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'w0rp/ale'
 "Plugin 'vim-airline/vim-airline'
-" "Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 Plugin 'DoxygenToolkit.vim'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'skywind3000/gutentags_plus'
@@ -54,6 +54,7 @@ set noswapfile
 set foldmethod=syntax
 set nospell
 
+set title titlestring=
 set title titlestring+=%<%f\ %([%{Tlist_Get_Tagname_By_Line()}]%)
 "augroup PreviewAutocmds
 "  autocmd!
@@ -61,7 +62,6 @@ set title titlestring+=%<%f\ %([%{Tlist_Get_Tagname_By_Line()}]%)
 "augroup END
 let b:vcm_tab_complete = "omni"
 autocmd BufWritePre * Strip
-autocmd BufWritePre *.java,*.cpp,*.c,*.h PadOperand
 let b:spelunker_check_type = 1
 autocmd BufWinEnter * if line("$") > 500 | let b:spelunker_check_type = 2 | endif
 

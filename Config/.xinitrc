@@ -29,9 +29,9 @@ setxkbmap -option compose:ralt
 [ -x /usr/bin/blueman-applet ] && blueman-applet >/dev/null &
 
 
-vim -c "mkspell! ~/SystemConfig/Config/vim-spell-programs.add" +qall
+#vim -c "mkspell! ~/SystemConfig/Config/vim-spell-programs.add" +qall
 
 [ -f ~/.xprofile ] && . ~/.xprofile
 NESTED_SHELL_LEVEL=
 [ -f /tmp/mpxmanager.out ] && mv /tmp/mpxmanager.out /tmp/mpxmanager.out.bk
-exec $WINDOW_MANAGER &>> /tmp/$WINDOW_MANAGER.out
+exec $WINDOW_MANAGER &> /tmp/$WINDOW_MANAGER.out
