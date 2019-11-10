@@ -16,7 +16,7 @@ main () {
     fi
     tempC=$(curl -s 'wttr.in?m&format=%t&lang=uk')
     tempF=$(curl -s 'wttr.in?u&format=%t&lang=uk')
-    if [ "$?" -ne 0 ] || [ -z "$tempC" ]; then
+    if [ "$?" -ne 0 ] || [ -z "$tempC" ] || [[ "$tempC" == "Unknown"* ]] ; then
         touch $file
         echo $(cat $file)'*'
     else
