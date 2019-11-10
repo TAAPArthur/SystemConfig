@@ -2,8 +2,6 @@
     "install_hooks":{
         "conky": "~/SystemConfig/Conky/conky-install.sh",
         "mpxmanager": "mpxmanager --recompile -g",
-        "steam": "sudo chown nonfree $(which steam); sudo chmod u+s $(which steam)",
-        "networkmanager":"sudo systemctl enable NetworkManager",
         "vundle-git": "vim -c'VundleInstall' +qall"
     },
     "scripts":[
