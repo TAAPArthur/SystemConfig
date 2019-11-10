@@ -12,12 +12,13 @@ if [[ "$1" == "update" || "$1" == "-u" ]]; then
     exit 0
 fi
 
-if [[ "$1" != "-s" ]]; then
+if [[ "$1" == "--non-free" ]]; then
 	if grep -q nonfree /etc/passwd;then
 	    usermod -G games,users,input,video nonfree
 	else
 	    useradd -m -G games,users,input,video nonfree
 	fi
+    exit 0
 fi
 if grep -q $user /etc/passwd;then
     usermod -G sys,disk,lp,wheel,rfkill,video,optical,storage,scanner,input,users $user
@@ -31,7 +32,7 @@ sudo pacman -S git vim jq --needed
 
 su $user -c "cd ~;[[ -d SystemConfig ]] && (cd SystemConfig && git pull) || git clone https://github.com/TAAPArthur/SystemConfig.git"
 cd /tmp
-pacman -Qs system-manager >>/dev/null || su -p $user -c "[[ -d /tmp/system-manager ]] || (git clone https://github.com/TAAPArthur/system-manager.git && cd /tmp/system-manager && makepkg -sc;)" && pacman -U /tmp/system-manager/*.tar.xz --needed
+pacman -Qs system-manager >>/dev/null || su $user -c "[[ -d /tmp/system-manager ]] || (git clone https://github.com/TAAPArthur/system-manager.git && cd /tmp/system-manager && makepkg -sc;)" && pacman -U /tmp/system-manager/*.tar.xz --needed
 
 su $user -P -c "system-manager init"
 su $user -P -c "system-manager link-normal"
