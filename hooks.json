@@ -5,7 +5,6 @@
         "vundle-git": "vim -c'VundleInstall' +qall"
     },
     "scripts":[
-        "grep -q '\\[taap\\]' /etc/pacman.conf|| sudo echo -e '[taap]\nSigLevel = Optional TrustAll\nServer = https://taaparthur.ddns.net/Database' | sudo tee -a /etc/pacman.conf",
         "grep -q '\\[disastrousaur\\]' /etc/pacman.conf|| echo -e '[disastrousaur]\nServer = https://mirror.repohost.de/$repo/$arch' | sudo tee -a /etc/pacman.conf",
         "sudo pacman-key --recv-keys CBAE582A876533FD && sudo pacman-key --lsign-key  CBAE582A876533FD",
         "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;"
