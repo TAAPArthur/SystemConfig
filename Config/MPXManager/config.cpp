@@ -108,14 +108,6 @@ Chain chainBindings[] = {
         },{},0,"splitMaster"
     }
 };
-static BoundFunction raiseTrayerRule = {
-    +[](WindowInfo*winInfo) {
-        if(winInfo->isDock()) {
-            findAndRaise( {matchesClass, std::string("trayer")} );
-            findAndRaise( {matchesClass, std::string("dzen2")}, ACTION_LOWER);
-        }
-    }
-} ;
 
 void addFocusMask(WindowInfo*winInfo) {
     if(!winInfo->isInputOnly()&&!winInfo->hasPartOfMask(INPUT_MASK|WM_TAKE_FOCUS_MASK))
@@ -167,15 +159,15 @@ void loadSettings() {
     //addToList(getEventRules(ClientMapAllow), );
 
 
-    getWorkspace(3)->setName("Gaming");
-    getWorkspace(3)->addMask(FLOATING_MASK);
+    getWorkspace(7)->setName("7Gaming");
+    getWorkspace(7)->addMask(FLOATING_MASK);
 
     getBatchEventRules(onScreenChange).add( {spawn, "conky-install.sh;nitrogen --restore 2>/dev/null"} );
 
-    getEventRules(ClientMapAllow).add( {handleSteamGame, "handleSteamGame"} );
-    getEventRules(PreRegisterWindow).add(addFocusMask);
-    getEventRules(onWindowMove).add(raiseTrayerRule);
-    getEventRules(ClientMapAllow).add(+[](WindowInfo*winInfo) {if(matchesClass(winInfo, "dzen2"))winInfo->addMask(ALWAYS_ON_BOTTOM);} );
+    getEventRules(ClientMapAllow).add( USER_EVENT(handleSteamGame));
+    getEventRules(PreRegisterWindow).add(USER_EVENT(addFocusMask));
+    // getEventRules(onWindowMove).add(USER_EVENT(raiseTrayer));
+    getEventRules(ClientMapAllow).add({+[](WindowInfo*winInfo) {if(matchesClass(winInfo, "dzen2"))winInfo->addMask(ALWAYS_ON_BOTTOM);},"AOB dzen2"});
     getEventRules(ClientMapAllow).add({+[](WindowInfo*winInfo) {if(winInfo->getType()==ewmh->_NET_WM_WINDOW_TYPE_NOTIFICATION)winInfo->addMask(ALWAYS_ON_TOP);},"AOT notifications"} );
 
     loadNormalSettings();
