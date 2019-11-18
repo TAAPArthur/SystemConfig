@@ -85,7 +85,9 @@ let g:gutentags_modules = ['ctags', 'gtags_cscope']
 let g:gutentags_ctags_exclude = ["doc", "*.md"]
 let g:gutentags_define_advanced_commands = 1
 let g:gutentags_project_root = ['.root', '.git']
-let g:gutentags_plus_switch = 0
+let g:gutentags_plus_switch = 1
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
 
 let g:vcm_default_maps = 0
 
@@ -97,11 +99,11 @@ augroup END
 
 set tw=0
 
-command -bar PadOperand %s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\)/\1 \2/ge | %s/\([/+-=><!{}]=\|=\|,\|}\)\([^ ,/!+=\-<>]\)/\1 \2/ge
-command GenTags !gcc -M *.[ch] | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
-command GenTagspp !gcc  -std=c++11 -M *.{cpp,h} | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
+command -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\)\([^ ,/!+=\-<>]\)/\1 \2/ge
+command GenTags !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
+command GenTagspp !gcc  -std=c++11 -M *.{cpp,h} | grep -E "^\s*/" | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
 command FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
-command -bar Strip %s/\s\+$//ge
+command -bar -range Strip %s/\s\+$//ge
 
 
 
@@ -125,9 +127,6 @@ endfunction
 map ;; <C-w>T
 noremap <Space> <C-w>w
 
-inoremap :w<cr> <c-o>:w<cr>
-inoremap :ww :w
-
 
 noremap H ^
 noremap L $
@@ -149,7 +148,6 @@ nnoremap <silent> gt :TlistToggle<CR>
 
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <CR> i<CR><Esc>
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
