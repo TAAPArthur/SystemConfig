@@ -33,5 +33,6 @@ setxkbmap -option compose:ralt
 
 [ -f ~/.xprofile ] && . ~/.xprofile
 NESTED_SHELL_LEVEL=
-[ -f /tmp/mpxmanager.out ] && mv /tmp/mpxmanager.out /tmp/mpxmanager.out.bk
-exec $WINDOW_MANAGER &> /tmp/$WINDOW_MANAGER.out
+outputFile=/tmp/$WINDOW_MANAGER.out.${DISPLAY:1}
+[ -f $outputFile ] && mv $outputFile $outputFile.bk
+exec $WINDOW_MANAGER &> $outputFile

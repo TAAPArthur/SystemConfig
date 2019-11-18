@@ -27,6 +27,8 @@ export TERMINAL=terminator
 export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_WAIT_TIME_MS=12000
+export TASKRC=~/Documents/Tasks/.taskrc
+export TASKDATA=~/Documents/Tasks/.task
 
 google-chrome() { google-chrome-stable; }
 export -f google-chrome
