@@ -1,0 +1,10 @@
+# /etc/pacman.d/hooks/<file>.hook
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = terminator
+
+[Action]
+Description = Apply newTabAfterCurrent
+When = PostTransaction
+Exec = /usr/bin/patch -d / -p0 --verbose -i /etc/pacman.d/patches/terminator.patch

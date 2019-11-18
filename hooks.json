@@ -1,9 +1,4 @@
 {
-    "install_hooks":{
-        "conky": "~/SystemConfig/Conky/conky-install.sh",
-        "mpxmanager": "mpxmanager --recompile -g",
-        "vundle-git": "vim -c'VundleInstall' +qall"
-    },
     "scripts":[
         "grep -q '\\[disastrousaur\\]' /etc/pacman.conf|| echo -e '[disastrousaur]\nServer = https://mirror.repohost.de/$repo/$arch' | sudo tee -a /etc/pacman.conf",
         "sudo pacman-key --recv-keys CBAE582A876533FD && sudo pacman-key --lsign-key  CBAE582A876533FD",
@@ -33,6 +28,8 @@
      "links_root":{
         "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
         "~/SystemConfig/Config/pam/login":"/etc/pam.d/login",
-        "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/"
+        "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/",
+        "~/SystemConfig/Patches/terminator.patch": "/etc/pacman.d/patches/",
+        "~/SystemConfig/Hooks/terminator.hook": "/etc/pacman.d/hooks/"
     }
 }
