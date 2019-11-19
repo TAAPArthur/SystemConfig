@@ -6,9 +6,12 @@
 [ -x /usr/bin/gnome-keyring-daemon ] && eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
-shopt -q login_shell && kbdrate -d 100 -r 20
+if [ ! -z "$PS1" ] && [ -z "$SSH_CLIENT$SSH_TTY" ]; then
+    shopt -q login_shell && kbdrate -d 100 -r 20
+fi
 
-if [ -f $HOME/.bashrc ]; then
+# source iff interactive shell
+if [ -f $HOME/.bashrc ] && [ ! -z "$PS1" ]; then
     source $HOME/.bashrc
 fi
 

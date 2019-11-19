@@ -38,7 +38,7 @@ alias highlight="grep --color -E -e '^|' -e"
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias ls-new='ls -t | head -n1'
-attach() { SESSION_NAME="$1:" abduco -A $1; }
+attach() { NESTED_SHELL_LEVEL= SESSION_NAME="$1:" abduco -A $1; }
 export -f attach
 
 export HISTCONTROL=ignoredups
