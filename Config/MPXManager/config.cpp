@@ -69,8 +69,6 @@ Binding customBindings[] = {
 
     {Mod4Mask, XK_w, {raiseOrRun, "$BROWSER"} },
     {Mod4Mask | ShiftMask, XK_w, {spawn, "$BROWSER_ALT"} },
-    {Mod4Mask | ControlMask, XK_w, +[] {raiseOrRun("google-chrome", "google-chrome-stable --new-window --disk-cache-size=1000");} },
-    {Mod4Mask | ControlMask | ShiftMask, XK_w, {spawn, "google-chrome-stable --new-window"} },
     {Mod4Mask, XK_f, {raiseOrRun, "firefox"} },
     {Mod4Mask | ShiftMask, XK_f, {spawn, "firefox --new-window"} },
 
@@ -85,27 +83,27 @@ Binding customBindings[] = {
     {ControlMask | Mod1Mask, XK_t, {raiseOrRun, "$TERMINAL"} },
     {ControlMask | Mod1Mask | ShiftMask, XK_t, {spawn, "$TERMINAL"} },
 
+    {Mod3Mask, XK_f, centerMouseInWindow},
+    {Mod4Mask, XK_n, {cycleSlave, UP}},
+    {Mod3Mask, XK_n, {cycleSlave, UP}},
+    {Mod4Mask|ShiftMask, XK_n, {cycleSlave, DOWN}},
+    {Mod3Mask|ShiftMask, XK_n, {cycleSlave, DOWN}},
+
     {Mod4Mask, XK_d, startMPX},
-    {Mod4Mask | ControlMask | Mod1Mask, XK_d, saveMPXMasterInfo},
-    {Mod4Mask | ControlMask | Mod1Mask | ShiftMask, XK_d, loadMPXMasterInfo},
+    {Mod4Mask | ControlMask, XK_d, saveMPXMasterInfo},
+    {Mod4Mask | ControlMask | ShiftMask, XK_d, loadMPXMasterInfo},
     {Mod4Mask | ShiftMask, XK_d, stopMPX},
 
     {Mod4Mask, XK_x, +[](WindowInfo*winInfo) {cloneWindow(winInfo);} },
     {Mod4Mask | ShiftMask, XK_x, killAllClones},
 
-
-    {Mod4Mask | Mod3Mask, 	XK_Up, {clickButton, 	 SCROLL_UP} },
-    {Mod4Mask | Mod3Mask, 	XK_Down, {clickButton, 	 SCROLL_DOWN} },
-    {Mod4Mask | Mod3Mask, 	XK_Left, {clickButton, 	 SCROLL_LEFT} },
-    {Mod4Mask | Mod3Mask, 	XK_Right, {clickButton,	 SCROLL_RIGHT} },
-
 } ;
-Chain chainBindings[] = {
-    {Mod4Mask | ControlMask | Mod1Mask, XK_e, startSplitMaster,{
+Chain* chainBindings[] = {
+    new Chain{Mod4Mask | Mod1Mask, XK_d, {startSplitMaster,"splitMaster",NO_PASSTHROUGH},{
           {0,XK_Escape, endSplitMaster, {.noGrab=1}},
           {0,XK_Escape, endActiveChain, {.passThrough=NO_PASSTHROUGH, .noGrab=1}},
           {WILDCARD_MODIFIER,0, attachActiveSlaveToMarkedMaster, {.passThrough=NO_PASSTHROUGH, .noGrab=1}}
-        },{},0,"splitMaster"
+        },{.noKeyRepeat = 0},GLOBAL_CHAIN,"splitMasterChain"
     }
 };
 
@@ -159,40 +157,36 @@ void loadSettings() {
     //addToList(getEventRules(ClientMapAllow), );
 
 
-    getWorkspace(7)->setName("7Gaming");
-    getWorkspace(7)->addMask(FLOATING_MASK);
+    getWorkspace(8)->setName("7Gaming");
+    getWorkspace(8)->addMask(FLOATING_MASK);
 
     getBatchEventRules(onScreenChange).add( {spawn, "conky-install.sh;nitrogen --restore 2>/dev/null"} );
 
+    getEventRules(onXConnection).add( {loadCustomAtoms, "loadCustomAtoms"}, PREPEND_UNIQUE );
     getEventRules(ClientMapAllow).add( USER_EVENT(handleSteamGame));
     getEventRules(PreRegisterWindow).add(USER_EVENT(addFocusMask));
-    // getEventRules(onWindowMove).add(USER_EVENT(raiseTrayer));
-    getEventRules(ClientMapAllow).add({+[](WindowInfo*winInfo) {if(matchesClass(winInfo, "dzen2"))winInfo->addMask(ALWAYS_ON_BOTTOM);},"AOB dzen2"});
+    getEventRules(ClientMapAllow).add({+[](WindowInfo*winInfo) {if(matchesClass(winInfo, "dzen2"))winInfo->addMask(PRIMARY_MONITOR_MASK|ALWAYS_ON_BOTTOM);},"AOB dzen2"});
     getEventRules(ClientMapAllow).add({+[](WindowInfo*winInfo) {if(winInfo->getType()==ewmh->_NET_WM_WINDOW_TYPE_NOTIFICATION)winInfo->addMask(ALWAYS_ON_TOP);},"AOT notifications"} );
+    addDieOnIntegrityCheckFailRule();
 
     loadNormalSettings();
-    for(Binding&b:customBindings)
+    for(Binding& b : customBindings)
         getDeviceBindings().add(b);
-    for(Binding&b:chainBindings)
+    for(Chain* b : chainBindings)
         getDeviceBindings().add(b);
-    addDefaultXMouseControlBindings();
+
     addKeepTransientsOnTopRule();
-    addDieOnIntegrityCheckFailRule();
     addResumeCustomStateRules();
-    addAutoMPXRules();
     addNoDockFocusRule();
     addIgnoreSmallWindowRule();
-     addIgnoreOverrideRedirectWindowsRule(ADD_REMOVE);
+    addIgnoreOverrideRedirectWindowsRule(ADD_REMOVE);
+
+    // Extensions
+    addAutoMPXRules();
     addCloneRules();
     startAutoUpdatingClones();
+    addDefaultXMouseControlBindings();
     addStartXMouseControlRule();
-    getEventRules(onXConnection).add( {loadCustomAtoms, "loadCustomAtoms"}, PREPEND_UNIQUE );
-    /*
-    getEventRules(ClientMapAllow).add(+[](WindowInfo*winInfo) {
-        if(matchesClass(winInfo, "google-chrome"))
-            passiveGrab(winInfo->getID(), NON_ROOT_DEVICE_EVENT_MASKS|XCB_INPUT_XI_EVENT_MASK_BUTTON_PRESS);
-    } );
-    */
 }
 __attribute__((constructor)) static void _onStart() {
 }
