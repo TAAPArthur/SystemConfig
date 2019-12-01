@@ -10,8 +10,8 @@ dbus-update-activation-environment --systemd DISPLAY
 
 xset s 1200 180
 
-[[ -x /usr/bin/xss-lock && -x /usr/bin/xsecurelock ]] && xss-lock -n '(brightness set .1 && trap "brightness set" EXIT && sleep 1000s)' -- xsecurelock &
-[[ -x /usr/bin/xautolock ]] && xautolock -time ${SUSPEND_TIME:-30} -detectsleep -locker "systemctl suspend" &
+# [[ -x /usr/bin/xss-lock && -x /usr/bin/xsecurelock ]] && xss-lock -n '(brightness set .1 && trap "brightness set")' -- xsecurelock &
+# [[ -x /usr/bin/xautolock ]] && xautolock -time ${SUSPEND_TIME:-30} -detectsleep -locker "systemctl suspend" &
 
 setxkbmap -option compose:ralt
 
