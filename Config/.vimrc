@@ -49,6 +49,7 @@ set tags=./tags;,tags;
 "set completeopt-=preview "disable preview window for autocomplete
 set laststatus=2
 set wildignore=*.gc??,*.o
+set wildmode=list:longest,full
 set updatetime=1000
 set noswapfile
 set foldmethod=syntax
