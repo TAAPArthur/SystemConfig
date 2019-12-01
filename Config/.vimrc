@@ -103,7 +103,7 @@ set tw=0
 command -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\)\([^ ,/!+=\-<>]\)/\1 \2/ge
 command GenTags !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
 command GenTagspp !gcc  -std=c++11 -M *.{cpp,h} | grep -E "^\s*/" | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
-command FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
+command -bar -range FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
 command -bar -range Strip %s/\s\+$//ge
 
 
