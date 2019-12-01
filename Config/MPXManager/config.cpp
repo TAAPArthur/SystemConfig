@@ -68,7 +68,7 @@ Binding customBindings[] = {
     {Mod4Mask, XK_Menu, {raiseOrRun, "pavucontrol"} },
 
     {Mod4Mask, XK_w, {raiseOrRun, "$BROWSER"} },
-    {Mod4Mask | ShiftMask, XK_w, {spawn, "$BROWSER --new-window"} },
+    {Mod4Mask | ShiftMask, XK_w, {spawn, "$BROWSER_ALT"} },
     {Mod4Mask | ControlMask, XK_w, +[] {raiseOrRun("google-chrome", "google-chrome-stable --new-window --disk-cache-size=1000");} },
     {Mod4Mask | ControlMask | ShiftMask, XK_w, {spawn, "google-chrome-stable --new-window"} },
     {Mod4Mask, XK_f, {raiseOrRun, "firefox"} },

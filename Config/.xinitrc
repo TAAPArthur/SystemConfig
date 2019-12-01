@@ -2,8 +2,6 @@
 
 [ -x /usr/bin/nitrogen ] && nitrogen --restore
 
-dbus-update-activation-environment --systemd DISPLAY
-
 [ -x /usr/bin/xsetroot ] && xsetroot -cursor_name left_ptr
 
 [ -x /usr/bin/lxqt-policykit-agent ] && lxqt-policykit-agent &
@@ -20,7 +18,7 @@ setxkbmap -option compose:ralt
 
 [ -x /usr/bin/dunst ] && dunst &
 
-[ -x /usr/bin/trayer ] && trayer --edge top --align right  --height 19 --widthtype pixel --width 90 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0 --monitor primary &
+[ -x /usr/bin/trayer ] && trayer --edge top --align right --height 19 --widthtype pixel --width 90 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0 --monitor primary &
 
 [ -x clip-history ] && clip-history monitor &>/dev/null &
 
