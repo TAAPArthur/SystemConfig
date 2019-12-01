@@ -1,10 +1,10 @@
 {
         "basic":[
             "dhcpcd",
+            "gvim",
             "less",
             "linux",
-            "systemd",
-            "vim"
+            "systemd"
         ],
         "bluetooth":[
             "blueberry",
