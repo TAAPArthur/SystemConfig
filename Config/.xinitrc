@@ -20,7 +20,7 @@ setxkbmap -option compose:ralt
 
 [ -x /usr/bin/trayer ] && trayer --edge top --align right --height 19 --widthtype pixel --width 90 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0 --monitor primary &
 
-[ -x clip-history ] && clip-history monitor &>/dev/null &
+[ -x /usr/bin/clip-history ] && clip-history monitor &>/dev/null &
 
 [ -x /usr/bin/pasystray ] && pasystray --notify=all &
 [ -x /usr/bin/nm-applet ] && nm-applet >/dev/null &
