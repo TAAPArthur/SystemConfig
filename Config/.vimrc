@@ -63,8 +63,8 @@ set title titlestring+=%<%f\ %([%{Tlist_Get_Tagname_By_Line()}]%)
 "augroup END
 let b:vcm_tab_complete = "omni"
 autocmd BufWritePre * Strip
-let b:spelunker_check_type = 1
-autocmd BufWinEnter * if line("$") > 500 | let b:spelunker_check_type = 2 | endif
+let b:spelunker_check_type = 2
+autocmd BufWinEnter * if line("$") < 500 | let b:spelunker_check_type = 1 | endif
 
 " Resize splits when the window is resized
 au VimResized * :wincmd =
@@ -100,7 +100,7 @@ augroup END
 
 set tw=0
 
-command -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\)\([^ ,/!+=\-<>]\)/\1 \2/ge
+command -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\|:\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\|?\|:\)\([^ ,/!+=\-<>]\)/\1 \2/ge
 command GenTags !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
 command GenTagspp !gcc  -std=c++11 -M *.{cpp,h} | grep -E "^\s*/" | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
 command -bar -range FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
