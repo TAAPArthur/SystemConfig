@@ -3,7 +3,8 @@
             "dhcpcd",
             "less",
             "linux",
-            "systemd"
+            "systemd",
+            "vim"
         ],
         "bluetooth":[
             "blueberry",
@@ -48,7 +49,6 @@
             "gparted",
             "ledger",
             "pitivi",
-            "seahorse",
             "simple-scan",
             "sqlitebrowser",
             "syncthing-gtk",
@@ -58,7 +58,7 @@
             "vlc",
             "xpra"
         ],
-        "gamming":[
+        "gaming":[
             "dolphin-emu",
             "lib32-libpulse",
             "playonlinux",
@@ -77,6 +77,7 @@
             "aurutils",
             "bash-completion",
             "conky",
+            "cronie",
             "dmenu",
             "dzen2",
             "firefox",
@@ -92,7 +93,6 @@
             "python-pip",
             "terminator",
             "trayer",
-            "vim",
             "vundle-git",
             "xorg-server",
             "xorg-server-xvfb",
@@ -104,11 +104,13 @@
             "arandr",
             "bind-tools",
             "calf",
-            "gummi",
             "google-chrome",
+            "gummi",
             "imv",
             "linux-headers",
             "lxqt-policykit",
+            "rofi",
+            "seahorse",
             "sxiv",
             "tcpdump",
             "traceroute",
@@ -134,10 +136,8 @@
         ],
         "server":[
             "certbot",
-            "cronie",
             "lighttpd",
             "mariadb",
-            "ntp",
             "openssh",
             "pacgraph",
             "php-cgi",
@@ -145,9 +145,7 @@
             "sshguard",
             "syncthing",
             "syncthing-relaysrv",
-            "taapcrunchyroll-bot",
-            "trash-cli",
-            "vim"
+            "taapcrunchyroll-bot"
         ],
         "sound":[
             "alsa-utils",
@@ -181,11 +179,6 @@
             "android-tools",
             "arch-install-scripts",
             "bc",
-            "clip-history",
-            "cups",
-            "cups-pdf",
-            "dmenu-pycalc",
-            "dunst",
             "espeak",
             "exfat-utils",
             "expac",
@@ -201,11 +194,9 @@
             "maim",
             "man-db",
             "moreutils",
-            "notification-daemon",
             "pacgraph",
             "pkgfile",
             "pkgstats",
-            "rofi",
             "sshfs",
             "system-manager",
             "tar",
@@ -213,8 +204,17 @@
             "trash-cli",
             "tree",
             "tzupdate",
-            "vim-spell-en",
             "wget",
+            "zip"
+        ],
+        "utility_graphical":[
+            "autorandr",
+            "clip-history",
+            "cups",
+            "cups-pdf",
+            "dmenu-pycalc",
+            "dunst",
+            "notification-daemon",
             "xnee",
             "xorg-xinput",
             "xorg-xrandr",
@@ -223,8 +223,7 @@
             "xsane-xrandr",
             "xsel",
             "xtrlock",
-            "xvkbd",
-            "zip"
+            "xvkbd"
         ],
         "virtualization":[
             "anbox-bridge",
