@@ -1,30 +1,20 @@
 {
-    "scripts":[
-        "grep -q '\\[disastrousaur\\]' /etc/pacman.conf|| echo -e '[disastrousaur]\nServer = https://mirror.repohost.de/$repo/$arch' | sudo tee -a /etc/pacman.conf",
-        "sudo pacman-key --recv-keys CBAE582A876533FD && sudo pacman-key --lsign-key  CBAE582A876533FD",
-        "sudo pacman -Sy; sudo pacman --noconfirm -S pacaur;"
-    ],
     "custom":{
         "auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sudo mv ~/SystemConfig/Config/Systemd/tty-autologin.conf /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf",
-        "semi_auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf",
-        "ssh-server":"sudo systemctl enable sshd.socket"
+        "semi_auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf"
     },
     "links":{
         "~/SystemConfig/Config/.XCompose":"~/",
         "~/SystemConfig/Config/.astylerc":"~/",
         "~/SystemConfig/Config/.bash_profile":"~/",
         "~/SystemConfig/Config/.bashrc":"~/",
-        "~/SystemConfig/Config/.profile":"~/",
         "~/SystemConfig/Config/.vimrc":"~/",
         "~/SystemConfig/Config/.xinitrc":"~/",
         "~/SystemConfig/Config/.xserverrc":"~/",
-        "~/SystemConfig/Config/mimeapps.list":"~/.config/",
-        "~/SystemConfig/Config/MPXManager/config.cpp": "~/.mpxmanager/",
-        "~/SystemConfig/Config/Apps/terminator/config": "~/.config/terminator/config",
-        "~/SystemConfig/Config/Themes/gtk-3.0/settings.ini": "~/.config/gtk-3.0/",
-        "~/SystemConfig/Config/Themes/gtk-3.0/gtk.css": "~/.config/gtk-3.0/",
-        "~/SystemConfig/Config/dunst/dunstrc":"~/.config/dunst/",
-        "~/SystemConfig/Config/pyinotify-runner": "~/.config/"
+        "~/SystemConfig/Config/.config/*":"~/.config/",
+        "~/SystemConfig/Config/.bash_completion.d/*":"~/.bash_completion.d/",
+        "~/SystemConfig/Config/.local/man/*":"~/.local/man/",
+        "~/SystemConfig/Config/MPXManager/config.cpp": "~/.mpxmanager/"
     },
      "links_root":{
         "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
