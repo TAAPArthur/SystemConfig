@@ -58,7 +58,7 @@ xkb_symbols "basic" {
     key <BKSL> {	[ backslash,         bar	]	};
     key <RALT> {	[ ralt,         Multi_key 	]	};
 
-    key <CAPS> {    [ Hyper_L,      Shift_Lock	]   };
+    key <CAPS> {    [ Hyper_L,      Hyper_L]   };
 
     //modifier_map Mod4 { Super_L, Super_R };
 
@@ -504,8 +504,8 @@ xkb_symbols "dvorak-r" {
 };
 
 // Classic dvorak layout
-// by Piter Punk <piterpk@terra.com.br> - 2006-07-06 
-// Based on dvorak layout and e-mail from Russel L. Harris rlharris@oplink.net 
+// by Piter Punk <piterpk@terra.com.br> - 2006-07-06
+// Based on dvorak layout and e-mail from Russel L. Harris rlharris@oplink.net
 // on xorg list.
 partial alphanumeric_keys
 xkb_symbols "dvorak-classic" {
@@ -894,7 +894,7 @@ xkb_symbols "classmate-intl" {
 
     key <LSGT> { [ backslash,	bar,		backslash,	bar ] };
 
-    key <KP7>  { [	KP_Home,		KP_7,	
+    key <KP7>  { [	KP_Home,		KP_7,
 			onehalf,		dead_horn	] };
     key <KP8>  { [	KP_Up,			KP_8,
 			threequarters,		dead_ogonek	] };
@@ -973,7 +973,7 @@ xkb_symbols "classmate-altgr-intl" {
 
     key <LSGT> { [ backslash,	bar,		backslash,	bar ] };
 
-    key <KP7>  { [	KP_Home,		KP_7,	
+    key <KP7>  { [	KP_Home,		KP_7,
 			dead_horn,		dead_horn	] };
     key <KP8>  { [	KP_Up,			KP_8,
 			dead_ogonek,		dead_ogonek	] };
