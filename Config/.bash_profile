@@ -33,6 +33,7 @@ export XSECURELOCK_WAIT_TIME_MS=12000
 export TASKRC=~/Documents/Tasks/.taskrc
 export TASKDATA=~/Documents/Tasks/.task
 
+alias steam="sudo su nonfree steam"
 google-chrome() { google-chrome-stable; }
 export -f google-chrome
 
