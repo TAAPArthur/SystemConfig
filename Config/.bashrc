@@ -56,10 +56,10 @@ grn='\001\e[1;32m\002'
 blu='\001\e[1;34m\002'
 cyn='\001\e[1;36m\002'
 end='\001\e[0m\002'
-[[ "$NESTED_SHELL_LEVEL" -eq 0 ]] || NESTED_SHELL_LEVEL_STR="$cyn\r$NESTED_SHELL_LEVEL$end"
+[[ "$NESTED_SHELL_LEVEL" -eq 0 ]] || NESTED_SHELL_LEVEL_STR="$cyn$NESTED_SHELL_LEVEL$end"
 #interactive shell specific variables
 alias get-branch='branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) && echo -en "$grn""[$branch]"'
-export PS1='$(echo -en $NESTED_SHELL_LEVEL_STR)$(get-branch)'"$cyn$SESSION_NAME$blu\u@\h$end:"'$( [[ "$_EXIT_CODE" -eq 0 ]] && echo -en $grn || echo -en $red"($_EXIT_CODE)")'"\w$end$ "
+export PS1="$NESTED_SHELL_LEVEL_STR"'$(get-branch)'"$cyn$SESSION_NAME$blu\u@\h$end:"'$( [[ "$_EXIT_CODE" -eq 0 ]] && echo -en $grn || echo -en $red"($_EXIT_CODE)")'"\w$end$ "
 
 bind '\C-SPACE':menu-complete;
 
