@@ -13,7 +13,7 @@
         "~/SystemConfig/Config/.xserverrc":"~/",
         "~/SystemConfig/Config/.config/*":"~/.config/",
         "~/SystemConfig/Config/.bash_completion.d/*":"~/.bash_completion.d/",
-        "~/SystemConfig/Config/.local/man/*":"~/.local/man/",
+        "~/SystemConfig/Config/.local/man/man1/*":"~/.local/man/man1/",
         "~/SystemConfig/Config/MPXManager/config.cpp": "~/.mpxmanager/"
     },
      "links_root":{
