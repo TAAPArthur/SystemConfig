@@ -1,5 +1,8 @@
 {
         "basic":[
+            "base",
+            "bash",
+            "less",
             "dhcpcd",
             "gvim",
             "less",
@@ -18,7 +21,7 @@
         "bluray":[
             "aacskeys",
             "libaacs",
-            "libbluray-git",
+            "libbluray",
             "libdvdcss",
             "libdvdnav"
         ],
@@ -37,6 +40,9 @@
             "shellcheck",
             "valgrind"
         ],
+        "desktop":[
+            "mdadm"
+        ],
         "divers":[
             "broadcom-wl-dkms",
             "xf86-video-amdgpu",
@@ -46,6 +52,7 @@
         "extended":[
             "audacity",
             "gimp",
+            "crunchyroll-guest-pass-finder",
             "gparted",
             "ledger",
             "pitivi",
@@ -102,6 +109,7 @@
         ],
         "pending":[
             "arandr",
+            "grub",
             "bind-tools",
             "calf",
             "google-chrome",
@@ -118,7 +126,6 @@
         ],
         "performance":[
             "acpi",
-            "duc",
             "gnome-disk-utility",
             "hardinfo",
             "hddtemp",
@@ -174,6 +181,7 @@
             "xorg-xfontsel"
         ],
         "utility":[
+            "ntp",
             "abduco",
             "android-tools",
             "arch-install-scripts",
@@ -185,6 +193,8 @@
             "graphviz",
             "gt5",
             "gvfs",
+            "man-db",
+            "man-pages",
             "indent-sort",
             "iproute2",
             "jq",
