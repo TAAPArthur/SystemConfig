@@ -3,22 +3,26 @@ set -xe
 
 user=${user:-arthur}
 
-if [[ "$1" == "update" || "$1" == "-u" ]]; then
-    cd /tmp
-    [[ -d SystemConfig ]] && (cd SystemConfig && git pull) || git clone https://github.com/TAAPArthur/SystemConfig.git
-    cd SystemConfig
-    ./restore.sh
-    echo "Newest version is in $(pwd)/restore.sh"
-    exit 0
-fi
+if [[ ! -z "$1" ]]; then
+    if [[ "$1" == "update" || "$1" == "-u" ]]; then
+        cd /tmp
+        [[ -d SystemConfig ]] && (cd SystemConfig && git pull) || git clone https://github.com/TAAPArthur/SystemConfig.git
+        cd SystemConfig
+        ./restore.sh
+        echo "Newest version is in $(pwd)/restore.sh"
+        exit 0
+    elif [[ "$1" =~ (--)?non-?free ]]; then
+        if grep -q nonfree /etc/passwd;then
+            usermod -G games,audio,users,input,video nonfree
+        else
+            useradd -m -G games,audio,users,input,video nonfree
+        fi
+        exit 0
+    else
+        echo "unknown option $1"
+        exit 1
+    fi
 
-if [[ "$1" == "--non-free" ]]; then
-	if grep -q nonfree /etc/passwd;then
-	    usermod -G games,users,input,video nonfree
-	else
-	    useradd -m -G games,users,input,video nonfree
-	fi
-    exit 0
 fi
 if grep -q $user /etc/passwd;then
     usermod -G sys,disk,lp,wheel,rfkill,video,optical,storage,scanner,input,users $user
