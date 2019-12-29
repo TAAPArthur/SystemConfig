@@ -17,6 +17,9 @@
   title_transmit_fg_color = "#555753"
   title_use_system_font = False
 [keybindings]
+  broadcast_all = None
+  broadcast_group = None
+  help = None
 [layouts]
   [[default]]
     [[[child1]]]
