@@ -36,6 +36,11 @@ set -e
 
 export SYSTEM_CONFIG_DIR=${SYSTEM_CONFIG_DIR:-~/SystemConfig}
 
+CACHE_DIR=~/.cache/system-manager
+CACHE=$CACHE_DIR/install.txt
+mkdir -p $CACHE_DIR
+touch $CACHE
+
 displayHelp(){
     SCRIPT_HEADSIZE=$(head -200 ${0} |grep -n "^# END_OF_HEADER" | cut -f1 -d:)
     SCRIPT_NAME="$(basename ${0})"
@@ -87,8 +92,11 @@ menu() {
 selectCustom(){
     selectFromMenu $(jq -r '.custom |  keys | join(" ")' $SYSTEM_CONFIG_DIR/hooks.json |sort) |xargs -I{} echo ".custom{}"
 }
+listGroups(){
+    jq -r '[""] + keys | join(" .")' $SYSTEM_CONFIG_DIR/packages.json |sort
+}
 selectPackages(){
-    selectFromMenu $(jq -r 'keys | join(" ")' $SYSTEM_CONFIG_DIR/packages.json |sort)
+    selectFromMenu $(listGroups)
 }
 selectFromMenu(){
     #taken from https://serverfault.com/questions/144939/multi-select-menu-in-bash-script
@@ -119,9 +127,15 @@ selectFromMenu(){
     done
 
     for i in ${!options[@]}; do
-        [[ "${choices[i]}" ]] && { echo ".${options[i]}"; }
+        [[ "${choices[i]}" ]] && { echo "${options[i]}"; }
     done
     return 0
+}
+
+install(){
+    echo "Installing $*"
+    packages=$(jq -r "$* | flatten | join(\"\n\")" $SYSTEM_CONFIG_DIR/packages.json |sort)
+    ${PKG_MANAGER:-sudo pacman} -S $(echo $packages) --needed
 }
 
 case "$1" in
@@ -140,6 +154,9 @@ case "$1" in
     init)
         jq -r '.scripts |join("; ")' $SYSTEM_CONFIG_DIR/hooks.json |bash
         ;;
+    reinstall)
+        install $(echo $(cat $CACHE) | sed "s/ /, /g")
+        ;;
     install)
         shift
         args="$*"
@@ -147,8 +164,9 @@ case "$1" in
             args=$(echo $(selectPackages)|sed "s/ /, /g")
             echo "Selected $args"
         fi
-        packages=$(jq -r "$args | flatten | join(\"\n\")" $SYSTEM_CONFIG_DIR/packages.json |sort)
-        ${PKG_MANAGER:-sudo pacman} -S $(echo $packages) --needed
+        cat <(echo $args | sed "s/, /\n/g") <(cat $CACHE) | sort -u > $CACHE.tmp
+        mv $CACHE.tmp $CACHE
+        install $args
         ;;
      link-normal)
          linkNormal
@@ -160,8 +178,8 @@ case "$1" in
          linkFiles
          ;;
      list-groups)
-        jq -r 'keys | join("\n")' $SYSTEM_CONFIG_DIR/packages.json |sort
-       ;;
+         listGroups
+         ;;
      list-installed)
          comm -12 <(pacman -Qqe|sort) <(getAllPackages)
        ;;
