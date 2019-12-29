@@ -2,16 +2,14 @@
         "basic":[
             "base",
             "bash",
-            "less",
             "dhcpcd",
             "gvim",
+            "less",
             "less",
             "linux",
             "systemd"
         ],
         "bluetooth":[
-            "blueberry",
-            "blueman",
             "bluez-plugins",
             "bluez-tools",
             "bluez-utils",
@@ -24,6 +22,9 @@
             "libbluray",
             "libdvdcss",
             "libdvdnav"
+        ],
+        "desktop":[
+            "mdadm"
         ],
         "development":[
             "astyle",
@@ -40,9 +41,6 @@
             "shellcheck",
             "valgrind"
         ],
-        "desktop":[
-            "mdadm"
-        ],
         "divers":[
             "broadcom-wl-dkms",
             "xf86-video-amdgpu",
@@ -51,8 +49,8 @@
         ],
         "extended":[
             "audacity",
-            "gimp",
             "crunchyroll-guest-pass-finder",
+            "gimp",
             "gparted",
             "ledger",
             "pitivi",
@@ -60,7 +58,6 @@
             "sqlitebrowser",
             "syncthing-gtk",
             "system-config-printer",
-            "tor-browser-en",
             "transmission-gtk",
             "vlc",
             "xpra"
@@ -74,6 +71,10 @@
             "wii-u-gc-adapter",
             "xorg-xhost"
         ],
+        "alternatives":[
+            "xorg-server-git",
+            "vim"
+        ],
         "laptop":[
             "ibam",
             "xautolock",
@@ -81,6 +82,7 @@
             "xss-lock"
         ],
         "normal":[
+            "arandr",
             "aurutils",
             "bash-completion",
             "conky",
@@ -108,15 +110,16 @@
             "xreader"
         ],
         "pending":[
-            "arandr",
-            "grub",
             "bind-tools",
             "calf",
             "google-chrome",
+            "grub",
             "gummi",
             "imv",
             "linux-headers",
             "lxqt-policykit",
+            "netctl",
+            "picom",
             "rofi",
             "seahorse",
             "sxiv",
@@ -143,6 +146,7 @@
         ],
         "server":[
             "certbot",
+            "crunchyroll-guest-pass-finder",
             "lighttpd",
             "mariadb",
             "openssh",
@@ -151,8 +155,7 @@
             "phpmyadmin",
             "sshguard",
             "syncthing",
-            "syncthing-relaysrv",
-            "taapcrunchyroll-bot"
+            "syncthing-relaysrv"
         ],
         "sound":[
             "alsa-utils",
@@ -169,10 +172,8 @@
         ],
         "theme":[
             "adwaita-qt",
-            "gnome-themes-extra",
             "lxappearance-gtk3",
             "otf-ipafont",
-            "qt5ct",
             "ttf-dejavu",
             "ttf-freefont",
             "ttf-liberation",
@@ -181,7 +182,6 @@
             "xorg-xfontsel"
         ],
         "utility":[
-            "ntp",
             "abduco",
             "android-tools",
             "arch-install-scripts",
@@ -189,21 +189,19 @@
             "espeak",
             "exfat-utils",
             "expac",
-            "global",
             "graphviz",
             "gt5",
             "gvfs",
-            "man-db",
-            "man-pages",
             "indent-sort",
             "iproute2",
             "jq",
-            "libnotify",
             "links",
-            "maim",
             "man-db",
+            "man-pages",
             "moreutils",
+            "ntp",
             "pacgraph",
+            "pacman-contrib",
             "pkgfile",
             "pkgstats",
             "sshfs",
@@ -217,11 +215,15 @@
         ],
         "utility_graphical":[
             "autorandr",
+            "brightnessctl",
             "clip-history",
             "cups",
             "cups-pdf",
             "dunst",
+            "libnotify",
+            "maim",
             "notification-daemon",
+            "xclip",
             "xnee",
             "xorg-xinput",
             "xorg-xrandr",
@@ -231,6 +233,9 @@
             "xsel",
             "xtrlock",
             "xvkbd"
+        ],
+        "video":[
+            "streamlink"
         ],
         "virtualization":[
             "anbox-bridge",
@@ -247,6 +252,8 @@
         ],
         "x_debugging":[
             "evtest",
+            "wmctrl",
+            "xcolor",
             "xdotool",
             "xorg-xev",
             "xorg-xprop",

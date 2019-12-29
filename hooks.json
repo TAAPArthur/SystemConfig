@@ -6,21 +6,21 @@
     "links":{
         "~/SystemConfig/Config/.XCompose":"~/",
         "~/SystemConfig/Config/.astylerc":"~/",
+        "~/SystemConfig/Config/.bash_completion.d/*":".local/share/bash-completion/completions/",
         "~/SystemConfig/Config/.bash_profile":"~/",
         "~/SystemConfig/Config/.bashrc":"~/",
+        "~/SystemConfig/Config/.config/*":"~/.config/",
+        "~/SystemConfig/Config/.local/man/man1/*":"~/.local/man/man1/",
         "~/SystemConfig/Config/.vimrc":"~/",
         "~/SystemConfig/Config/.xinitrc":"~/",
-        "~/SystemConfig/Config/.xserverrc":"~/",
-        "~/SystemConfig/Config/.config/*":"~/.config/",
-        "~/SystemConfig/Config/.bash_completion.d/*":"~/.bash_completion.d/",
-        "~/SystemConfig/Config/.local/man/man1/*":"~/.local/man/man1/",
-        "~/SystemConfig/Config/MPXManager/config.cpp": "~/.mpxmanager/"
+        "~/SystemConfig/Config/.xserverrc":"~/"
     },
      "links_root":{
+        "~/SystemConfig/Config/bash_completion.d/*":"/etc/bash_completion.d/",
         "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
-        "~/SystemConfig/Config/pam/login":"/etc/pam.d/login",
         "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/",
-        "~/SystemConfig/Patches/terminator.patch": "/etc/pacman.d/patches/",
-        "~/SystemConfig/Hooks/terminator.hook": "/etc/pacman.d/hooks/"
+        "~/SystemConfig/Config/pam/login":"/etc/pam.d/login",
+        "~/SystemConfig/Hooks/terminator.hook": "/etc/pacman.d/hooks/",
+        "~/SystemConfig/Patches/terminator.patch": "/etc/pacman.d/patches/"
     }
 }
