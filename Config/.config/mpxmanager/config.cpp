@@ -23,15 +23,26 @@
 #include <mpxmanager/wm-rules.h>
 #include <mpxmanager/wmfunctions.h>
 
+void clean() {
+    for(WindowInfo*winInfo:getAllWindows()) {
+        if(winInfo->isDock())
+            winInfo->removeFromWorkspace();
+        if(!winInfo->getWorkspace()){
+            if(winInfo->hasMask(MAPPABLE_MASK))
+                mapWindow(winInfo->getID());
+            removeBorder(*winInfo);
+        }
+    }
+}
 
 Binding customBindings[] = {
     {Mod4Mask, XK_F6, {raiseOrRun, "arandr"} },
     {0, XF86XK_Display, {spawn, "autorandr -c"} },
     {ShiftMask, XF86XK_Display, {spawn, "xsane-xrandr -i configure"} },
-    {Mod4Mask, XF86XK_Display, {spawn, "arandr"} },
+    {Mod4Mask, XF86XK_Display, {raiseOrRun, "arandr"} },
 
     {0, XF86XK_MonBrightnessUp, {spawn, "brightnessctl s +1"} },
-    {0, XF86XK_MonBrightnessDown, {spawn, "brightnessctl s -1"} },
+    {0, XF86XK_MonBrightnessDown, {spawn, "brightnessctl s 1-"} },
     {Mod4Mask, XF86XK_MonBrightnessUp, {spawn, "brightness +.1"} },
     {Mod4Mask | ShiftMask, XF86XK_MonBrightnessUp, {spawn, "brightness"} },
     {Mod4Mask, XF86XK_MonBrightnessDown, {spawn, "brightness -.1"} },
@@ -81,6 +92,7 @@ Binding customBindings[] = {
 
     {Mod4Mask, XK_w, +[]{return raiseOrRun("browser", "$BROWSER", MATCHES_ROLE);} },
     {Mod4Mask | ShiftMask, XK_w, {spawn, "$BROWSER_ALT"} },
+    {Mod4Mask | ControlMask | ShiftMask, XK_w, {spawn, "$BROWSER"} },
 
     {Mod4Mask | ControlMask, XK_v, {raiseOrRun, "vlc"} },
     {Mod4Mask | ControlMask | Mod1Mask, XK_v, {raiseOrRun, "pitivi"} },
@@ -110,6 +122,9 @@ Binding customBindings[] = {
     {Mod4Mask, XK_x, +[](WindowInfo*winInfo) {cloneWindow(winInfo);} },
     {Mod4Mask | ShiftMask, XK_x, killAllClones},
 
+    {Mod4Mask , XK_grave, clean},
+
+
 } ;
 Chain* chainBindings[] = {
     new Chain{Mod4Mask | Mod1Mask, XK_d, {startSplitMaster,"splitMaster",NO_PASSTHROUGH},{
@@ -131,17 +146,22 @@ void loadCustomAtoms() {
     LOG(LOG_LEVEL_INFO, "Loading steam atom %d\n", STEAM_GAME);
 }
 bool isSteamGame(WindowID win) {
-    auto reply = loadPropertyFromAtom(win, STEAM_GAME, XCB_ATOM_CARDINAL);
-    return reply?1:0;
+    return getWindowPropertyValue(win, STEAM_GAME, XCB_ATOM_CARDINAL);
 }
-void handleSteamGame(WindowInfo*winInfo) {
-    if(isSteamGame(winInfo->getID())) {
+void handleSteamGame(WindowInfo*winInfo) { if(isSteamGame(winInfo->getID())) {
         winInfo->addMask(FULLSCREEN_MASK );
     }
 }
 
+void configureStatusBar(WindowInfo*winInfo) {
+    if(matchesClass(winInfo, "dzen2")){
+        winInfo->addMask(PRIMARY_MONITOR_MASK|ALWAYS_ON_BOTTOM_MASK);
+        winInfo->setTilingOverrideEnabled(3);
+    }
+}
+
 void loadSettings() {
-    setLogLevel(LOG_LEVEL_DEBUG);
+    setLogLevel(LOG_LEVEL_TRACE);
     LD_PRELOAD_INJECTION = 1;
     SHELL = getenv("SHELL");
     spawnPipe("dzen2 -ta l -fg '#00FF00' -bg '#000000' -dock -fn 'xft:Bitstream Vera Sans Mono:size = 10:antialias = true' -h 20 -e ''");
@@ -165,7 +185,7 @@ void loadSettings() {
                 winInfo->moveToWorkspace(8);
     },"HideSteamNews"});
     getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT(handleSteamGame));
-    getEventRules(CLIENT_MAP_ALLOW).add({+[](WindowInfo*winInfo) {if(matchesClass(winInfo, "dzen2"))winInfo->addMask(PRIMARY_MONITOR_MASK|ALWAYS_ON_BOTTOM_MASK);},"AOB dzen2"});
+    getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT(configureStatusBar));
     getEventRules(CLIENT_MAP_ALLOW).add({+[](WindowInfo*winInfo) {if(winInfo->getType()==ewmh->_NET_WM_WINDOW_TYPE_NOTIFICATION)winInfo->addMask(ALWAYS_ON_TOP_MASK);},"AOT notifications"} );
 
 
@@ -173,7 +193,7 @@ void loadSettings() {
     addResumeCustomStateRules();
     addNoDockFocusRule();
     addIgnoreSmallWindowRule();
-    addIgnoreOverrideRedirectWindowsRule(ADD_REMOVE);
+    //addIgnoreOverrideRedirectWindowsRule(ADD_REMOVE);
 
     // Extensions
     addAutoMPXRules();

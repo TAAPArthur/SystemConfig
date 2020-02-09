@@ -3,8 +3,8 @@
 # invoked on login
 # source from bashrc
 
-[ -x /usr/bin/gnome-keyring-daemon ] && eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
+#[ -x /usr/bin/gnome-keyring-daemon ] && eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+#export SSH_AUTH_SOCK
 
 if [ ! -z "$PS1" ] && [ -z "$SSH_CLIENT$SSH_TTY" ]; then
     shopt -q login_shell && kbdrate -d 100 -r 20
@@ -17,25 +17,23 @@ fi
 
 # global variables
 export ABDUCO_CMD=bash
-export WINDOW_MANAGER=mpxmanager
 export BROWSER=firefox
-export BROWSER_ALT=google-chrome-stable
+export BROWSER_ALT=chromium
 export EDITOR=vim
-export SUSPEND_TIME=30
 export LEDGER_FILE=~/Documents/Accounting/ledger
 export PKG_MANAGER=pacaur
 export QT_STYLE_OVERRIDE=adwaita-dark
+export SUSPEND_TIME=30
+export TASKDATA=~/Documents/Tasks/.task
+export TASKRC=~/Documents/Tasks/.taskrc
 export TERMINAL=terminator
+export WINDOW_MANAGER=mpxmanager
 export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_WAIT_TIME_MS=12000
-export TASKRC=~/Documents/Tasks/.taskrc
-export TASKDATA=~/Documents/Tasks/.task
 
 steam() { sudo -u nonfree steam; }
 export -f steam
-google-chrome() { google-chrome-stable; }
-export -f google-chrome
 
 if [ -f $HOME/.profile ]; then
     source $HOME/.profile

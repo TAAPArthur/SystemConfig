@@ -12,6 +12,7 @@ values=( "X" "Y" "WIDTH" "HEIGHT" )
 for var in "${values[@]}"
 do
     value="${!var}"
+    echo value="${!var}"
     if [[ ! "$value" ]];then
         value=0
     fi
@@ -30,7 +31,7 @@ function subFile(){
         escapedExpr=$(echo $expr | sed -E "s/([\*\/])/\\\\\1/g")
         sed -i -e "s/$escapedExpr/$result/g" $f2
     done < <(sed -n 's/[^\$]*\(\$[A-Z]\+.*\),/\1/p' $f1 |sort |uniq)
-    diff -qN $dir/$f1 $f2 || cat $f2 > $dir/$f1
+    mv $f2 $dir/$f1
 }
 cd "$HOME/SystemConfig/Config/Conky"
 subFile time

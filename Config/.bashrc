@@ -40,6 +40,12 @@ alias ls='ls --color=auto'
 alias ls-new='ls -t | head -n1'
 attach() { NESTED_SHELL_LEVEL= SESSION_NAME="$1:" abduco -A $1; }
 export -f attach
+find-replace() {
+    find . -name "$1" -exec sed -Ei "$2" {} \;
+}
+find-replace-dryrun() {
+    find . -name "$1" -exec sed -En "$2" {} \;
+}
 
 export HISTCONTROL=ignoredups
 export HISTSIZE=

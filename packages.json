@@ -1,4 +1,9 @@
 {
+        "alternatives":[
+            "chromium",
+            "vim",
+            "xorg-server-git"
+        ],
         "basic":[
             "base",
             "bash",
@@ -38,11 +43,13 @@
             "git",
             "global",
             "help2man",
+            "python-pylint",
             "shellcheck",
             "valgrind"
         ],
-        "divers":[
+        "drivers":[
             "broadcom-wl-dkms",
+            "xf86-input-evdev",
             "xf86-video-amdgpu",
             "xf86-video-ati",
             "xf86-video-intel"
@@ -50,6 +57,7 @@
         "extended":[
             "audacity",
             "crunchyroll-guest-pass-finder",
+            "geckodriver",
             "gimp",
             "gparted",
             "ledger",
@@ -71,10 +79,6 @@
             "wii-u-gc-adapter",
             "xorg-xhost"
         ],
-        "alternatives":[
-            "xorg-server-git",
-            "vim"
-        ],
         "laptop":[
             "ibam",
             "xautolock",
@@ -90,8 +94,6 @@
             "dmenu",
             "dzen2",
             "firefox",
-            "gnome-keyring",
-            "libgnome-keyring",
             "mpxmanager",
             "network-manager-applet",
             "networkmanager",
@@ -112,7 +114,6 @@
         "pending":[
             "bind-tools",
             "calf",
-            "google-chrome",
             "grub",
             "gummi",
             "imv",
@@ -121,7 +122,6 @@
             "netctl",
             "picom",
             "rofi",
-            "seahorse",
             "sxiv",
             "tcpdump",
             "traceroute",
@@ -172,6 +172,7 @@
         ],
         "theme":[
             "adwaita-qt",
+            "gnome-themes-extra",
             "lxappearance-gtk3",
             "otf-ipafont",
             "ttf-dejavu",
