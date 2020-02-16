@@ -1,10 +1,7 @@
 #!/bin/bash
 
 # invoked on login
-# source from bashrc
-
-#[ -x /usr/bin/gnome-keyring-daemon ] && eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-#export SSH_AUTH_SOCK
+# sourced from bashrc
 
 if [ ! -z "$PS1" ] && [ -z "$SSH_CLIENT$SSH_TTY" ]; then
     shopt -q login_shell && kbdrate -d 100 -r 20
@@ -18,7 +15,7 @@ fi
 # global variables
 export ABDUCO_CMD=bash
 export BROWSER=firefox
-export BROWSER_ALT=chromium
+export BROWSER_ALT=firefox
 export EDITOR=vim
 export LEDGER_FILE=~/Documents/Accounting/ledger
 export PKG_MANAGER=pacaur

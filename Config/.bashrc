@@ -36,8 +36,11 @@ alias bk='popd'
 alias tg='pushd_builtin'
 alias highlight="grep --color -E -e '^|' -e"
 alias grep='grep --color=auto'
+alias oneline="git log --oneline"
+alias git-branch-recent="git branch --sort=-committerdate |head -n10"
 alias ls='ls --color=auto'
-alias ls-new='ls -t | head -n1'
+ls-new() { ls -Alsth | head -n"$((${*:-1}+1))" | tail -n+2; }
+ddd() { dd bs=4M status=progress $*; }
 attach() { NESTED_SHELL_LEVEL= SESSION_NAME="$1:" abduco -A $1; }
 export -f attach
 find-replace() {
