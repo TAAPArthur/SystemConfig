@@ -1,0 +1,20 @@
+#!/bin/bash
+set -xe
+url=$(bt list | grep -w $(bt active |cut -d$'\t' -f1) |cut -d$'\t' -f3)
+echo $url
+if ! streamlink --can-handle-url "$url "; then
+    notify-send "Cannot handle $url"
+    exit 1
+fi
+
+TMP_FILE=/tmp/stream_link_temp.mp4
+HISTORY_FILE=/tmp/$(basename $0).history
+FILE_NAME=$(basename $url)
+echo "$FILE_NAME" >> $HISTORY_FILE
+if [[ "$1" =~ -*save ]]; then
+    streamlink -o $FILE_NAME -f $url best
+elif [[ "$1" =~ -*reopen ]]; then
+    vlc $TMP_FILE
+else
+    streamlink -Q -o $TMP_FILE -f $url best & (sleep 5s; vlc --fullscreen $TMP_FILE )
+fi
