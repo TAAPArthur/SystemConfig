@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -xe
+
+mirrorList=/etc/pacman.d/mirrorlist
+mirrorListTemp=$mirrorList.bk
+cp $mirrorList $mirrorListTemp
+
+if [[ "$1" == stop ]]; then
+    sed -zi "s|Server=https://archive.archlinux.org[^\n]*\n||g" $mirrorList
+    exit 0
+fi
+relativeTime=${*:-"-1 day"}
+datePath=$(date +%Y/%m/%d -d "$relativeTime")
+
+if head -n2 $mirrorList | grep -q "archive"; then
+    sed -i "s|Server=https://archive.archlinux.org.*|Server=https://archive.archlinux.org/repos/$datePath/\$repo/os/\$arch|" $mirrorListTemp
+    mv $mirrorListTemp $mirrorList
+else
+    echo "Adding archive"
+    echo "Server=https://archive.archlinux.org/repos/$datePath/\$repo/os/\$arch" > $mirrorList
+    cat $mirrorListTemp  >> $mirrorList
+fi
+
