@@ -41,6 +41,8 @@ elif [[ "$1" == "sink-inputs" ]]; then
     saveSinkInput
 elif [[ "$1" == "sink-input-mute" ]]; then
     muteSteam "$2"
+elif [[ "$1" == "clear" ]]; then
+    echo "" > "$inputSinkConfigFile"
 else
     adjustSteam "$1"
 fi
