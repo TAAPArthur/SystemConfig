@@ -70,6 +70,8 @@ end='\001\e[0m\002'
 alias get-branch='branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) && echo -en "$grn""[$branch]"'
 export PS1="$NESTED_SHELL_LEVEL_STR"'$(get-branch)'"$cyn$SESSION_NAME$blu\u@\h$end:"'$( [[ "$_EXIT_CODE" -eq 0 ]] && echo -en $grn || echo -en $red"($_EXIT_CODE)")'"\w$end$ "
 
+stty -ixon
+
 bind '\C-SPACE':menu-complete;
 
 if [ -f $HOME/.profile ]; then
