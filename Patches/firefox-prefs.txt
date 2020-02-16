@@ -1,0 +1,17 @@
+"browser.newtabpage.enabled"   false
+"browser.startup.homepage"  "about:blank"
+"browser.tabs.insertAfterCurrent"   true
+"browser.tabs.remote.separatedMozillaDomains"   ""
+"browser.tabs.warnOnClose"   false
+"devtools.screenshot.audio.enabled"   false
+"devtools.theme"   "dark"
+"dom.disable_open_during_load"  false
+"font.name.monospace.x-western"  "Ubuntu Mono"
+"font.name.sans-serif.x-western"  "Ubuntu Mono"
+"font.name.serif.x-western"  "Ubuntu Mono"
+"font.size.monospace.x-western"  14
+"full-screen-api.ignore-widgets"   true
+"general.smoothScroll"   false
+"general.warnOnAboutConfig"   false
+"ui.systemUsesDarkTheme"   1
+"widget.content.allow-gtk-dark-theme"   true

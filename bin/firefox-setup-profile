@@ -1,0 +1,15 @@
+#!/bin/bash
+FILE=~/SystemConfig/Patches/firefox-prefs.txt
+
+path=$HOME/.mozilla/firefox/*.${1:-default}/prefs.js
+
+set -e
+[ -f $path ]
+
+while read key value; do
+    if grep -q $key $path; then
+        sed -i "s/user_pref($key, .*);/user_pref($key, $value);/g" $path
+    else
+        echo "user_pref($key, $value);" >> $path
+    fi
+done < <(cat $FILE)
