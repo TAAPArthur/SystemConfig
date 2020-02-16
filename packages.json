@@ -117,6 +117,7 @@
             "grub",
             "gummi",
             "imv",
+            "linux-firmware",
             "linux-headers",
             "lxqt-policykit",
             "netctl",
@@ -125,7 +126,9 @@
             "sxiv",
             "tcpdump",
             "traceroute",
-            "viewnior"
+            "viewnior",
+            "vim-spell-en",
+            "xorg-twm"
         ],
         "performance":[
             "acpi",
@@ -170,6 +173,14 @@
             "pulseaudio-alsa",
             "pulseeffects"
         ],
+        "system":[
+            "dmidecode",
+            "man-db",
+            "man-pages",
+            "pacman-contrib",
+            "pkgfile",
+            "pkgstats"
+        ],
         "theme":[
             "adwaita-qt",
             "gnome-themes-extra",
@@ -197,20 +208,16 @@
             "iproute2",
             "jq",
             "links",
-            "man-db",
-            "man-pages",
             "moreutils",
             "ntp",
             "pacgraph",
-            "pacman-contrib",
-            "pkgfile",
-            "pkgstats",
             "sshfs",
             "tar",
             "task",
             "trash-cli",
             "tree",
             "tzupdate",
+            "unzip",
             "wget",
             "zip"
         ],
