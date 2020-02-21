@@ -90,7 +90,7 @@ menu() {
     done
 }
 selectCustom(){
-    selectFromMenu $(jq -r '.custom |  keys | join(" ")' $SYSTEM_CONFIG_DIR/hooks.json |sort) |xargs -I{} echo ".custom{}"
+    selectFromMenu $(jq -r '.custom |  keys | join(" ")' $SYSTEM_CONFIG_DIR/hooks.json |sort) |xargs -I{} echo ".custom.{}"
 }
 listGroups(){
     jq -r '[""] + keys | join(" .")' $SYSTEM_CONFIG_DIR/packages.json |sort

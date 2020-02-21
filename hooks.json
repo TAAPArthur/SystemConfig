@@ -1,7 +1,6 @@
 {
     "custom":{
-        "auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sudo mv ~/SystemConfig/Config/Systemd/tty-autologin.conf /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf",
-        "semi_auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sudo mv ~/SystemConfig/Config/Systemd/tty-default-user.conf /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf"
+        "auto_login":"sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/; sed s/\\$USER/$USER/g ~/SystemConfig/Config/Systemd/tty-default-user.conf | sudo tee /etc/systemd/system/getty@tty1.service.d/tty-autologin.conf"
     },
     "links":{
         "~/SystemConfig/Config/.XCompose":"~/",
