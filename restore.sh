@@ -32,11 +32,41 @@ else
 fi
 echo "Remember to use visudo to allow wheel to use sudo"
 
-sudo pacman -S git vim jq --needed
 
-PATH=/home/$user/.local/bin:$PATH
+if uname -a | grep -q aarch64 && ! pacman -Qq archlinuxarm-keyring; then
+    pacman -S archlinuxarm-keyring
+    pacman-key --populate archlinuxarm
+fi
 
-su $user -P -c "system-manager init"
-su $user -P -c "system-manager link-normal"
-su $user --login -P -c "system-manager install"
-su $user -P -c "system-manager link-root"
+sudo pacman -S git base-devel wget vim jq sudo --needed
+
+[[ -d /home/$user/SystemConfig ]] || (cd /home/$user && su $user -c "git clone https://github.com/TAAPArthur/SystemConfig.git")
+
+TMP_AUR_PATH=/tmp/aur
+if ! which aur ; then
+   su $user -c "
+   mkdir -p $TMP_AUR_PATH
+   cd $TMP_AUR_PATH
+   wget -nc https://aur.archlinux.org/cgit/aur.git/snapshot/aurutils.tar.gz
+   tar -xf aurutils.tar.gz
+   chmod 777 -R $TMP_AUR_PATH
+   (cd aurutils;pwd; makepkg --skippgpcheck -sic)
+   "
+fi
+if ! which pacaur ; then
+   su $user -c "
+   mkdir -p $TMP_AUR_PATH
+    cd $TMP_AUR_PATH
+    aur fetch pacaur
+    aur fetch auracle-git
+   chmod 777 -R $TMP_AUR_PATH
+   which auracle || (cd auracle-git;pwd; makepkg -sic)
+   (cd pacaur;pwd; makepkg -sic)
+   "
+fi
+
+BIN=/home/$user/SystemConfig/bin
+su $user -P -c "$BIN/system-manager init"
+su $user -P -c "$BIN/system-manager link-normal"
+su $user --login -P -c "$BIN/system-manager install"
+su $user -P -c "$BIN/system-manager link-root"

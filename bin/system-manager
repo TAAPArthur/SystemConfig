@@ -40,6 +40,7 @@ CACHE_DIR=~/.cache/system-manager
 CACHE=$CACHE_DIR/install.txt
 mkdir -p $CACHE_DIR
 touch $CACHE
+export makeopts="-A"
 
 displayHelp(){
     SCRIPT_HEADSIZE=$(head -200 ${0} |grep -n "^# END_OF_HEADER" | cut -f1 -d:)
