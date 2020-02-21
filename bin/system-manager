@@ -66,7 +66,7 @@ _link(){
             if [[ ! -d $target ]] && diff -qN $srcFile $target || diff -qN $srcFile $target$(basename $srcFile); then
                 $1 ln -sf $srcFile $target
             else
-                $1 ln -si $srcFile $target
+                $1 ln -si $srcFile $target </dev/tty
             fi
         done < <(eval ls -d $src)
     done < <(jq -r "$key|to_entries|map(\"\(.key) \(.value|tostring)\")|.[]" $SYSTEM_CONFIG_DIR/hooks.json)
