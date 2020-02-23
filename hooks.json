@@ -19,7 +19,7 @@
         "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
         "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/",
         "~/SystemConfig/Config/pam/login":"/etc/pam.d/login",
-        "~/SystemConfig/Hooks/terminator.hook": "/etc/pacman.d/hooks/",
-        "~/SystemConfig/Patches/terminator.patch": "/etc/pacman.d/patches/"
+        "~/SystemConfig/Hooks/*": "/etc/pacman.d/hooks/",
+        "~/SystemConfig/Patches/*": "/etc/pacman.d/patches/"
     }
 }

@@ -1,0 +1,11 @@
+# /etc/pacman.d/hooks/<file>.hook
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Type = Package
+Target = onboard
+
+[Action]
+Description = delegate always_on_top
+When = PostTransaction
+Exec = /usr/bin/patch --ignore-whitespace -d / -p0 --verbose -i /etc/pacman.d/patches/onboard.patch

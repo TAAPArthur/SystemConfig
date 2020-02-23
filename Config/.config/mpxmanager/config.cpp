@@ -2,6 +2,8 @@
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>
 
+//#include <mpxmanager/Extensions/gestures.h>
+//#include <mpxmanager/Extensions/gesture-functions.h>
 #include <mpxmanager/Extensions/mpx.h>
 #include <mpxmanager/Extensions/session.h>
 #include <mpxmanager/Extensions/window-clone.h>
@@ -35,6 +37,18 @@ void clean() {
     }
 }
 
+/*
+GestureBinding gestureBindings[] = {
+    {{GESTURE_TAP},[]{moveAndClick(1);}},
+    {{GESTURE_TAP},[]{moveAndClick(1);}, {.count = 2}},
+    {{GESTURE_NORTH},[]{moveAndClick(4);}, {.mask =TouchMotionMask}},
+    {{GESTURE_SOUTH},[]{moveAndClick(5);}, {.mask =TouchMotionMask}},
+    {{GESTURE_EAST},[]{moveAndClick(6);}, {.mask =TouchMotionMask}},
+    {{GESTURE_WEST},[]{moveAndClick(7);}, {.mask =TouchMotionMask}},
+    {{GESTURE_EAST},[]{shiftFocus(UP);}, {.fingers = 2}},
+    {{GESTURE_WEST},[]{shiftFocus(DOWN);}, {.fingers = 2}},
+};
+*/
 Binding customBindings[] = {
     {Mod4Mask, XK_F6, {raiseOrRun, "arandr"} },
     {0, XF86XK_Display, {spawn, "autorandr -c"} },
@@ -82,6 +96,8 @@ Binding customBindings[] = {
     {ShiftMask, XF86XK_AudioRaiseVolume, {spawn, "pamixer --default-source -i 1"} },
     {ShiftMask, XF86XK_AudioMute, {spawn, "pamixer -t"} },
     {0, XF86XK_AudioMicMute, {spawn, "pamixer --default-source -t"} },
+    {Mod3Mask, XF86XK_AudioLowerVolume, {spawn, "omnivolctrl clear"} },
+    {Mod3Mask, XF86XK_AudioRaiseVolume, {spawn, "omnivolctrl clear"} },
     {Mod4Mask, XF86XK_AudioLowerVolume, {spawn, "omnivolctrl -1%"} },
     {Mod4Mask, XF86XK_AudioRaiseVolume, {spawn, "omnivolctrl +1%"} },
     {Mod4Mask, XF86XK_AudioMute, {spawn, "omnivolctrl sink-input-mute toggle"} },
@@ -153,16 +169,19 @@ void handleSteamGame(WindowInfo*winInfo) { if(isSteamGame(winInfo->getID())) {
     }
 }
 
-void configureStatusBar(WindowInfo*winInfo) {
+void configureWindowsByName(WindowInfo*winInfo) {
     if(matchesClass(winInfo, "dzen2")){
         winInfo->addMask(PRIMARY_MONITOR_MASK|ALWAYS_ON_BOTTOM_MASK);
         winInfo->setTilingOverrideEnabled(3);
     }
+    if(matchesClass(winInfo, "Onboard")){
+        winInfo->addMask(ALWAYS_ON_TOP_MASK);
+    }
 }
 
 void loadSettings() {
-    setLogLevel(LOG_LEVEL_TRACE);
     LD_PRELOAD_INJECTION = 1;
+    setLogLevel(LOG_LEVEL_DEBUG);
     SHELL = getenv("SHELL");
     spawnPipe("dzen2 -ta l -fg '#00FF00' -bg '#000000' -dock -fn 'xft:Bitstream Vera Sans Mono:size = 10:antialias = true' -h 20 -e ''");
 
@@ -171,6 +190,7 @@ void loadSettings() {
         getDeviceBindings().add(b);
     for(Chain* b : chainBindings)
         getDeviceBindings().add(b);
+
 
     getWorkspace(8)->setName("7Gaming");
     getWorkspace(8)->addMask(FLOATING_MASK);
@@ -185,7 +205,7 @@ void loadSettings() {
                 winInfo->moveToWorkspace(8);
     },"HideSteamNews"});
     getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT(handleSteamGame));
-    getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT(configureStatusBar));
+    getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT(configureWindowsByName));
     getEventRules(CLIENT_MAP_ALLOW).add({+[](WindowInfo*winInfo) {if(winInfo->getType()==ewmh->_NET_WM_WINDOW_TYPE_NOTIFICATION)winInfo->addMask(ALWAYS_ON_TOP_MASK);},"AOT notifications"} );
 
 
@@ -201,6 +221,11 @@ void loadSettings() {
     startAutoUpdatingClones();
     addDefaultXMouseControlBindings();
     addStartXMouseControlRule();
+    /*
+    for(GestureBinding& b : gestureBindings)
+        getGestureBindings().add(new GestureBinding(b));
+    getEventRules(X_CONNECTION).add([]{initGestureMaster();enableGestures();});
+    */
 
     addAllDebugRules();
 }
