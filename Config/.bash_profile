@@ -28,6 +28,7 @@ export WINDOW_MANAGER=mpxmanager
 export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
 export XSECURELOCK_SHOW_DATETIME=1
 export XSECURELOCK_WAIT_TIME_MS=12000
+export MOZ_USE_XINPUT2=1
 
 steam() { sudo -u nonfree steam; }
 export -f steam
