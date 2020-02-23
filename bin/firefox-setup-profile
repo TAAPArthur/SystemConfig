@@ -1,5 +1,5 @@
 #!/bin/bash
-FILE=~/SystemConfig/Patches/firefox-prefs.txt
+FILE=~/SystemConfig/PseudoPatches/firefox-prefs.txt
 
 path=$HOME/.mozilla/firefox/*.${1:-default}/prefs.js
 
