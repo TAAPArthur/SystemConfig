@@ -1,4 +1,4 @@
---- notebook.py.orig	2019-11-16 05:13:49.269253733 -0500
+--- /dev/null/notebook.py.orig	2019-11-16 05:13:49.269253733 -0500
 +++ /usr/lib/python2.7/site-packages/terminatorlib/notebook.py	2019-11-16 05:28:32.139224387 -0500
 @@ -281,7 +281,7 @@
          if metadata and metadata.has_key('tabnum'):
@@ -6,6 +6,6 @@
          else:
 -            tabpos = -1
 +            tabpos = self.get_current_page() + 1
- 
+
          label = TabLabel(self.window.get_title(), self)
          if metadata and metadata.has_key('label'):
