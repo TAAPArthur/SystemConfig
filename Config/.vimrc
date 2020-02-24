@@ -75,6 +75,7 @@ let g:ale_cpp_gcc_options = '-x c++ -std=gnu++17 -lstdc++ -Werror -Wextra -Wall 
 let g:ale_c_gcc_options = '-std=gnu11 -Werror -Wextra -Wall -Wincompatible-pointer-types -Wno-parentheses -Wno-sign-compare -Wno-missing-braces -Wno-missing-field-initializers -Wno-cast-function-type -D_DEFAULT_SOURCE'
 let g:ale_java_javac_options = '-Xlint:all'
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_enter = 0
 let g:ale_fixers = {'python': ['autopep8']}
 let g:ale_python_pylint_options = "-E"
 let g:ale_sh_shellcheck_exclusions = "SC2068,SC2076"
@@ -102,7 +103,7 @@ set tw=0
 
 command -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\|:\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\|?\|:\)\([^ ,/!+=\-<>]\)/\1 \2/ge
 command GenTags !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
-command GenTagspp !g++ -M **/*.{cpp,h} | grep -E "^\s*/" | sed -e 's/[\\ ]/\n/g' -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -u | ctags -R -L - --c++-kinds=+p
+command GenTagspp !g++ -M **/*.{cpp,h} | grep -E "^\s*/" | sed -e 's/[\\ ]/\n/g' -e '/^$/d' -e '/\.o:[ \t]*$/d' | grep "^/" | sort -u | ctags -R -L - --c++-kinds=+p
 command -bar -range FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
 command -bar -range Strip %s/\s\+$//ge
 
@@ -136,7 +137,8 @@ noremap L $
 nnoremap gI `.
 
 set noshowmode
-au CursorMovedI *.cpp,*.java,.*.sh,*.md PreviewSignature
+au CursorHoldI *.cpp,*.java,.*.sh,*.md PreviewSignature
+au InsertEnter *.cpp,*.java,.*.sh,*.md PreviewSignature
 "inoremap ( (<c-\><c-o>:PreviewSignature<cr>
 "inoremap hh <c-\><c-o>:PreviewSignature<cr>
 
