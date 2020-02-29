@@ -49,6 +49,11 @@ GestureBinding gestureBindings[] = {
     {{GESTURE_WEST},[]{shiftFocus(DOWN);}, {.fingers = 2}},
 };
 */
+
+Binding phoneBindings[] = {
+    {0, XF86XK_PowerOff, {spawn, "systemctl-suspend"} },
+};
+
 Binding customBindings[] = {
     {Mod4Mask, XK_F6, {raiseOrRun, "arandr"} },
     {0, XF86XK_Display, {spawn, "autorandr -c"} },
@@ -214,6 +219,11 @@ void loadSettings() {
     addNoDockFocusRule();
     addIgnoreSmallWindowRule();
     //addIgnoreOverrideRedirectWindowsRule(ADD_REMOVE);
+
+
+    for(Binding& b : phoneBindings)
+        getDeviceBindings().add(b);
+
 
     // Extensions
     addAutoMPXRules();
