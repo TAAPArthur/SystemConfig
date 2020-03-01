@@ -77,7 +77,8 @@ Binding customBindings[] = {
     {0, XK_Print, {spawn, "maim -s | xclip -selection clipboard -t image/png"} },
     {ShiftMask, XK_Print, {spawn, "maim -s /tmp/$(date +%s).png"} },
     {Mod4Mask, XK_Print, {spawn, "maim -i $_WIN_ID| xclip -selection clipboard -t image/png"} },
-    {Mod4Mask | ShiftMask, XK_Print, {spawn, "maim -i | xclip -selection clipboard -t image/png"} },
+    {Mod4Mask | ShiftMask, XK_Print, {spawn, "maim -i $_WIN_ID /tmp/$(date +%s).png"} },
+    {ControlMask, XK_Print, {spawn, "maim -i | xclip -selection clipboard -t image/png"} },
 
     {0, XF86XK_Eject, {spawn, "dmenu-pycalc"} },
     {0, XF86XK_Calculator, {spawn, "dmenu-pycalc"} },
