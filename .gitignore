@@ -2,5 +2,5 @@
 Config/vim-spell-programs.add
 .xprofile
 .profile
-mpxmanager/mpxmanager
+Config/.config/mpxmanager/mpxmanager
 *.o
