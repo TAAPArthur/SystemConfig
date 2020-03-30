@@ -1,2 +1,0 @@
-pgrep conky && pkill conky
-(conky -dc ~/.config/conky/.conkyrc && conky -dc ~/.config/conky/time) &>/dev/null
