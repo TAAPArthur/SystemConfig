@@ -58,7 +58,10 @@ cpu_freq_formatted(const char*fmt) {
 
 const char * cpu_perc(const char*fmt)
 {
-    long double a[7], sum;
+    long double a[7];
+    long work, total;
+    static long prevWork;
+    static long prevTotal;
 
     /* cpu user nice system idle iowait irq softirq */
     if (pscanf("/proc/stat", "%*s %Lf %Lf %Lf %Lf %Lf %Lf %Lf",
@@ -67,10 +70,14 @@ const char * cpu_perc(const char*fmt)
         return NULL;
     }
 
-    sum = (a[0] + a[1] + a[2] + a[3] + a[4] + a[5] + a[6]);
+    work = (a[0] + a[1] + a[2] + a[5] + a[6]);
+    total = (work + a[3] + a[4]);
 
-    sprintf(buffer, fmt, sum==0?0:(int)(100 *
-                    (a[0] + a[1] + a[2] + a[5] + a[6]) / sum));
+    int percent = !prevTotal||total == prevTotal?0:(int)(100 * (work - prevWork) / (double)(total - prevTotal));
+
+    sprintf(buffer, fmt, percent);
+    prevWork = work;
+    prevTotal = total;
     return buffer;
 }
 
