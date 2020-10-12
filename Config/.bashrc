@@ -50,6 +50,12 @@ find-replace-dryrun() {
     find . -name "$1" -exec sed -En "$2" {} \;
 }
 
+
+
+title(){
+    echo -ne "\033]0;$*\007"
+}
+
 export HISTCONTROL=ignoredups
 export HISTSIZE=
 export HISTFILESIZE=               # big big history
@@ -57,7 +63,6 @@ export HISTTIMEFORMAT="[%F %T] "
 shopt -s histappend
 #export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 #export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-export PROMPT_COMMAND='_EXIT_CODE=$?;history -a;'
 export NESTED_SHELL_LEVEL=$((${NESTED_SHELL_LEVEL:--1}+1));
 
 red='\001\e[1;31m\002'
@@ -65,11 +70,13 @@ grn='\001\e[1;32m\002'
 blu='\001\e[1;34m\002'
 cyn='\001\e[1;36m\002'
 end='\001\e[0m\002'
-[[ "$NESTED_SHELL_LEVEL" -eq 0 ]] || NESTED_SHELL_LEVEL_STR="$cyn$NESTED_SHELL_LEVEL$end"
+[[ "$NESTED_SHELL_LEVEL" -eq 0 ]] || NESTED_SHELL_LEVEL_STR="$NESTED_SHELL_LEVEL"
 #interactive shell specific variables
 alias get-branch='branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) && echo -en "$grn""[$branch]"'
-export PS1="$NESTED_SHELL_LEVEL_STR"'$(get-branch)'"$cyn$SESSION_NAME$blu\u@\h$end:"'$( [[ "$_EXIT_CODE" -eq 0 ]] && echo -en $grn || echo -en $red"($_EXIT_CODE)")'"\w$end$ "
+export PS1="$cyn$NESTED_SHELL_LEVEL_STR$end"'$(get-branch)'"$cyn$SESSION_NAME$blu\u@\h$end:"'$( [[ "$_EXIT_CODE" -eq 0 ]] && echo -en $grn || echo -en $red"($_EXIT_CODE)")'"\w$end$ "
 
+export _oldTile=""
+export PROMPT_COMMAND='_EXIT_CODE=$?;history -a;export T=$NESTED_SHELL_LEVEL_STR$SESSION_NAME$__CD; [ "$T" == "$_oldTile" ] || title $T '
 stty -ixon
 
 bind '\C-SPACE':menu-complete;
