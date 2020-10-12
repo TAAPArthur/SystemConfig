@@ -4,3 +4,7 @@ Config/vim-spell-programs.add
 .profile
 Config/.config/mpxmanager/mpxmanager
 *.o
+*tags
+*TAGS
+GPATH
+*.last_compiled_verision
