@@ -5,7 +5,7 @@
     "links":{
         "~/SystemConfig/Config/.XCompose":"~/",
         "~/SystemConfig/Config/.astylerc":"~/",
-        "~/SystemConfig/Config/bash_completion.d/*":".local/share/bash-completion/completions/",
+        "~/SystemConfig/Config/bash_completion.d/*":"~/.local/share/bash-completion/completions/",
         "~/SystemConfig/Config/.bash_profile":"~/",
         "~/SystemConfig/Config/.bashrc":"~/",
         "~/SystemConfig/Config/.config/*":"~/.config/",
