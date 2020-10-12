@@ -129,6 +129,15 @@ endfunction
 map ;; <C-w>T
 noremap <Space> <C-w>w
 
+noremap <leader>cd :lcd %:p:h<CR>
+noremap <leader>lcd :cd %:p:h<CR>
+
+noremap <leader>yy ::w !xsel -i -b<CR>
+noremap <leader>pp :r!xsel -b<CR>
+noremap <leader>PP :r!xsel -p<CR>
+
+inoremap <c-z> <esc>:suspend<cr>
+
 
 noremap H ^
 noremap L $
