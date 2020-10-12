@@ -1,0 +1,11 @@
+#!/bin/bash
+set -xe
+set -o pipefail
+cmd=${@:-maim -s}
+cd $PICTURES_DIR
+
+TEMP_FILE=/tmp/$(date +%s).png
+$cmd $TEMP_FILE
+fileName=$(zenity --file-selection --save --confirm-overwrite)
+mv $TEMP_FILE $fileName
+cat $fileName | xclip -selection clipboard -t image/png
