@@ -9,7 +9,10 @@ fi
 
 [[ -f /usr/share/doc/pkgfile/command-not-found.bash ]] && source /usr/share/doc/pkgfile/command-not-found.bash
 
+export __CD=
 
+alias _update_cd_cache='__CD=$(pwd | sed -E "s|$HOME|~|g")'
+_update_cd_cache
 pushd()
 {
   if [ $# -eq 0 ]; then
@@ -19,6 +22,7 @@ pushd()
   fi
 
   builtin pushd "${DIR}" > /dev/null
+  _update_cd_cache
 }
 
 pushd_builtin()
@@ -28,6 +32,7 @@ pushd_builtin()
 popd()
 {
   builtin popd > /dev/null
+  _update_cd_cache
 }
 
 #interactive shell specific aliases
