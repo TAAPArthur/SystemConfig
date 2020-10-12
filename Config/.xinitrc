@@ -1,6 +1,5 @@
 #!/bin/bash
-
-[ -x /usr/bin/nitrogen ] && nitrogen --restore
+exec > ~/.xinitrc.out 2> ~/.xinitrc.err
 
 [ -x /usr/bin/xsetroot ] && xsetroot -cursor_name left_ptr
 
@@ -17,13 +16,17 @@ fi
 
 [ -x /usr/bin/dunst ] && dunst &
 
-[ -x /usr/bin/trayer ] && trayer --edge top --align right --height 19 --widthtype pixel --width 90 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0 --monitor primary &
+[ -x /usr/bin/trayer ] && trayer --edge top --align right --height 18 --widthtype pixel --width 90 --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0 --monitor primary &
 
-[ -x /usr/bin/clip-history ] && clip-history monitor &>/dev/null &
+[ -x /usr/bin/clip-history ] && clip-history monitor &
 
 [ -x /usr/bin/pasystray ] && pasystray --notify=all &
-[ -x /usr/bin/nm-applet ] && nm-applet >/dev/null &
+[ -x /usr/bin/nm-applet ] && nm-applet &
 [[ -x /usr/bin/xhost && -x /usr/bin/steam ]] && xhost +
+[ -x /usr/bin/dzen2 ] && mystatusbar | status-bar -title-name "mystatusbar" &
+#[ -x /usr/bin/dzen2 ] && mystatusbar | dzen2 -ta l -fg '#00FF00' -bg '#000000' -dock -fn 'xft:Bitstream Vera Sans Mono:size = 10:antialias = true' -h 18 -title-name "mystatusbar" &
+
+[ -x /usr/bin/xmouse-control ] && xmouse-control &
 
 
 #vim -c "mkspell! ~/SystemConfig/Config/vim-spell-programs.add" +qall

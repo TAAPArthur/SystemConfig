@@ -44,6 +44,10 @@ alias grep='grep --color=auto'
 alias oneline="git log --oneline"
 alias git-branch-recent="git branch --sort=-committerdate |head -n10"
 alias ls='ls --color=auto'
+status-bar() {
+    dzen2 -ta l -fg '#00FF00' -bg '#000000' -dock -fn 'Liberation Mono Regular:size = 10' -h 18 -e '' $*
+}
+export -f status-bar
 ls-new() { ls -Alsth | head -n"$((${*:-1}+1))" | tail -n+2; }
 ddd() { dd bs=4M status=progress $*; }
 attach() { NESTED_SHELL_LEVEL= SESSION_NAME="$1:" abduco -A $1; }
