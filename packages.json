@@ -1,18 +1,26 @@
 {
         "alternatives":[
-            "chromium",
-            "vim",
             "xorg-server-git"
+        ],
+        "android":[
+            "anbox-bridge",
+            "anbox-git",
+            "anbox-image",
+            "anbox-modules-dkms-git"
         ],
         "basic":[
             "base",
             "bash",
             "dhcpcd",
-            "gvim",
+            "vim",
             "less",
             "less",
             "linux",
             "systemd"
+        ],
+        "bloat":[
+            "firefox",
+            "vlc"
         ],
         "bluetooth":[
             "bluez-plugins",
@@ -67,7 +75,6 @@
             "syncthing-gtk",
             "system-config-printer",
             "transmission-gtk",
-            "vlc",
             "xpra"
         ],
         "gaming":[
@@ -85,30 +92,21 @@
             "xsecurelock",
             "xss-lock"
         ],
-        "normal":[
+        "manga":[
+            "komikku"
+        ],
+        "network_monitor":[
+            "nmap",
+            "wireshark-qt"
+        ],
+        "applications": [
             "arandr",
-            "aurutils",
-            "bash-completion",
-            "cronie",
-            "dmenu",
-            "dzen2",
-            "firefox",
-            "mpxmanager",
-            "network-manager-applet",
-            "networkmanager",
-            "nitrogen",
-            "numlockx",
-            "openssh",
-            "pacaur",
-            "python-pip",
-            "terminator",
-            "trayer",
-            "vundle-git",
-            "xorg-server",
-            "xorg-server-xvfb",
-            "xorg-xinit",
-            "xorg-xmodmap",
-            "xreader"
+            "mpv",
+            "st",
+            "sxiv",
+            "vimb",
+            "zathura",
+            "zathura-pdf-poppler"
         ],
         "pending":[
             "bind-tools",
@@ -120,14 +118,12 @@
             "linux-headers",
             "lxqt-policykit",
             "netctl",
-            "picom",
             "rofi",
-            "sxiv",
+            "tabbed",
             "tcpdump",
             "traceroute",
             "viewnior",
-            "vim-spell-en",
-            "xorg-twm"
+            "vim-spell-en"
         ],
         "performance":[
             "acpi",
@@ -145,6 +141,15 @@
             "testdisk",
             "tiobench",
             "xsensors"
+        ],
+        "phone":[
+        ],
+        "phone-pending":[
+            "geoclue",
+            "iio-sensor-proxy"
+        ],
+        "reverse_eng":[
+            "cfr"
         ],
         "server":[
             "certbot",
@@ -176,6 +181,7 @@
             "dmidecode",
             "man-db",
             "man-pages",
+            "pacaur",
             "pacman-contrib",
             "pkgfile",
             "pkgstats"
@@ -193,7 +199,13 @@
             "xorg-xfontsel"
         ],
         "utility":[
+            "python-pip",
+            "networkmanager",
+            "openssh",
             "abduco",
+            "aurutils",
+            "bash-completion",
+            "cronie",
             "android-tools",
             "arch-install-scripts",
             "bc",
@@ -207,12 +219,17 @@
             "iproute2",
             "jq",
             "links",
+            "lsof",
             "moreutils",
             "ntp",
             "pacgraph",
+            "python-argcomplete",
             "sshfs",
+            "strace",
             "tar",
             "task",
+            "tcc",
+            "tpm",
             "trash-cli",
             "tree",
             "tzupdate",
@@ -226,10 +243,17 @@
             "clip-history",
             "cups",
             "cups-pdf",
+            "dmenu",
             "dunst",
+            "dzen2",
             "libnotify",
             "maim",
+            "mpxmanager",
+            "network-manager-applet",
             "notification-daemon",
+            "numlockx",
+            "trayer",
+            "vundle-git",
             "xclip",
             "xnee",
             "xorg-xinput",
@@ -242,7 +266,8 @@
             "xvkbd"
         ],
         "video":[
-            "streamlink"
+            "mpv-git",
+            "youtube-dl"
         ],
         "virtualization":[
             "anbox-bridge",
@@ -257,12 +282,17 @@
         "vpn":[
             "openconnect"
         ],
-        "x_debugging":[
+        "x_11":[
             "evtest",
             "wmctrl",
+            "xorg-server",
+            "xorg-server-xvfb",
+            "xorg-xinit",
+            "xorg-xmodmap",
             "xcolor",
             "xdotool",
             "xorg-xev",
+            "xorg-xkill",
             "xorg-xprop",
             "xorg-xwininfo"
         ]

@@ -1,0 +1,10 @@
+# /etc/pacman.d/hooks/<file>.hook
+[Trigger]
+Operation = Install
+Type = Package
+Target = python-argcomplete
+
+[Action]
+Description = Setup python argcomplete globally
+When = PostTransaction
+Exec = activate-global-python-argcomplete --user
