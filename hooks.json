@@ -18,7 +18,6 @@
         "~/SystemConfig/Config/bash_completion.d/*":"/etc/bash_completion.d/",
         "~/SystemConfig/Config/Keyboard/90-custom-kbd.conf":"/etc/X11/xorg.conf.d/",
         "~/SystemConfig/Config/Keyboard/taap": "/usr/share/X11/xkb/symbols/",
-        "~/SystemConfig/Hooks/*": "/etc/pacman.d/hooks/",
-        "~/SystemConfig/Patches/*": "/etc/pacman.d/patches/"
+        "~/SystemConfig/Hooks/*": "/etc/pacman.d/hooks/"
     }
 }
