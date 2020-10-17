@@ -1,0 +1,13 @@
+pkgname=taap-keyboard
+pkgver=1.0
+pkgrel=1
+pkgdesc='custom keyboard layout'
+arch=('any')
+license=('MIT')
+source=( "90-custom-kbd.conf" taap)
+package() {
+    install -D -t /etc/X11/xorg.conf.d/ 90-custom-kbd.conf
+    install -D -t /etc/X11/xorg.conf.d/ 90-custom-kbd.conf
+    install -D -t /usr/share/X11/xkb/symbols/ taap
+}
+
