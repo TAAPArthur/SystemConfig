@@ -1,26 +1,29 @@
 {
-        "alternatives":[
-            "xorg-server-git"
+        "applications":[
+            "crunchyroll-guest-pass-finder",
+            "gimp",
+            "ledger",
+            "simple-scan",
+            "sqlitebrowser",
+            "syncthing-gtk",
+            "transmission-gtk",
+            "xpra"
         ],
-        "android":[
-            "anbox-bridge",
-            "anbox-git",
-            "anbox-image",
-            "anbox-modules-dkms-git"
+        "minimal":[
+            "myinit",
+            "sbase-git",
+            "ubase-git",
+            "iproute2",
+            "bash-static",
+            "less",
+            "vundle-git",
+            "vim"
         ],
         "basic":[
-            "base",
-            "bash",
-            "dhcpcd",
-            "vim",
-            "less",
-            "less",
             "linux",
-            "systemd"
-        ],
-        "bloat":[
-            "firefox",
-            "vlc"
+            "hwdetect",
+            "arch-install-scripts",
+            "iwd"
         ],
         "bluetooth":[
             "bluez-plugins",
@@ -36,6 +39,15 @@
             "libdvdcss",
             "libdvdnav"
         ],
+        "core_apps": [
+            "arandr",
+            "mpv-git",
+            "st",
+            "sxiv",
+            "vimb",
+            "zathura",
+            "zathura-pdf-poppler"
+        ],
         "desktop":[
             "mdadm"
         ],
@@ -46,13 +58,14 @@
             "cscope",
             "ctags",
             "doxygen",
-            "gcc",
             "gdb",
             "git",
             "global",
             "help2man",
+            "linux-headers",
             "python-pylint",
             "shellcheck",
+            "tcc",
             "valgrind"
         ],
         "drivers":[
@@ -61,21 +74,6 @@
             "xf86-video-amdgpu",
             "xf86-video-ati",
             "xf86-video-intel"
-        ],
-        "extended":[
-            "audacity",
-            "crunchyroll-guest-pass-finder",
-            "geckodriver",
-            "gimp",
-            "gparted",
-            "ledger",
-            "pitivi",
-            "simple-scan",
-            "sqlitebrowser",
-            "syncthing-gtk",
-            "system-config-printer",
-            "transmission-gtk",
-            "xpra"
         ],
         "gaming":[
             "dolphin-emu",
@@ -87,35 +85,19 @@
             "xorg-xhost"
         ],
         "laptop":[
-            "ibam",
             "xautolock",
             "xsecurelock",
             "xss-lock"
-        ],
-        "manga":[
-            "komikku"
         ],
         "network_monitor":[
             "nmap",
             "wireshark-qt"
         ],
-        "applications": [
-            "arandr",
-            "mpv",
-            "st",
-            "sxiv",
-            "vimb",
-            "zathura",
-            "zathura-pdf-poppler"
-        ],
         "pending":[
             "bind-tools",
             "calf",
             "grub",
-            "gummi",
             "imv",
-            "linux-firmware",
-            "linux-headers",
             "lxqt-policykit",
             "netctl",
             "rofi",
@@ -127,11 +109,9 @@
         ],
         "performance":[
             "acpi",
-            "gnome-disk-utility",
             "hardinfo",
             "hddtemp",
             "hdparm",
-            "hwdetect",
             "intel-ucode",
             "iotop",
             "lshw",
@@ -153,14 +133,8 @@
         ],
         "server":[
             "certbot",
-            "crunchyroll-guest-pass-finder",
-            "lighttpd",
-            "mariadb",
             "openssh",
             "pacgraph",
-            "php-cgi",
-            "phpmyadmin",
-            "sshguard",
             "syncthing",
             "syncthing-relaysrv"
         ],
@@ -178,7 +152,7 @@
             "pulseeffects"
         ],
         "system":[
-            "dmidecode",
+            "linux-firmware",
             "man-db",
             "man-pages",
             "pacaur",
@@ -199,16 +173,12 @@
             "xorg-xfontsel"
         ],
         "utility":[
-            "python-pip",
-            "networkmanager",
-            "openssh",
             "abduco",
             "aurutils",
             "bash-completion",
-            "cronie",
-            "android-tools",
-            "arch-install-scripts",
             "bc",
+            "dnsmasq",
+            "cronie",
             "espeak",
             "exfat-utils",
             "expac",
@@ -216,14 +186,17 @@
             "gt5",
             "gvfs",
             "indent-sort",
+            "youtube-dl",
             "iproute2",
             "jq",
             "links",
             "lsof",
             "moreutils",
             "ntp",
+            "openssh",
             "pacgraph",
             "python-argcomplete",
+            "python-pip",
             "sshfs",
             "strace",
             "tar",
@@ -241,19 +214,13 @@
             "autorandr",
             "brightnessctl",
             "clip-history",
-            "cups",
-            "cups-pdf",
             "dmenu",
-            "dunst",
             "dzen2",
             "libnotify",
             "maim",
             "mpxmanager",
-            "network-manager-applet",
-            "notification-daemon",
             "numlockx",
             "trayer",
-            "vundle-git",
             "xclip",
             "xnee",
             "xorg-xinput",
@@ -261,38 +228,27 @@
             "xorg-xsetroot",
             "xrandr-invert-colors",
             "xsane-xrandr",
-            "xsel",
             "xtrlock",
             "xvkbd"
         ],
-        "video":[
-            "mpv-git",
-            "youtube-dl"
-        ],
         "virtualization":[
-            "anbox-bridge",
-            "anbox-git",
-            "anbox-image",
-            "anbox-modules-dkms-git",
-            "qemu",
-            "virtualbox",
-            "virtualbox-ext-oracle",
-            "virtualbox-guest-utils"
+            "alma",
+            "qemu"
         ],
         "vpn":[
             "openconnect"
         ],
-        "x_11":[
+        "x11":[
             "evtest",
             "wmctrl",
-            "xorg-server",
-            "xorg-server-xvfb",
-            "xorg-xinit",
-            "xorg-xmodmap",
             "xcolor",
             "xdotool",
+            "xorg-server",
+            "xorg-server-xvfb",
             "xorg-xev",
+            "xorg-xinit",
             "xorg-xkill",
+            "xorg-xmodmap",
             "xorg-xprop",
             "xorg-xwininfo"
         ]
