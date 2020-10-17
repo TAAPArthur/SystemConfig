@@ -98,6 +98,21 @@ augroup resCur
   autocmd BufReadPost * call setpos(".", getpos("'\""))
 augroup END
 
+" Don't enter insert mode for non-modifable files
+autocmd BufRead * let &l:modifiable = !&readonly
+
+if empty($SESSION_NAME)
+    " remove temp file on save
+    autocmd BufWritePost * silent execute "!rm -f " . expand("~/.cache/backup/%:t")
+    " Auto backup on leaving insert
+    function! UpdateFile()
+        silent execute "update! " . expand("~/.cache/backup/%:t")
+    endfunction
+    au InsertLeave * call UpdateFile()
+endif
+" Command to recover file created with above
+command! Recover execute "1,$d|0r" expand("~/.cache/backup/%:t")
+
 
 set tw=0
 
