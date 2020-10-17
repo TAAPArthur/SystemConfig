@@ -1,0 +1,214 @@
+#!/bin/sh
+
+minimal=(
+    bash-static
+    iproute2
+    less
+    myinit
+    sbase-git
+    ubase-git
+    vim
+    vundle-git
+)
+
+basic=(
+    ${minimal[@]}
+    linux
+    dnsmasq
+    hwdetect
+    arch-install-scripts
+    openssh
+    iwd
+    pacaur
+    man-db
+    man-pages
+    pkgfile
+)
+X11=(
+    evtest
+    wmctrl
+    xcolor
+    xdotool
+    xorg-server
+    xorg-server-xvfb
+    xorg-xev
+    xorg-xinit
+    xorg-xkill
+    xorg-xmodmap
+    xorg-xprop
+    xorg-xwininfo
+)
+graphical=(
+    ${X11[@]}
+    autorandr
+    brightnessctl
+    clip-history
+    dmenu
+    dzen2
+    libnotify
+    maim
+    mpxmanager
+    numlockx
+    trayer
+    xclip
+    xnee
+    xorg-xinput
+    xorg-xrandr
+    xorg-xsetroot
+    xrandr-invert-colors
+    xsane-xrandr
+    xtrlock
+    xorg-xhost
+    xvkbd
+)
+
+sound=(
+    alsa-utils
+    libmicrodns
+    lsp-plugins
+    pamixer
+    paprefs
+    pasystray-gtk3-git
+    pavucontrol
+    protobuf
+    pulseaudio
+    pulseaudio-alsa
+    pulseeffects
+)
+theme=(
+    adwaita-qt
+    gnome-themes-extra
+    lxappearance-gtk3
+    otf-ipafont
+    ttf-dejavu
+    ttf-freefont
+    ttf-liberation
+    ttf-ubuntu-font-family
+    xorg-fonts-misc
+    xorg-xfontsel
+)
+utils=(
+    abduco
+    aurutils
+    bash-completion
+    bc
+    cronie
+    espeak
+    exfat-utils
+    expac
+    graphviz
+    gt5
+    indent-sort
+    youtube-dl
+    links
+    lsof
+    moreutils
+    ntp
+    pacgraph
+    python-argcomplete
+    python-pip
+    sshfs
+    strace
+    tar
+    task
+    tcc
+    tpm
+    trash-cli
+    tree
+    tzupdate
+    unzip
+    wget
+    zip
+)
+simple=(
+    ${basic[@]}
+    ${graphical[@]}
+    ${theme[@]}
+    ${sound[@]}
+    linux-firmware
+    pacman-contrib
+    pkgstats
+    arandr
+    mpv-git
+    st
+    sxiv
+    vimb
+    zathura
+    zathura-pdf-poppler
+)
+apps=(
+    crunchyroll-guest-pass-finder
+    gimp
+    ledger
+    simple-scan
+    syncthing-gtk
+    transmission-gtk
+    xpra
+    syncthing
+)
+devel=(
+    astyle
+    autopep8
+    cloc
+    cscope
+    ctags
+    doxygen
+    gdb
+    git
+    global
+    help2man
+    linux-headers
+    python-pylint
+    shellcheck
+    tcc
+    valgrind
+)
+extra=(
+    nmap
+    wireshark-qt
+    xautolock
+    xsecurelock
+    xss-lock
+)
+normal=(
+    ${simple[@]}
+    ${apps[@]}
+    ${devel[@]}
+)
+gaming=(
+    dolphin-emu
+    lib32-libpulse
+    playonlinux
+    snes9x-gtk
+    steam
+    wii-u-gc-adapter
+)
+virt=( alma qemu)
+vpn=(openconnect)
+large=(${normal[@]} ${gaming[@]})
+server=(
+    ${expected[@]}
+    syncthing-relaysrv
+    certbot
+)
+ALL=( minimal basic X11 server simple normal large)
+
+
+case "$1" in
+    list)
+        echo ${ALL[@]}
+        ;;
+    list-all)
+        for i in ${ALL[@]}; do
+            eval echo "\${${i}[@]}"
+        done
+        ;;
+    get)
+        shift
+        for arg in $@; do
+            for i in ${ALL[@]}; do
+                [ "$i" == "$arg" ] && eval echo "\${${i}[@]}"
+            done
+        done
+        ;;
+esac
