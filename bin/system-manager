@@ -7,12 +7,8 @@
 #%
 #%
 #%Action:
-#%    custom                        Interactively let the user to select which scripts to execute from .custom in hooks.json
-#%    init                          Executes the scripts in the .scripts in hooks.json
 #%    install [groups]              Install the user specified groups. If blank defaults to normal
 #%    link                          Link files as specified in .links and .links_root. If the target exists and the files aren't the same, the user will be asked to confirm.
-#%    link-normal                   Link files as specified in .links If the target exists and the files aren't the same, the user will be asked to confirm.
-#%    link-root                     Link files as specified in .links_root. If the target exists and the files aren't the same, the user will be asked to confirm.
 #%    list-groups                   Outputs the list of user defined groups
 #%    list-installed                Outputs the list of packages installed than are in a user defined group
 #%    list-known                    Outputs the list of packages that are in a user defined group
@@ -30,7 +26,6 @@
 #================================================================
 # END_OF_HEADER
 #================================================================
-#MAN generated with help2man -No system-manager.1 ./system-manager.sh
 
 set -e
 
@@ -46,34 +41,31 @@ displayHelp(){
 displayVersion(){
     echo "0.5.0"
 }
-
-_link(){
-    if [[ -z $1 ]]; then
-        key=.links
+safeLn() {
+    srcFile=$1
+    target=$2
+    if diff -qN $srcFile $target; then
+        ln -sf $srcFile $target
     else
-        key=.links_root
+        ln -si $srcFile $target  </dev/tty
     fi
-    while read -r src target; do
-        target=$(eval echo $target)
-        while read -r srcFile ; do
-            [[ $target == */ ]] && $1 mkdir -p $target || $1 mkdir -p $(dirname $target);
-            if [[ ! -d $target ]] && diff -qN $srcFile $target || diff -qN $srcFile $target$(basename $srcFile); then
-                $1 ln -sf $srcFile $target
-            else
-                $1 ln -si $srcFile $target </dev/tty
-            fi
-        done < <(eval ls -d $src)
-    done < <(jq -r "$key|to_entries|map(\"\(.key) \(.value|tostring)\")|.[]" $SYSTEM_CONFIG_DIR/hooks.json)
 }
-linkRoot(){
-    _link sudo
-}
-linkNormal(){
-    _link
-}
-linkFiles(){
-    linkNormal
-    linkRoot
+
+link(){
+    cd Config
+    for dotFile in .*; do
+        echo "DotFile $dotFile"
+        if [ $dotFile == "." ] || [ $dotFile == ".." ]; then
+            continue
+        elif [ -d $dotFile ]; then
+            mkdir -p ~/$dotFile
+            for config in $dotFile/*; do
+                safeLn $config ~/$config
+            done
+        else
+            safeLn $dotFile ~/$dotFile
+        fi
+    done
 }
 getAllPackages(){
     $SYSTEM_CONFIG_DIR/bin/packages.sh list-all
@@ -88,18 +80,6 @@ install(){
 }
 
 case "$1" in
-    custom)
-        shift
-        args="$*"
-        if [[ -z "$args" ]]; then
-            args=$(echo $(selectCustom)|sed "s/ /, /g")
-            echo "Selected $args"
-        fi
-        jq -r "$args " $SYSTEM_CONFIG_DIR/hooks.json | bash
-        ;;
-    init)
-        jq -r '.scripts |join("; ")' $SYSTEM_CONFIG_DIR/hooks.json |bash
-        ;;
     install)
         shift
         if [ -z "$*" ]; then
@@ -109,14 +89,8 @@ case "$1" in
         fi
         install $args
         ;;
-     link-normal)
-         linkNormal
-         ;;
-     link-root)
-         linkRoot
-         ;;
      link)
-         linkFiles
+         link
          ;;
      list-groups)
          listGroups

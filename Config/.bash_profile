@@ -15,6 +15,7 @@ fi
 # global variables
 export ABDUCO_CMD=bash
 export ABDUCO_SOCKET_DIR=~/.config
+export BASH_COMPLETION_USER_FILE=~/SystemConfig/bash_completion.d
 export BROWSER=vimb
 export BROWSER_ALT=firefox
 export EDITOR=vim
