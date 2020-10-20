@@ -1,0 +1,26 @@
+# Maintainer: Christian Hesse <mail@eworm.de>
+# Contributor: Jens Staal <staal1978@gmail.com>
+# Contributor: Sascha Biermmanns <saschakb at gmail dot com>
+
+pkgname=sbase-git
+pkgver=0.r1922.gab53d99
+pkgrel=1
+pkgdesc='A suckless variant of the *nix core utilities - git checkout'
+arch=('i686' 'x86_64')
+provides=(sbase base coreutils findutils sed grep tar which)
+license=('MIT')
+url='http://git.suckless.org/sbase'
+makedepends=('git')
+source=('git://git.suckless.org/sbase')
+sha256sums=('SKIP')
+
+build() {
+	cd $srcdir/sbase/
+    make
+}
+package() {
+	cd $srcdir/sbase/
+
+	make DESTDIR=${pkgdir} PREFIX=/usr/local MANPREFIX=/usr/local/share/man install
+	install -D -m0644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+}

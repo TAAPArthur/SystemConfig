@@ -1,0 +1,11 @@
+pkgname=mystatusbar
+pkgver=1.0
+pkgrel=1
+pkgdesc='custom status bar'
+arch=('any')
+license=('MIT')
+source=( Makefile mystatusbar.c)
+package() {
+    make DESTDIR=$pkgdir install
+}
+

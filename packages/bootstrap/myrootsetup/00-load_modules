@@ -1,0 +1,2 @@
+#! /bin/sh
+exec modprobe -i -a $(find /sys/ -name modalias -exec cat {} +)

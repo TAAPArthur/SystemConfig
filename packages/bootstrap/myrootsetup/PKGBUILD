@@ -1,0 +1,30 @@
+# Maintainer: Arthur Williams <taaparthur at gmail dot com>
+pkgname=myrootsetup
+pkgver=0.1
+pkgrel=3
+pkgdesc='Base config files'
+arch=('any')
+license=('MIT')
+source=("00-load_modules" PKGBUILD dbus dhclient dnsmasq iwd udev _resolvconf.conf)
+install=.install
+
+package() {
+    install -D -t $pkgdir/etc/myinit/services.d/ [a-z]*
+    install -D -t $pkgdir/etc/myinit/init.d/ [0-9]*
+    install _resolvconf.conf $pkgdir/etc/resolvconf.conf
+    mkdir -p $pkgdir/etc/sudoers.d/
+    chmod 750 $pkgdir/etc/sudoers.d
+
+    echo "%wheel ALL=(ALL) ALL" > $pkgdir/etc/sudoers.d/sudo_wheel
+    echo 'Defaults env_keep += "EDITOR"' > $pkgdir/etc/sudoers.d/keep_editor
+    cd $pkgdir/
+    mkdir -p etc/myinit/services.d
+    mkdir -p etc/myinit/init.d
+    mkdir -p var/log
+    mkdir -p root
+    chmod 750 root
+    cd root
+    ln -s ../etc/myinit/services.d .
+    ln -s ../etc/myinit/init.d .
+    ln -s ../var/log .
+}

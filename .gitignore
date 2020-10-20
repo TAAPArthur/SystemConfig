@@ -8,3 +8,6 @@ Config/.config/mpxmanager/mpxmanager
 *TAGS
 GPATH
 *.last_compiled_verision
+packages/bootstrap/*/*/*
+packages/normal/*/*/*
+*.tar.gz

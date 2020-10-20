@@ -1,0 +1,8 @@
+pkgname=fake-pkg
+pkgver=1.0
+pkgrel=1
+pkgdesc='Provides packages to prevent them from being installed'
+provides=(elogind)
+arch=('any')
+license=('MIT')
+

@@ -79,15 +79,50 @@ install(){
     ${PKG_MANAGER:-sudo pacman} -S $($SYSTEM_CONFIG_DIR/bin/packages.sh get $*) --needed
 }
 
+buildCustomPkgs() {
+    for pkg in $1/*; do
+        (
+            cd $pkg
+            if [ ! -f  "$(makepkg --packagelist)" ] || [ "$2" == --force ]; then
+                makepkg -cfs --skipinteg
+            else
+                echo "Already built $pkg"
+            fi
+        )
+    done
+}
+getPackages() {
+    if [ -z "$*" ]; then
+        args="normal"
+    else
+        args="$*"
+    fi
+    $SYSTEM_CONFIG_DIR/bin/packages.sh get $args
+}
+
 case "$1" in
+    bootstrap)
+        shift
+        if [ $1 == "--force" ]; then
+            force=$1
+            shift
+        fi
+        buildCustomPkgs packages/bootstrap $force
+        sudo pacstrap -M -i -C pacman/pacman.conf -U $1 packages/bootstrap/**/*pkg.tar*
+        sudo pacstrap -M -i -C pacman/pacman.conf $1 $($SYSTEM_CONFIG_DIR/bin/packages.sh get minimal)
+        ;;
+    pre-install)
+        shift
+        buildCustomPkgs packages/normal
+        sudo pacstrap -M -C pacman/pacman.conf -U $1 packages/normal/**/*pkg.tar*
+        ;;
+    get)
+        shift
+        getPackages $*
+        ;;
     install)
         shift
-        if [ -z "$*" ]; then
-            args="normal"
-        else
-            args="$*"
-        fi
-        install $args
+        install $(getPackages $* )
         ;;
      link)
          link

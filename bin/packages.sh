@@ -1,33 +1,40 @@
 #!/bin/sh
 
-minimal=(
-    bash-static
-    iproute2
-    less
+assumed=(
     myinit
     sbase-git
     ubase-git
+)
+minimal=(
+    coreutils
+    findutils
+    bash
+    iproute2
+    iputils
+    less
+    sudo
+    pacman
     vim
-    vundle-git
+)
+bootable=(
+    ${minimal[@]}
+    linux
 )
 
 basic=(
-    ${minimal[@]}
-    linux
-    dnsmasq
-    hwdetect
+    ${bootable[@]}
     arch-install-scripts
-    openssh
+    dnsmasq
+    dhclient
     iwd
-    pacaur
     man-db
     man-pages
+    openssh
     pkgfile
 )
 X11=(
     evtest
     wmctrl
-    xcolor
     xdotool
     xorg-server
     xorg-server-xvfb
@@ -45,21 +52,16 @@ graphical=(
     clip-history
     dmenu
     dzen2
-    libnotify
     maim
     mpxmanager
     numlockx
     trayer
     xclip
     xnee
+    xorg-xhost
     xorg-xinput
     xorg-xrandr
     xorg-xsetroot
-    xrandr-invert-colors
-    xsane-xrandr
-    xtrlock
-    xorg-xhost
-    xvkbd
 )
 
 sound=(
@@ -76,7 +78,6 @@ sound=(
     pulseeffects
 )
 theme=(
-    adwaita-qt
     gnome-themes-extra
     lxappearance-gtk3
     otf-ipafont
@@ -99,12 +100,13 @@ utils=(
     graphviz
     gt5
     indent-sort
-    youtube-dl
     links
     lsof
     moreutils
     ntp
     pacgraph
+    pacman-contrib
+    pkgstats
     python-argcomplete
     python-pip
     sshfs
@@ -118,6 +120,7 @@ utils=(
     tzupdate
     unzip
     wget
+    youtube-dl
     zip
 )
 simple=(
@@ -125,11 +128,11 @@ simple=(
     ${graphical[@]}
     ${theme[@]}
     ${sound[@]}
+    ${utils[@]}
     linux-firmware
-    pacman-contrib
-    pkgstats
+    vundle-git
     arandr
-    mpv-git
+    mpv
     st
     sxiv
     vimb
@@ -144,6 +147,7 @@ apps=(
     syncthing-gtk
     transmission-gtk
     xpra
+    xvkbd
     syncthing
 )
 devel=(
@@ -167,8 +171,12 @@ extra=(
     nmap
     wireshark-qt
     xautolock
+    xcolor
     xsecurelock
     xss-lock
+    xrandr-invert-colors
+    xsane-xrandr
+    xtrlock
 )
 normal=(
     ${simple[@]}
@@ -191,7 +199,7 @@ server=(
     syncthing-relaysrv
     certbot
 )
-ALL=( minimal basic X11 server simple normal large)
+ALL=( minimal bootable basic X11 server simple normal large)
 
 
 case "$1" in
