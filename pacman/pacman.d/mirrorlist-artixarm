@@ -1,0 +1,8 @@
+##
+## ARMtix repository mirrorlist
+## Generated on 2020-06-17
+##
+
+Server = https://armtix.artixlinux.org/repos/$repo/os/$arch
+Server = https://armtix.morphism.de/repos/$repo/os/$arch
+Server = https://armtix.kovacsandrej.com/repos/$repo/os/$arch
