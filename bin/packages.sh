@@ -5,18 +5,24 @@ assumed=(
     sbase-git
     ubase-git
 )
+
 minimal=(
+glibc  pciutils  tar  shadow   bzip2  gzip  xz
     coreutils
     findutils
+    util-linux
     bash
     iproute2
     iputils
     less
-    sudo
     pacman
+    procps-ng
+    psmisc
     vim
 )
 bootable=(
+    gcc-libs
+    sed
     ${minimal[@]}
     linux
 )
@@ -24,9 +30,9 @@ bootable=(
 basic=(
     ${bootable[@]}
     arch-install-scripts
-    dnsmasq
     dhclient
     iwd
+    sudo
     man-db
     man-pages
     openssh
@@ -89,6 +95,7 @@ theme=(
     xorg-xfontsel
 )
 utils=(
+    file
     abduco
     aurutils
     bash-completion
