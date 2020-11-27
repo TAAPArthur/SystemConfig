@@ -128,6 +128,8 @@ command GenTagspp !g++ -M **/*.{cpp,h} | grep -E "^\s*/" | sed -e 's/[\\ ]/\n/g'
 command -bar -range FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
 command -bar -range Strip %s/\s\+$//ge
 
+command -bar -range -nargs=1 Renum :let @a=<q-args> | '<,'>s/\d\+/\=(@a+setreg('a',@a+1))/g
+
 
 
 " It's 2019.
