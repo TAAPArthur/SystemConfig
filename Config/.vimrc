@@ -28,6 +28,10 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 
+augroup project
+  autocmd!
+  autocmd BufRead,BufNewFile *.h,*.c set filetype=c
+augroup END
 
 color default
 colorscheme desert
@@ -71,12 +75,14 @@ au VimResized * :wincmd =
 
 let g:DoxygenToolkit_briefTag_pre=""
 
-let g:ale_cpp_gcc_options = '-x c++ -std=gnu++17 -lstdc++ -Werror -Wextra -Wall -Wincompatible-pointer-types -Wno-parentheses -Wno-sign-compare -Wno-missing-field-initializers'
-let g:ale_c_gcc_options = '-std=gnu11 -Werror -Wextra -Wall -Wincompatible-pointer-types -Wno-parentheses -Wno-sign-compare -Wno-missing-braces -Wno-missing-field-initializers -Wno-cast-function-type -D_DEFAULT_SOURCE'
+let g:ale_linters = {"c": ["gcc"]}
+let g:ale_cpp_gcc_options = '-x cpp -std=c++99 -lstdc++ -Wincompatible-pointer-types -Wno-parentheses -Wno-sign-compare -Wno-missing-field-initializers'
+let g:ale_c_cc_options = '-std=c99 -Wno-format-truncation -Werror -Wextra -Wall -Wincompatible-pointer-types -Wno-parentheses -Wno-sign-compare  -Wno-missing-field-initializers -Wno-cast-function-type -D_DEFAULT_SOURCE -O3'
+let g:ale_c_gcc_options = g:ale_c_cc_options
 let g:ale_java_javac_options = '-Xlint:all'
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_enter = 0
-let g:ale_fixers = {'python': ['autopep8']}
+let g:ale_fixers = {'python': ['autopep8', 'isort']}
 let g:ale_python_pylint_options = "-E"
 let g:ale_sh_shellcheck_exclusions = "SC2068,SC2076"
 let g:ale_sh_shellcheck_options="--severity=error"
