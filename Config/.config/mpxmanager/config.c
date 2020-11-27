@@ -3,12 +3,12 @@
 #include <X11/keysym.h>
 
 #include <mpxmanager/Extensions/compatibility-rules.h>
+#include <mpxmanager/Extensions/env-injector.h>
 #include <mpxmanager/Extensions/containers.h>
 #include <mpxmanager/Extensions/ewmh.h>
 #include <mpxmanager/Extensions/extra-rules.h>
 #include <mpxmanager/Extensions/mpx.h>
 #include <mpxmanager/Extensions/session.h>
-#include <mpxmanager/Extensions/window-clone.h>
 #include <mpxmanager/bindings.h>
 #include <mpxmanager/boundfunction.h>
 #include <mpxmanager/functions.h>
@@ -87,10 +87,11 @@ void onXConnectionStart() {
 }
 
 void addNormalBindings();
-void enableGestureBindings();
 void loadSettings() {
+    setLogLevel(LOG_LEVEL_DEBUG);
     DEFAULT_BORDER_COLOR = 0x00FF00;
     LD_PRELOAD_INJECTION = 1;
+	onChildSpawn = setClientMasterEnvVar;
     // IDLE_TIMEOUT = 100;
     ALLOW_SETTING_UNSYNCED_MASKS = 1;
     spawnPipe("status-bar -title-name 'wm-status'", REDIRECT_CHILD_INPUT_ONLY);
@@ -117,7 +118,6 @@ void loadSettings() {
     // Extensions
     addAutoDetectDockPosition();
     addAutoMPXRules();
-    addCloneRules();
     addEWMHRules();
     addFloatRule();
     addMoveNonTileableWindowsToWorkspaceBounds();
@@ -137,6 +137,4 @@ void loadSettings() {
     addPrintStatusRule();
     addStickyPrimaryMonitorRule();
     */
-    // gestures
-    enableGestureBindings();
 }

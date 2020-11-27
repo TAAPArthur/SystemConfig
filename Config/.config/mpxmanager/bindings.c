@@ -5,7 +5,6 @@
 #include <mpxmanager/Extensions/containers.h>
 #include <mpxmanager/Extensions/mpx.h>
 #include <mpxmanager/Extensions/session.h>
-#include <mpxmanager/Extensions/window-clone.h>
 #include <mpxmanager/bindings.h>
 #include <mpxmanager/boundfunction.h>
 #include <mpxmanager/util/debug.h>
@@ -33,8 +32,8 @@ Binding customBindings[] = {
     // Freeze focus stack while Mod4Mask (super) is held
     {0, XK_Super_L, {grabActiveKeyboard, {0}} },
     {0, XK_Super_L, {setFocusStackFrozen, {1}} },
-    {Mod4Mask, XK_Super_L, {setFocusStackFrozen, {0}}, .flags = {.mask = XCB_INPUT_XI_EVENT_MASK_KEY_RELEASE}},
-    {Mod4Mask, XK_Super_L, {ungrabActiveKeyboard, {0}}, .flags = {.mask = XCB_INPUT_XI_EVENT_MASK_KEY_RELEASE}},
+    {XCB_MOD_MASK_ANY, XK_Super_L, {setFocusStackFrozen, {0}}, .flags = {.mask = XCB_INPUT_XI_EVENT_MASK_KEY_RELEASE}},
+    {XCB_MOD_MASK_ANY, XK_Super_L, {ungrabActiveKeyboard, {0}}, .flags = {.mask = XCB_INPUT_XI_EVENT_MASK_KEY_RELEASE}},
 
     {Mod4Mask, XK_F6, {raiseOrRun,  .arg = {.str = "arandr"}} },
     {0, XF86XK_Display, {spawn,  .arg = {.str = "autorandr -c"}} },
@@ -64,8 +63,8 @@ Binding customBindings[] = {
 
     {0, XF86XK_Eject, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
     {0, XF86XK_Calculator, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
-    {Mod4Mask, XK_Delete, {raiseOrRun,  .arg = {.str = "gt5"}, .arg2.str = "$TERMINAL -c gt5 -e gt5 /"} },
-    {Mod4Mask | ShiftMask, XK_Delete, {raiseOrRun,  .arg = {.str = "gt5"}, .arg2.str = "$TERMINAL -c gt5 -e gt5 ~"} },
+    {Mod4Mask, XK_Delete, {raiseOrRun2,  .arg = {.str = "gt5"}, .arg2.str = "$TERMINAL -c gt5 -e gt5 /"} },
+    {Mod4Mask | ShiftMask, XK_Delete, {raiseOrRun2,  .arg = {.str = "gt5"}, .arg2.str = "$TERMINAL -c gt5 -e gt5 ~"} },
 
     {ControlMask | Mod1Mask, XK_Delete, {spawn,  .arg = {.str = "notify-send -t 20000  CPU \"}$(ps -Ao pid,pcpu,pmem,comm --sort=-pcpu --cols=27 | head -n 6)\" && notify-send -t 20000  MEM \"$(ps -Ao pid,pcpu,pmem,comm --sort=-pmem --cols=27 | head -n 6)\" "}}, { .noKeyRepeat = 1}},
 
@@ -108,31 +107,38 @@ Binding customBindings[] = {
     {DEFAULT_MOD_MASK | ShiftMask, XF86XK_AudioPlay, {toggleMask, {ROOT_FULLSCREEN_MASK}}, .flags = {.windowToPass = FOCUSED_WINDOW}},
 
     {Mod3Mask, XK_f, {centerMouseInWindow}, .flags = {.windowToPass = FOCUSED_WINDOW}},
-    /*
-    {Mod4Mask, XK_n, {cycleSlave, UP}},
-    {Mod3Mask, XK_n, {cycleSlave, UP}},
-    {Mod4Mask | ShiftMask, XK_n, {cycleSlave, DOWN}},
-    {Mod3Mask | ShiftMask, XK_n, {cycleSlave, DOWN}},
-
-    */
-    {Mod4Mask, XK_d, {startMPX}},
-    {Mod4Mask | ControlMask, XK_d, {(void(*)())saveMPXMasterInfo}},
-    {Mod4Mask | ShiftMask, XK_d, {destroyAllNonDefaultMasters}},
 
     /*
     {Mod4Mask, XK_x, {cloneFocusedWindow}},
     {Mod4Mask | ShiftMask, XK_x, {killAllClones}},
     */
 
-    {Mod4Mask, XK_z, {containTablessWindows}},
+    {Mod4Mask, XK_t, {containTablessWindows}, },
+    {Mod4Mask , XK_z, {containWindowAndActivate},  {.windowToPass = FOCUSED_WINDOW}},
     {Mod4Mask | ShiftMask, XK_z, {releaseAllWindows}},
-    //{Mod4Mask | Mod1Mask, XK_z, createSimpleContainer},
-    {Mod3Mask, XK_t, {toggleContainer}},
+    {Mod3Mask, XK_t, {toggleContainer},  {.windowToPass = FOCUSED_WINDOW}},
 
     SPLIT_MASTER_BINDING(Mod4Mask | Mod1Mask, XK_d),
 
 } ;
 
+/*
+#define MASTER_FLAGS 2
+Binding masterBindings[] = {
+    {Mod4Mask, XK_period, {toggleParentMaster}},
+    {Mod4Mask, XK_comma, {toggleChildMaster}},
+    {Mod4Mask, XK_b, {splitMaster}},
+    {Mod4Mask, XK_n, {cycleSlaves, .arg.i = UP}},
+    {Mod4Mask | ShiftMask, XK_n, {cycleSlaves, .arg.i = DOWN}},
+    {Mod4Mask, XK_m, {cycleSlave, .arg.i = UP}},
+    {Mod4Mask | ShiftMask, XK_m, {cycleSlave, .arg.i = DOWN}},
+    {Mod4Mask, XK_d, {startMPX}},
+    {Mod4Mask | ControlMask, XK_d, {(void(*)())saveMPXMasterInfo}},
+    {Mod4Mask | ShiftMask, XK_d, {destroyAllNonDefaultMasters}},
+};
+*/
+
 void addNormalBindings() {
     addBindings(customBindings, LEN(customBindings));
+    //addBindingsInMode(masterBindings, LEN(masterBindings), MASTER_FLAGS);
 }
