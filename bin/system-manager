@@ -44,26 +44,35 @@ displayVersion(){
 safeLn() {
     srcFile=$1
     target=$2
-    if diff -qN $srcFile $target; then
-        ln -sf $srcFile $target
+    linkTarget=$2
+    [ -e $srcFile ]
+    if [ -d $target ]; then
+        target="$target/$(basename $srcFile)"
+    fi
+    if [ ! -e $target ] || diff -q $srcFile $target; then
+        ln -sf $srcFile $linkTarget
     else
-        ln -si $srcFile $target  </dev/tty
+        diff -Ny --suppress-common-lines $srcFile $target || true
+        echo "Override  and link $target to $srcFile ? Y/n"
+        read ans
+        if [ "$ans" == Y ] || [ "$ans" == y ]; then
+            ln -sf $srcFile $linkTarget
+        fi
     fi
 }
 
 link(){
-    cd Config
+    cd $SYSTEM_CONFIG_DIR/Config
     for dotFile in .*; do
-        echo "DotFile $dotFile"
         if [ $dotFile == "." ] || [ $dotFile == ".." ]; then
             continue
         elif [ -d $dotFile ]; then
             mkdir -p ~/$dotFile
             for config in $dotFile/*; do
-                safeLn $config ~/$config
+                safeLn $PWD/$config ~/$dotFile/
             done
         else
-            safeLn $dotFile ~/$dotFile
+            safeLn $PWD/$dotFile ~/$dotFile
         fi
     done
 }
