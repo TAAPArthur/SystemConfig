@@ -1,7 +1,5 @@
 *.spl
 Config/vim-spell-programs.add
-.xprofile
-.profile
 Config/.config/mpxmanager/mpxmanager
 *.o
 *tags

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /bin/mpxmanager find-and-raise $1 || mpxmanager spawn ${2:-1};

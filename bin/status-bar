@@ -1,0 +1,2 @@
+#!/bin/sh
+dzen2 -ta l -fg '#00FF00' -bg '#000000' -dock -fn 'Liberation Mono Regular:size = 10' -h 18 -e '' $*

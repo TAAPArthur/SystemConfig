@@ -23,7 +23,7 @@ fi
 [ -x /usr/bin/pasystray ] && pasystray --notify=all &
 [ -x /usr/bin/nm-applet ] && nm-applet &
 [[ -x /usr/bin/xhost && -x /usr/bin/steam ]] && xhost +
-[ -x /usr/bin/dzen2 ] && mystatusbar | status-bar -title-name "mystatusbar" &
+[ -x /usr/bin/dzen2 ] && [ -x /usr/bin/mystatusbar ] && mystatusbar | status-bar -title-name "mystatusbar" &
 #[ -x /usr/bin/dzen2 ] && mystatusbar | dzen2 -ta l -fg '#00FF00' -bg '#000000' -dock -fn 'xft:Bitstream Vera Sans Mono:size = 10:antialias = true' -h 18 -title-name "mystatusbar" &
 
 [ -x /usr/bin/xmouse-control ] && xmouse-control &
