@@ -26,7 +26,6 @@ popd()
 alias cd='pushd'
 alias bk='popd'
 alias tg='pushd_builtin'
-alias highlight="grep --color -E -e '^|' -e"
 alias grep='grep --color=auto'
 alias oneline="git log --oneline"
 alias git-branch-recent="git branch --sort=-committerdate |head -n10"
