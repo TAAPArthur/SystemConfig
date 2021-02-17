@@ -11,125 +11,111 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'w0rp/ale'
-"Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-fugitive'
-Plugin 'DoxygenToolkit.vim'
-Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'skywind3000/gutentags_plus'
-Plugin 'ajh17/VimCompletesMe'
+"Plugin 'ajh17/VimCompletesMe'
 Plugin 'akhaku/vim-java-unused-imports'
-" Plugin 'ledger/vim-ledger'
 Plugin 'iamcco/markdown-preview.vim'
-Plugin 'kamykn/spelunker.vim'
-Plugin 'skywind3000/vim-preview'
-Plugin 'vim-scripts/taglist.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-
-augroup project
-  autocmd!
-  autocmd BufRead,BufNewFile *.h,*.c set filetype=c
-augroup END
 
 color default
 colorscheme desert
 syntax on
 
-set title
-set hidden
-set ttyfast
+set backspace=indent,eol,start
 set encoding=utf-8
-set number
-set tabstop=4
 set expandtab
-set shiftwidth=4
-set tabpagemax=100
-set shortmess=A
-set spellfile=~/SystemConfig/Config/vim-spell.utf-8.add,~/SystemConfig/Config/vim-spell-programs.add
 set foldlevelstart=99 " code folding
-set tags=./tags;,tags;
-"set completeopt-=preview "disable preview window for autocomplete
+set foldmethod=syntax
+set hidden
 set laststatus=2
+set noshowmode
+set noswapfile
+set number
+set shiftwidth=4
+set shortmess=A
+set spell
+set spellfile=~/SystemConfig/Config/vim-spell.utf-8.add,~/SystemConfig/Config/vim-spell-programs.add
+set spelloptions=camel
+set tabpagemax=100
+set tabstop=4
+set tags=./tags;,tags;
+set title
+set tw=0
+set updatetime=1000
 set wildignore=*.gc??,*.o
 set wildmode=list:longest,full
-set updatetime=1000
-set noswapfile
-set foldmethod=syntax
-set nospell
 
-set title titlestring=
-set title titlestring+=%<%f\ %([%{Tlist_Get_Tagname_By_Line()}]%)
-"augroup PreviewAutocmds
-"  autocmd!
-"  autocmd WinEnter * if &previewwindow | set nospell | endif
-"augroup END
-let b:vcm_tab_complete = "omni"
-autocmd BufWritePre * Strip
-let b:spelunker_check_type = 2
-autocmd BufWinEnter * if line("$") < 500 | let b:spelunker_check_type = 1 | endif
+let &titlestring=$SESSION_NAME . "%f"
 
-" Resize splits when the window is resized
-au VimResized * :wincmd =
+let g:mkdp_browserfunc = 'OpenBrowser'
+let g:mkdp_auto_close = 0
 
-let g:DoxygenToolkit_briefTag_pre=""
+function! OpenBrowser(url)
+        execute "! $BROWSER " a:url "& "
+endfunction
 
-let g:ale_linters = {"c": ["gcc"]}
-let g:ale_cpp_gcc_options = '-x cpp -std=c++99 -lstdc++ -Wincompatible-pointer-types -Wno-parentheses -Wno-sign-compare -Wno-missing-field-initializers'
-let g:ale_c_cc_options = '-std=c99 -Wno-format-truncation -Werror -Wextra -Wall -Wincompatible-pointer-types -Wno-parentheses -Wno-sign-compare  -Wno-missing-field-initializers -Wno-cast-function-type -D_DEFAULT_SOURCE -O3'
-let g:ale_c_gcc_options = g:ale_c_cc_options
-let g:ale_java_javac_options = '-Xlint:all'
-let g:ale_fix_on_save = 1
-let g:ale_lint_on_enter = 0
-let g:ale_fixers = {'python': ['autopep8', 'isort']}
-let g:ale_python_pylint_options = "-E"
-let g:ale_sh_shellcheck_exclusions = "SC2068,SC2076"
-let g:ale_sh_shellcheck_options="--severity=error"
-let g:ale_python_flake8_options="--select=E999"
-let g:ale_python_autopep8_options="--ignore E501,E711,E721,W601,W602,W603,W604"
-
-let g:gutentags_modules = ['ctags', 'gtags_cscope']
-let g:gutentags_ctags_exclude = ["doc", "*.md"]
-let g:gutentags_define_advanced_commands = 1
-let g:gutentags_project_root = ['.root', '.git']
-let g:gutentags_plus_switch = 1
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-
-
-let g:vcm_default_maps = 0
 
 augroup resCur
   autocmd!
   autocmd BufReadPost * call setpos(".", getpos("'\""))
 augroup END
 
-" Don't enter insert mode for non-modifable files
-autocmd BufRead * let &l:modifiable = !&readonly
+augroup Misc
+  autocmd!
+  " Resize splits when the window is resized
+  au VimResized * :wincmd =
+  " Don't enter insert mode for non-modifable files
+  autocmd BufRead * let &l:modifiable = !&readonly
+  autocmd BufWritePre * Strip
+augroup END
 
-if empty($SESSION_NAME)
+function! UpdateFile()
+    silent execute "update! " . expand("~/.cache/backup/%:t")
+endfunction
+augroup Backup
+  autocmd!
     " remove temp file on save
     autocmd BufWritePost * silent execute "!rm -f " . expand("~/.cache/backup/%:t")
     " Auto backup on leaving insert
-    function! UpdateFile()
-        silent execute "update! " . expand("~/.cache/backup/%:t")
-    endfunction
     au InsertLeave * call UpdateFile()
-endif
+augroup END
 " Command to recover file created with above
 command! Recover execute "1,$d|0r" expand("~/.cache/backup/%:t")
 
 
-set tw=0
+augroup project
+  autocmd!
+  autocmd BufRead,BufNewFile *.h,*.c set filetype=c
+  autocmd FileType c setlocal makeprg=tcc\ -c\ %
+  autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090,SC2068,SC2086,SC2048\ -f\ gcc\ %
+  autocmd FileType python setlocal makeprg=python-linter
+  autocmd FileType json setlocal formatprg=jq\ -r\ .
+  autocmd BufWritePost * if &makeprg != "make" | silent make! % | silent redraw!
+  autocmd BufWritePost *.py,*.c,*.h silent !ctags -a %
+  autocmd BufWritePost *.py edit | call setpos(".", getpos("'\""))
+  autocmd QuickFixCmdPost [^l]* cwindow
+augroup END
 
-command -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\|:\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\|?\|:\)\([^ ,/!+=\-<>]\)/\1 \2/ge
-command GenTags !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V |uniq | ctags -R -L - --c++-kinds=+p
-command GenTagspp !g++ -M **/*.{cpp,h} | grep -E "^\s*/" | sed -e 's/[\\ ]/\n/g' -e '/^$/d' -e '/\.o:[ \t]*$/d' | grep "^/" | sort -u | ctags -R -L - --c++-kinds=+p
-command -bar -range FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
-command -bar -range Strip %s/\s\+$//ge
+command! -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\|:\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\|?\|:\)\([^ ,/!+=\-<>]\)/\1 \2/ge
+"command! GenTags !tcc -E *.c **/*.c | grep "^\# .*\.[ch]" | awk '{print $3}' | tr -d '"' | sort -u |  xargs -I{} realpath --relative-to=. {} | sed -E "s|^(../)+|/|g" |sort -u |  ctags --kinds-c=+p -R -L -
 
-command -bar -range -nargs=1 Renum :let @a=<q-args> | '<,'>s/\d\+/\=(@a+setreg('a',@a+1))/g
+function! GenerateTags()
+    if &filetype == "c"
+        !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V | uniq | ctags -R -L - --c++-kinds=+p
+    else
+        !ctags -R --exclude="*cov*" --exclude="*doc*" .
+    endif
+endfunction
+command! GenTags call GenerateTags()
 
+
+command! -bar -range FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
+command! -bar -range Strip %s/\s\+$//ge
+command! -nargs=1 -complete=file T tab drop <args>
+command! -nargs=1 -complete=file Tabe tab drop <args>
+command! -bar -range -nargs=1 Renum :let @a=<q-args> | '<,'>s/\d\+/\=(@a+setreg('a',@a+1))/g
 
 
 " It's 2019.
@@ -139,28 +125,19 @@ noremap k gk
 noremap gj j
 noremap gk k
 
-
-fu! Profile()
-    :profile start profile.log
-    :profile func *
-    :profile file *
-endfunction
-fu! StopProfile()
-    :profile pause
-endfunction
-
 map ;; <C-w>T
 noremap <Space> <C-w>w
 
-noremap <leader>cd :lcd %:p:h<CR>
-noremap <leader>lcd :cd %:p:h<CR>
+noremap <leader>gcd :cd %:p:h<CR>
+noremap <leader>lcd :lcd %:p:h<CR>
 
-noremap <leader>yy ::w !xsel -i -b<CR>
-noremap <leader>pp :r!xsel -b<CR>
-noremap <leader>PP :r!xsel -p<CR>
+noremap <silent> <leader>yy :w !xsel -i -b <CR>
+noremap <silent> <leader>pp :r !xsel -b<CR>
+noremap <silent> <leader>PP :r !xsel -p<CR>
 
 inoremap <c-z> <esc>:suspend<cr>
 
+inoremap <A-Space> <C-x><C-o>
 
 noremap H ^
 noremap L $
@@ -168,21 +145,6 @@ noremap L $
 " something similar: move to last change
 nnoremap gI `.
 
-set noshowmode
-au CursorHoldI *.cpp,*.java,.*.sh,*.md PreviewSignature
-au InsertEnter *.cpp,*.java,.*.sh,*.md PreviewSignature
-"inoremap ( (<c-\><c-o>:PreviewSignature<cr>
-"inoremap hh <c-\><c-o>:PreviewSignature<cr>
-
-imap <C-Space> <plug>vim_completes_me_forward
-imap <C-@> <plug>vim_completes_me_forward
 imap jj <Esc>
 nnoremap ff gT
 nnoremap fg gt
-nnoremap <silent> gt :TlistToggle<CR>
-
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
