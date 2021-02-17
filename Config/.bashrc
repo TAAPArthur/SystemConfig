@@ -54,4 +54,22 @@ export PS1="$cyn$NESTED_SHELL_LEVEL_STR$end"'$(get-branch)'"$cyn$SESSION_NAME$bl
 
 stty -ixon
 
+
+# If there are multiple matches for completion, Tab should cycle through them
+
 bind '\C-SPACE':menu-complete;
+bind 'TAB':menu-complete
+
+# Display a list of the matching files
+
+bind "set show-all-if-ambiguous on"
+
+# Perform partial completion on the first Tab press,
+# only start cycling full results on the second Tab press
+
+bind "set menu-complete-display-prefix on"
+
+
+if [ -f $HOME/.profile ]; then
+    source $HOME/.profile
+fi
