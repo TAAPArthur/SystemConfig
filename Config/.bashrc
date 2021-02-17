@@ -31,6 +31,8 @@ alias oneline="git log --oneline"
 alias git-branch-recent="git branch --sort=-committerdate |head -n10"
 alias ls='ls --color=auto'
 ls-new() { ls -Alsth | head -n"$((${*:-1}+1))" | tail -n+2; }
+attach() { NESTED_SHELL_LEVEL='' SESSION_NAME="$1:" abduco -A $1; }
+export -f attach
 find-replace() {
     find . -name "$1" -exec sed -Ei "$2" {} \;
 }
