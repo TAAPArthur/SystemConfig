@@ -1,0 +1,21 @@
+#!/bin/sh
+
+device="Master"
+if [ "$2" == "--default-source" ]; then
+    device=Capture
+    shift
+fi
+
+case $1 in
+    "-i")
+        amixer set Master ${2:-1}+
+        ;;
+    "-d")
+        amixer set Master ${2:-1}-
+        ;;
+    "-t")
+        amixer set Master toggle
+        ;;
+
+esac
+
