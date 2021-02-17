@@ -28,13 +28,16 @@ void containTablessWindows() {
     containWindows(getWorkspace(4), (WindowFunctionArg) {matchesClass,  .arg = {.str = "st"}}, "st");
 }
 
-Binding customBindings[] = {
-    // Freeze focus stack while Mod4Mask (super) is held
-    {0, XK_Super_L, {grabActiveKeyboard, {0}} },
-    {0, XK_Super_L, {setFocusStackFrozen, {1}} },
-    {XCB_MOD_MASK_ANY, XK_Super_L, {setFocusStackFrozen, {0}}, .flags = {.mask = XCB_INPUT_XI_EVENT_MASK_KEY_RELEASE}},
-    {XCB_MOD_MASK_ANY, XK_Super_L, {ungrabActiveKeyboard, {0}}, .flags = {.mask = XCB_INPUT_XI_EVENT_MASK_KEY_RELEASE}},
 
+void raiseOrRunBrowser(int dir) {
+    raiseOrRunFunc("browser", "$BROWSER", dir, matchesRole);
+}
+
+void raiseOrRunTerminal(int dir) {
+    raiseOrRunFunc("$TERMINAL", "$TERMINAL", dir, matchesClass);
+}
+
+Binding customBindings[] = {
     {Mod4Mask, XK_F6, {raiseOrRun,  .arg = {.str = "arandr"}} },
     {0, XF86XK_Display, {spawn,  .arg = {.str = "autorandr -c"}} },
     {ShiftMask, XF86XK_Display, {spawn,  .arg = {.str = "xsane-xrandr -i configure"}} },
@@ -93,14 +96,16 @@ Binding customBindings[] = {
 
     {Mod4Mask, XK_Menu, {raiseOrRun,  .arg = {.str = "pavucontrol"}} },
 
-    {Mod4Mask, XK_w, {raiseOrRunRole,  .arg = {.str = "browser"}, .arg2.str = "$BROWSER"}, },
-    {Mod4Mask | ShiftMask, XK_w, {spawn,  .arg = {.str = "$BROWSER_ALT"}} },
+    CYCLE_BINDINGS(Mod4Mask, ShiftMask, XK_s, raiseOrRunTerminal, XK_Super_L),
+    {Mod4Mask | ControlMask, XK_s, {spawn,  .arg = {.str = "$TERMINAL"}} },
+
+    CYCLE_BINDINGS(Mod4Mask, ShiftMask, XK_w, raiseOrRunBrowser, XK_Super_L),
+    {Mod4Mask | Mod1Mask, XK_w, {spawn,  .arg = {.str = "$BROWSER_ALT"}} },
     {Mod4Mask | ControlMask | ShiftMask, XK_w, {spawn,  .arg = {.str = "$BROWSER"}} },
     {Mod4Mask | ControlMask, XK_w, {spawn,  .arg = {.str = "firefox"}} },
 
     {Mod4Mask | ControlMask, XK_d, {raiseOrRun,  .arg = {.str = "dolphin-emu"}} },
-    {Mod4Mask, XK_s, {raiseOrRun,  .arg = {.str = "$TERMINAL"}} },
-    {Mod4Mask | ShiftMask, XK_s, {spawn,  .arg = {.str = "$TERMINAL"}} },
+
 
     {0, XF86XK_AudioPlay, {toggleActiveLayoutOrCycle, .arg = {.p = &FULL}}},
     {DEFAULT_MOD_MASK, XF86XK_AudioPlay, {toggleMask, {FULLSCREEN_MASK}}, .flags = {.windowToPass = FOCUSED_WINDOW}},
@@ -113,32 +118,31 @@ Binding customBindings[] = {
     {Mod4Mask | ShiftMask, XK_x, {killAllClones}},
     */
 
-    {Mod4Mask, XK_t, {containTablessWindows}, },
+    {Mod4Mask| ControlMask, XK_t, {containTablessWindows}, },
     {Mod4Mask , XK_z, {containWindowAndActivate},  {.windowToPass = FOCUSED_WINDOW}},
     {Mod4Mask | ShiftMask, XK_z, {releaseAllWindows}},
     {Mod3Mask, XK_t, {toggleContainer},  {.windowToPass = FOCUSED_WINDOW}},
+    {Mod4Mask | Mod1Mask | ShiftMask, XK_z, {clearAllFakeMonitors}},
+
 
     SPLIT_MASTER_BINDING(Mod4Mask | Mod1Mask, XK_d),
 
-} ;
+};
 
-/*
-#define MASTER_FLAGS 2
 Binding masterBindings[] = {
-    {Mod4Mask, XK_period, {toggleParentMaster}},
-    {Mod4Mask, XK_comma, {toggleChildMaster}},
     {Mod4Mask, XK_b, {splitMaster}},
     {Mod4Mask, XK_n, {cycleSlaves, .arg.i = UP}},
     {Mod4Mask | ShiftMask, XK_n, {cycleSlaves, .arg.i = DOWN}},
-    {Mod4Mask, XK_m, {cycleSlave, .arg.i = UP}},
-    {Mod4Mask | ShiftMask, XK_m, {cycleSlave, .arg.i = DOWN}},
+    {Mod4Mask, XK_m, {shiftSlaves, .arg.i = UP}},
+    {Mod4Mask | ShiftMask, XK_m, {shiftSlaves, .arg.i = DOWN}},
+    {Mod4Mask, XK_comma, {cycleActiveSlave, .arg.i = UP}},
+    {Mod4Mask | ShiftMask, XK_comma, {cycleActiveSlave, .arg.i = DOWN}},
     {Mod4Mask, XK_d, {startMPX}},
     {Mod4Mask | ControlMask, XK_d, {(void(*)())saveMPXMasterInfo}},
     {Mod4Mask | ShiftMask, XK_d, {destroyAllNonDefaultMasters}},
 };
-*/
 
 void addNormalBindings() {
     addBindings(customBindings, LEN(customBindings));
-    //addBindingsInMode(masterBindings, LEN(masterBindings), MASTER_FLAGS);
+    addBindings(masterBindings, LEN(masterBindings));
 }

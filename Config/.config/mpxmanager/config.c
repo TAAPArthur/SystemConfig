@@ -23,9 +23,6 @@
 #include <mpxmanager/wmfunctions.h>
 #include <mpxmanager/xutil/window-properties.h>
 
-bool TOUCH_SCREEN_AS_MOUSE_NATIVE;
-bool NO_GESTURES;
-
 xcb_atom_t STEAM_GAME;
 void loadCustomAtoms() {
     STEAM_GAME = getAtom("STEAM_GAME");
@@ -91,6 +88,7 @@ void loadSettings() {
     setLogLevel(LOG_LEVEL_DEBUG);
     DEFAULT_BORDER_COLOR = 0x00FF00;
     LD_PRELOAD_INJECTION = 1;
+    ASSUME_PRIMARY_MONITOR = 1;
 	onChildSpawn = setClientMasterEnvVar;
     // IDLE_TIMEOUT = 100;
     ALLOW_SETTING_UNSYNCED_MASKS = 1;
@@ -125,16 +123,4 @@ void loadSettings() {
     addResumeContainerRules();
     addResumeCustomStateRules();
     addStickyPrimaryMonitorRule();
-    /* TODO
-    addAutoFocusRule();
-    addDesktopRule();
-    addEWMHRules();
-    addFloatRule();
-    addIgnoreInputOnlyWindowsRule();
-    addIgnoreNonTopLevelWindowsRule();
-    addKeepTransientsOnTopRule();
-    addMoveNonTileableWindowsToWorkspaceBounds();
-    addPrintStatusRule();
-    addStickyPrimaryMonitorRule();
-    */
 }
