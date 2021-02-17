@@ -1,20 +1,23 @@
 #!/bin/sh
 
+if [ -x /bin/pamixer ]; then
+    exec pamixer $@
+fi
 device="Master"
-if [ "$2" == "--default-source" ]; then
+if [ "$2" = "--default-source" ]; then
     device=Capture
     shift
 fi
 
 case $1 in
     "-i")
-        amixer set Master ${2:-1}+
+        amixer set $device ${2:-1}+
         ;;
     "-d")
-        amixer set Master ${2:-1}-
+        amixer set $device ${2:-1}-
         ;;
     "-t")
-        amixer set Master toggle
+        amixer set $device toggle
         ;;
 
 esac
