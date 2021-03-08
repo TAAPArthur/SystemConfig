@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# load bash completion
+for path in /usr/share/bash-completion/completions ~/.local/completions/bash; do
+    if [ -d $path ]; then
+        for file in "$path"/*; do
+            source "$file"
+        done
+    fi
+done
+
 silent_pushd()
 {
   if [ $# -eq 0 ]; then
