@@ -8,17 +8,18 @@ silent_pushd()
     DIR="$1"
   fi
 
-  builtin pushd "${DIR}" > /dev/null || return
+  # shellcheck disable=SC2164
+  pushd "${DIR}" > /dev/null
 }
 
 silent_popd()
 {
-  builtin popd > /dev/null || return
+  popd > /dev/null || popd -n > /dev/null
 }
 
 #interactive shell specific aliases
 alias cd='silent_pushd'
-alias bk='silent_popd || silent_popd -n'
+alias bk='silent_popd'
 alias tg='pushd > /dev/null'
 alias oneline="git log --oneline"
 alias git-branch-recent="git branch --sort=-committerdate |head -n10"
