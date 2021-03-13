@@ -10,15 +10,14 @@ if [ "$2" = "--default-source" ]; then
 fi
 
 case $1 in
-    "-i")
-        amixer set $device ${2:-1}+
+    -i|i)
+        amixer --quiet set $device ${2:-1}+
         ;;
-    "-d")
-        amixer set $device ${2:-1}-
+    -d|d)
+        amixer --quiet set $device ${2:-1}-
         ;;
-    "-t")
-        amixer set $device toggle
+    -m|-t|m|t)
+        amixer --quiet set $device toggle
         ;;
-
 esac
-
+notify-send -r $device "$(amixer get $device)"
