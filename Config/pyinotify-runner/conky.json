@@ -1,9 +1,0 @@
-{
-    "paths":["~/SystemConfig/Conky/.conkyrc","~/SystemConfig/Conky/time"],
-    "actions":[
-        {
-            "events":["MODIFY"],
-            "script":"$HOME/SystemConfig/Conky/conky-install.sh"
-        }
-    ]
-}
