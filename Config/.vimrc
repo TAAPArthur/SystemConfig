@@ -66,8 +66,9 @@ augroup Misc
   autocmd!
   " Resize splits when the window is resized
   au VimResized * :wincmd =
-  " Don't enter insert mode for non-modifable files
+  " Don't enter insert mode for non-modifiable files
   autocmd BufRead * let &l:modifiable = !&readonly
+  autocmd BufRead * if &readonly | set nospell
   autocmd BufWritePre * Strip
 augroup END
 
