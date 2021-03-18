@@ -42,7 +42,7 @@ void configureWindowsByName(WindowInfo* winInfo) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | X_CENTERED_MASK);
         removeMask(winInfo, ABOVE_MASK);
         setTilingOverrideEnabled(winInfo, 1 | 4 | 32);
-        setTilingOverride(winInfo, (Rect) {-140, 0, 520, 0});
+        setTilingOverride(winInfo, (Rect) {-30, 0, 520, 0});
     }
     else if(matchesClass(winInfo, "dzen2")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | BELOW_MASK);
