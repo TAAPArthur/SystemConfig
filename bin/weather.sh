@@ -1,33 +1,33 @@
-#!/bin/bash
+#!/bin/sh -e
 
-    file="/tmp/.weather"
+file="/tmp/.weather"
+tmpfile="$file.tmp"
+timestampFile="$file.ts"
 checkCache() {
-    if [[ -f "$file" && ($(date -r "$file" +%s) > $(date -d 'now - 1 hour' +%s)) ]]; then
+    if [ -f "$file" ] && [ -f "$timestampFile" ] && [ "$(date -u +%s)" -lt $(($(cat $timestampFile) + 3600)) ]; then
         cat $file
         exit 0
     fi
+}
+updateTimeStamp() {
+    date -u +%s > $timestampFile
 }
 
 main () {
     checkCache
 
-    if ! ping -q -c 1 -W 1 google.com &>/dev/null; then
-        touch $file
-        echo $(cat $file)'*'
+    if (curl -s 'wttr.in?m&format=%t&lang=uk' && curl -s 'wttr.in?u&format=%t&lang=uk') > $tmpfile; then
+        sed "s/[^CF0-9]//g" $tmpfile | tee $file
+        rm $tmpfile
+        updateTimeStamp
+    else
+        [ -r "$file" ] || cat $file
+        printf '*'
+        updateTimeStamp
         exit 1
     fi
-    temp=$(curl -s 'wttr.in?m&format=%t&lang=uk' & curl -s 'wttr.in?u&format=%t&lang=uk' )
-    if [ "$?" -ne 0 ] || [ -z "$temp" ] || [[ "$temp" == "Unknown"* ]] ; then
-        touch $file
-        echo $(cat $file)'*'
-    else
-        output=$(echo "$temp" | sed "s/[^CF0-9]//g" )
-        echo $output >$file
-        echo $output
-    fi
-
 }
-if [  "$1" == "-c" ]; then
+if [ "$1" = "-c" ]; then
     checkCache
     exit
 fi
