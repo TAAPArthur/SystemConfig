@@ -1,13 +1,17 @@
 #!/bin/sh -e
+if [ -"${1#-}" = "$1" ]; then
+    arg=$1
+    shift
+fi
 word=$1
 case $2 in
     black) color=30;;
-    r*|red) color=31;;
-    g*|green) color=32;;
-    y*yellow) color=33;;
+    r|red) color=31;;
+    g|green) color=32;;
+    y|yellow) color=33;;
     blue) color=34;;
     white) color=37;;
-    c*|cyan) color=36;;
-    *) [ ! -z "$2" ] && [ "$2" -gt 0 ] 2>/dev/null && color=$2 || color=31;;
+    c|cyan) color=36;;
+    *) [ -n "$2" ] && [ "$2" -gt 0 ] 2>/dev/null && color=$2 || color=31;;
 esac
-exec sed  -u $(echo -e "s/$word/\001\e[1;${color}m\002&\001\e[0m\002/g")
+exec sed $arg "$(/bin/printf %b "s/$word/\e[1;${color}m&\e[0m/g")"
