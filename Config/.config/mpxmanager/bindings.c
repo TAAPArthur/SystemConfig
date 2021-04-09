@@ -57,7 +57,7 @@ Binding customBindings[] = {
     {Mod4Mask | ShiftMask, XK_v, {spawn,  .arg = {.str = "clip-history select -w $_WIN_ID && xsel --clipboard | xvkbd -window $_WIN_ID -file - 2>/dev/null"}} },
 
     {Mod4Mask, XK_p, {spawn,  .arg = {.str = "dmenu_run"}} },
-    {Mod4Mask, XF86XK_PowerOff, {spawn,  .arg = {.str = "phonemenu"}} },
+    {0, XF86XK_PowerOff, {spawn,  .arg = {.str = "nmenu"}} },
 
     {0, XK_Print, {spawn,  .arg = {.str = "screenshot maim -s"}} },
     {ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $PICTURES_DIR/$(date +%s).png"}} },

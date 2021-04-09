@@ -1,0 +1,2 @@
+#!/bin/sh
+contacts list-recent | head -n 10; contacts list

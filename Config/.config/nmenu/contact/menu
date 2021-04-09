@@ -1,0 +1,5 @@
+#!/bin/sh
+printf "call\n"
+printf "text\n"
+[ -n "$(list-calls)" ] && printf "hangup\tcall -h\n"
+[ -n "$(list-calls -i)" ] && printf "answer\tcall -a\n"

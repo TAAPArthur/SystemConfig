@@ -1,0 +1,42 @@
+#!/bin/sh -e
+## Nested menu
+
+if [ -n "$1" ]; then
+    cd "$1"
+else
+    NMENU_HOME="${XDG_CONFIG_DIR:-$HOME/.config}/nmenu"
+    mkdir -p "$NMENU_HOME"
+    cd "$NMENU_HOME"
+fi
+
+show_menu() {
+    {
+        if [ -x menu ]; then
+            ./menu
+        elif [ -f menu ]; then
+            cat menu
+        else
+            find -t d .
+        fi
+    } | dmenu
+}
+run_menu() {
+    item=$(show_menu)
+
+    if [ -f run ]; then
+        ./run "$item"
+    elif [ -d "$item" ]; then
+        cd "$item"
+        run_menu
+    elif [ -f "$item" ]; then
+        exec "./$item"
+    else
+        cmd="$(echo "$item" | cut -f2)"
+        if [ -n "$cmd" ]; then
+            $cmd
+        else
+            exec "$item"
+        fi
+    fi
+}
+run_menu
