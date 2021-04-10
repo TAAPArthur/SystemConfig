@@ -67,6 +67,7 @@ typedef struct {
     GestureBindingArg arg;
 } GestureBinding ;
 
+#define ROTATE_CMD(X) "xsane-xrandr -a rotate " # X "; xsane-xrandr -a rotate-touchscreen"
 GestureBinding gestureBindings[] = {
     // normal
     {spawn,  {"mpxmanager swap-down"},            {{GESTURE_NORTH}, {.fingers = 3}}},
@@ -88,11 +89,16 @@ GestureBinding gestureBindings[] = {
     {{clickProportional,  .arg = {.i = 7}}, {{GESTURE_WEST}, {.fingers = 2, .mask = TouchMotionMask}}},
     {{moveAndClick,  .arg = {.i = 1}}, {{GESTURE_TAP}},  },
     */
-    // rotation
-    {spawn,  {"xsane-xrandr -a rotate normal"},   {{GESTURE_SOUTH, GESTURE_EAST}, }},
-    {spawn,  {"xsane-xrandr -a rotate left"},     {{GESTURE_EAST, GESTURE_NORTH}, }},
-    {spawn,  {"xsane-xrandr -a rotate inverted"}, {{GESTURE_NORTH, GESTURE_WEST}, }},
-    {spawn,  {"xsane-xrandr -a rotate right"},    {{GESTURE_WEST, GESTURE_SOUTH}, }},
+
+    // rotation; drawn an "L" to rotate
+    {spawn,  {ROTATE_CMD(normal)  }, {{GESTURE_SOUTH, GESTURE_EAST}}},
+    {spawn,  {ROTATE_CMD(normal)  }, {{GESTURE_SOUTH, GESTURE_SOUTH_EAST, GESTURE_EAST}}},
+    {spawn,  {ROTATE_CMD(left)    }, {{GESTURE_EAST,  GESTURE_NORTH}}},
+    {spawn,  {ROTATE_CMD(left)    }, {{GESTURE_EAST,  GESTURE_NORTH_EAST, GESTURE_NORTH}}},
+    {spawn,  {ROTATE_CMD(inverted)}, {{GESTURE_NORTH, GESTURE_WEST}}},
+    {spawn,  {ROTATE_CMD(inverted)}, {{GESTURE_NORTH, GESTURE_NORTH_WEST, GESTURE_WEST}}},
+    {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH}}},
+    {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH_WEST, GESTURE_SOUTH}}},
 };
 
 void triggerGestureBindings(GestureEvent* event) {
