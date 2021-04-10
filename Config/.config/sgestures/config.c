@@ -38,9 +38,9 @@ static inline bool contains(GestureRegion rect, GesturePoint arg) {
     return (rect.x <= arg.x && arg.x <=  rect.x + rect.width &&
             rect.y <= arg.y && arg.y <= rect.y + rect.height);
 }
-ProductID generateIDHighBits(ProductID id __attribute__((unused)), GesturePoint startingGesturePoint) {
+ProductID generateIDHighBits(const TouchEvent* event) {
     for(int i = LEN(gestureRegions) - 1; i > 0; --i)
-        if(contains(gestureRegions[i], startingGesturePoint))
+        if(contains(gestureRegions[i], event->pointPercent))
             return i + 1;
     return 0;
 }
@@ -48,8 +48,7 @@ ProductID generateIDHighBits(ProductID id __attribute__((unused)), GesturePoint 
 void spawn(const char* cmd) {
     int pid = fork();
     if(pid == 0) {
-        const char* const args[] = {"/bin/sh", "-c", cmd, NULL};
-        execv(args[0], (char* const*)args);
+        execl("/bin/sh", "/bin/sh", "-c", cmd, NULL);
         perror("exec failed; Aborting");
         exit(2);
     }
@@ -63,8 +62,8 @@ typedef struct {
     void (*func)();
     union {
         const char* str;
-    };
-    GestureBindingArg arg;
+    } arg;
+    GestureBindingArg bindingArg;
 } GestureBinding ;
 
 #define ROTATE_CMD(X) "xsane-xrandr -a rotate " # X "; xsane-xrandr -a rotate-touchscreen"
@@ -104,7 +103,7 @@ GestureBinding gestureBindings[] = {
 void triggerGestureBindings(GestureEvent* event) {
     currentEvent = event;
     for(int i = 0; i < LEN(gestureBindings); i++)
-        if(matchesGestureEvent(&gestureBindings[i].arg, event)) {
+        if(matchesGestureEvent(&gestureBindings[i].bindingArg, event)) {
             gestureBindings[i].func(gestureBindings[i].arg);
         }
     dumpAndFreeGesture(event);
