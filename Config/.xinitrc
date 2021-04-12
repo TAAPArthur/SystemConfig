@@ -28,6 +28,7 @@ fi
 
 [ -x /usr/bin/xmouse-control ] && xmouse-control &
 
+[ -x /usr/bin/sgestures ] && sgestures-libinput-writer | sgestures &
 
 #vim -c "mkspell! ~/SystemConfig/Config/vim-spell-programs.add" +qall
 
