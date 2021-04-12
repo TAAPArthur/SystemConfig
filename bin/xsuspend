@@ -1,0 +1,4 @@
+#!/bin/sh
+mpxmanager block-device-events
+/bin/suspend
+mpxmanager unblock-device-events

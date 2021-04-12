@@ -1,5 +1,6 @@
-suspend
-contact
-camera
-lock
-navboard
+#!/bin/sh
+printf "suspend\txsuspend\n"
+echo contact
+echo camera
+echo lock
+echo navboard
