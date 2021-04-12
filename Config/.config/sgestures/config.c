@@ -77,8 +77,10 @@ GestureBinding gestureBindings[] = {
     {spawn,  {"mpxmanager shift-workspace-down"}, {{GESTURE_WEST},  {.fingers = 4}}},
 
     // OSK
-    {spawn,  {"navboard"},                        {{GESTURE_EAST}, .regionID=TOP_MIDDLE}},
-    {spawn,  {"pkill navboard"},                  {{GESTURE_WEST}, .regionID=TOP_MIDDLE}},
+    {spawn,  {"navboard-local board_of_boards"},        {{GESTURE_EAST}, .regionID=BOTTOM_MIDDLE}},
+    {spawn,  {"navboard-local wm"},                     {{GESTURE_WEST}, .regionID=BOTTOM_MIDDLE}},
+    {spawn,  {"navboard-local"},                        {{GESTURE_EAST}, .regionID=TOP_MIDDLE}},
+    {spawn,  {"pkill navboard-local"},                  {{GESTURE_WEST}, .regionID=TOP_MIDDLE}},
 
     /*
     // mouse emulation
