@@ -11,13 +11,13 @@ fi
 
 case $1 in
     -i|i)
-        amixer --quiet set $device ${2:-1}+
+        amixer --quiet set "$device" ${2:-1}+
         ;;
     -d|d)
-        amixer --quiet set $device ${2:-1}-
+        amixer --quiet set "$device" ${2:-1}-
         ;;
     -m|-t|m|t)
-        amixer --quiet set $device toggle
+        amixer --quiet set "$device" toggle
         ;;
 esac
-notify-send -r $device "$(amixer get $device)"
+notify-send -r "$device" "$(amixer get "$device")"
