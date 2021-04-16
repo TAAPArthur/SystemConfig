@@ -41,7 +41,7 @@ static inline bool contains(GestureRegion rect, GesturePoint arg) {
 ProductID generateIDHighBits(const TouchEvent* event) {
     for(int i = LEN(gestureRegions) - 1; i > 0; --i)
         if(contains(gestureRegions[i], event->pointPercent))
-            return i + 1;
+            return i;
     return 0;
 }
 
