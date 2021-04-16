@@ -21,18 +21,18 @@ enum {
 };
 GestureRegion gestureRegions[] = {
     {0,     0, 100, 100},
-    {0,     0,  33,  20},
-    {33,    0,  33,  20},
-    {67,    0,  33,  20},
-    {0,     0,  20,   0},
-    {80,    0,  20,   0},
-    {0,    80,  33,  20},
-    {33,   80,  33,  20},
-    {37,   80,  33,  20},
+
+    {0,     0,  20,   2},
+    {20,    0,  60,   2},
+    {80,    0,  20,   2},
+
+    {0,    20,   2,   96},
+    {98,   20,   2,   96},
+
+    {0,    98,  20,   2},
+    {20,   98,  60,   2},
+    {80,   98,  20,   2},
 };
-
-static GestureEvent* currentEvent;
-
 
 static inline bool contains(GestureRegion rect, GesturePoint arg) {
     return (rect.x <= arg.x && arg.x <=  rect.x + rect.width &&
@@ -80,7 +80,7 @@ GestureBinding gestureBindings[] = {
     {spawn,  {"navboard-local board_of_boards"},        {{GESTURE_EAST}, .regionID=BOTTOM_MIDDLE}},
     {spawn,  {"navboard-local wm"},                     {{GESTURE_WEST}, .regionID=BOTTOM_MIDDLE}},
     {spawn,  {"navboard-local"},                        {{GESTURE_EAST}, .regionID=TOP_MIDDLE}},
-    {spawn,  {"pkill navboard-local"},                  {{GESTURE_WEST}, .regionID=TOP_MIDDLE}},
+    {spawn,  {"pkill navboard"},                  {{GESTURE_WEST}, .regionID=TOP_MIDDLE}},
 
     /*
     // mouse emulation
@@ -92,18 +92,17 @@ GestureBinding gestureBindings[] = {
     */
 
     // rotation; drawn an "L" to rotate
-    {spawn,  {ROTATE_CMD(normal)  }, {{GESTURE_SOUTH, GESTURE_EAST}}},
-    {spawn,  {ROTATE_CMD(normal)  }, {{GESTURE_SOUTH, GESTURE_SOUTH_EAST, GESTURE_EAST}}},
-    {spawn,  {ROTATE_CMD(left)    }, {{GESTURE_EAST,  GESTURE_NORTH}}},
-    {spawn,  {ROTATE_CMD(left)    }, {{GESTURE_EAST,  GESTURE_NORTH_EAST, GESTURE_NORTH}}},
-    {spawn,  {ROTATE_CMD(inverted)}, {{GESTURE_NORTH, GESTURE_WEST}}},
-    {spawn,  {ROTATE_CMD(inverted)}, {{GESTURE_NORTH, GESTURE_NORTH_WEST, GESTURE_WEST}}},
-    {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH}}},
-    {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH_WEST, GESTURE_SOUTH}}},
+    {spawn,  {ROTATE_CMD(normal)  }, {{GESTURE_SOUTH, GESTURE_EAST}, {.fingers=1}}},
+    {spawn,  {ROTATE_CMD(normal)  }, {{GESTURE_SOUTH, GESTURE_SOUTH_EAST, GESTURE_EAST}, {.fingers=1}}},
+    {spawn,  {ROTATE_CMD(left)    }, {{GESTURE_EAST,  GESTURE_NORTH}, {.fingers=1}}},
+    {spawn,  {ROTATE_CMD(left)    }, {{GESTURE_EAST,  GESTURE_NORTH_EAST, GESTURE_NORTH}, {.fingers=1}}},
+    {spawn,  {ROTATE_CMD(inverted)}, {{GESTURE_NORTH, GESTURE_WEST}, {.fingers=1}}},
+    {spawn,  {ROTATE_CMD(inverted)}, {{GESTURE_NORTH, GESTURE_NORTH_WEST, GESTURE_WEST}, {.fingers=1}}},
+    {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH}, {.fingers=1}}},
+    {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH_WEST, GESTURE_SOUTH}, {.fingers=1}}},
 };
 
 void triggerGestureBindings(GestureEvent* event) {
-    currentEvent = event;
     for(int i = 0; i < LEN(gestureBindings); i++)
         if(matchesGestureEvent(&gestureBindings[i].bindingArg, event)) {
             gestureBindings[i].func(gestureBindings[i].arg);
