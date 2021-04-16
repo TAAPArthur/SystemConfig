@@ -2,5 +2,7 @@
 printf "suspend\txsuspend\n"
 echo contact
 echo camera
-echo lock
+printf "screenshot\tmaim %s.png\n" "$PICTURES_DIR/$(date -Is)"
+printf "restart WM\tmpxmanager restart\n"
 echo navboard
+pidfile -e brownnoise && printf "stop brownnoise\tpidfile -k brownnoise\n" || printf "brownnoise\tpidfile -r brownnoise\n"

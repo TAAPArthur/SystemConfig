@@ -24,7 +24,7 @@ run_menu() {
     item=$(show_menu)
 
     if [ -f run ]; then
-        ./run "$item"
+        exec ./run "$item"
     elif [ -d "$item" ]; then
         cd "$item"
         run_menu
@@ -33,7 +33,8 @@ run_menu() {
     else
         cmd="$(echo "$item" | cut -f2)"
         if [ -n "$cmd" ]; then
-            $cmd
+            # shellcheck disable=SC2086
+            exec $cmd
         else
             exec "$item"
         fi
