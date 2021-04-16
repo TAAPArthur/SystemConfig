@@ -1,0 +1,2 @@
+#!/bin/sh
+exec ffplay -f lavfi -showmode 0 -i 'anoisesrc=color=brown'
