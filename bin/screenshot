@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 set -xe
-set -o pipefail
-cmd=${@:-maim -s}
-cd $PICTURES_DIR
+if [ "$#" -eq 0 ]; then
+    set -- maim -s
+fi
+cd "$PICTURES_DIR"
 
-TEMP_FILE=/tmp/$(date +%s).png
-$cmd $TEMP_FILE
+TEMP_FILE=/tmp/$(date -Is).png
+"$@" "$TEMP_FILE"
 fileName=$(zenity --file-selection --save --confirm-overwrite)
-mv $TEMP_FILE $fileName
-cat $fileName | xclip -selection clipboard -t image/png
+mv "$TEMP_FILE" "$fileName"
+xclip -selection clipboard -t image/png < "$fileName"
