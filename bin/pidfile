@@ -1,0 +1,19 @@
+#!/bin/sh -ex
+
+PIDDIR="/tmp/$USER"
+PIDFILE="$PIDDIR/$2"
+if [ "$1" = "-e" ]; then
+    [ -e "$PIDFILE" ]
+    flock -n "$PIDFILE" echo file exists && exit 1
+    exit 0
+elif [ "$1" = "-k" ]; then
+    if [ -e "$PIDFILE" ]; then
+        flock -n "$PIDFILE" /bin/true && exit 1
+        kill -9 "$(cat "$PIDFILE")"
+        rm "$PIDFILE"
+    fi
+elif [ "$1" = "-r" ]; then
+    shift
+    mkdir -p "$PIDDIR"
+    exec flock "$PIDFILE" /bin/sh -c "$* & echo \$! > $PIDFILE"
+fi
