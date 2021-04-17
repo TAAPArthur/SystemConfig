@@ -17,15 +17,11 @@ export PASSWORD_STORE_DIR=~/.config/tpm
 export PKG_MANAGER=pacaur
 export PICTURES_DIR=~/Pictures
 export QT_STYLE_OVERRIDE=adwaita-dark
-export SUSPEND_TIME=30
 export TASKDATA=~/Documents/Tasks/.task
 export TASKRC=~/Documents/Tasks/.taskrc
 export TERMINAL=st
 export VIDEO_PAYER=mpv
 export WINDOW_MANAGER=mpxmanager
-export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
-export XSECURELOCK_SHOW_DATETIME=1
-export XSECURELOCK_WAIT_TIME_MS=12000
 
 #shell vars
 export HISTCONTROL=ignoredups

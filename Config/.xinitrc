@@ -7,10 +7,7 @@ exec > ~/.xinitrc.out 2> ~/.xinitrc.err
 
 xset s 1200 180
 
-if [ "$SUSPEND_TIME" -ne "0" ]; then
-     [ -x /usr/bin/xss-lock ] && [ -x /usr/bin/xsecurelock ] && xss-lock -n '(brightness set .1 && trap "brightness set")' -- xsecurelock &
-     [ -x /usr/bin/xautolock ] && xautolock -time "${SUSPEND_TIME:-30}" -detectsleep -locker "systemctl suspend" &
-fi
+[ -x /usr/bin/apples ] && [ -x /usr/bin/mpxlocker ] && apples "mpxlocker" "/bin/suspend" &
 
 # setxkbmap -option compose:ralt
 
