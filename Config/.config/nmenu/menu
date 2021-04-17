@@ -1,5 +1,6 @@
 #!/bin/sh
-printf "suspend\txsuspend\n"
+printf "suspend\tdelay 2 xsuspend\n"
+printf "lock\tdelay 2 xset s activate \n"
 echo contact
 echo camera
 printf "screenshot\tmaim %s.png\n" "$PICTURES_DIR/$(date -Is)"

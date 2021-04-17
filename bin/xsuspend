@@ -1,4 +1,5 @@
 #!/bin/sh
-mpxmanager block-device-events
+
+xset s activate
+sleep 1
 /bin/suspend
-mpxmanager unblock-device-events
