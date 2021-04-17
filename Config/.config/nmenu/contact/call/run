@@ -1,2 +1,2 @@
 #!/bin/sh
-call "$1"
+exec call -d "$1"

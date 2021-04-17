@@ -16,7 +16,7 @@ show_menu() {
         elif [ -f menu ]; then
             cat menu
         else
-            find -t d .
+            find . -type d
         fi
     } | dmenu
 }

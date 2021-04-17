@@ -1,2 +1,2 @@
 #!/bin/sh
-send-sms "$1" "$(dmemu < quick_text.txt)"
+send-sms "$1" "$(dmenu < quick_text.txt)"
