@@ -1,23 +1,36 @@
-#!/bin/sh
+#!/bin/sh -e
 
 if [ -x /bin/pamixer ]; then
-    exec pamixer $@
+    if [ "$1" = "-s" ] || [ "$1" = "s" ]; then
+        shift
+        set -- --set-volume "$@"
+    fi
+    exec pamixer "$@"
 fi
-device="Master"
+ALSA_DEVICE=${ALSA_DEVICE:-"SoftVol Playback Device"}
 if [ "$2" = "--default-source" ]; then
-    device=Capture
+    ALSA_DEVICE=Capture
     shift
 fi
 
 case $1 in
     -i|i)
-        amixer --quiet set "$device" ${2:-1}+
+        amixer --quiet set "$ALSA_DEVICE" "${2:-1}+"
         ;;
     -d|d)
-        amixer --quiet set "$device" ${2:-1}-
+        amixer --quiet set "$ALSA_DEVICE" "${2:-1}-"
         ;;
-    -m|-t|m|t)
-        amixer --quiet set "$device" toggle
+    -s|s)
+        amixer --quiet set "$ALSA_DEVICE" "${2:-1}"
+        ;;
+    -m|m)
+        amixer --quiet set "$ALSA_DEVICE" mute
+        ;;
+    -u|u)
+        amixer --quiet set "$ALSA_DEVICE" unmute
+        ;;
+    -t|t)
+        amixer --quiet set "$ALSA_DEVICE" toggle
         ;;
 esac
-notify-send -r "$device" "$(amixer get "$device")"
+notify-send -r "$ALSA_DEVICE" "$(amixer get "$ALSA_DEVICE")"
