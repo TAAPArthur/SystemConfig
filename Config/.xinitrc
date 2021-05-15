@@ -31,7 +31,7 @@ xset s 1200 180
 
 [ -f ~/.xprofile ] && ~/.xprofile
 export NESTED_SHELL_LEVEL=""
-outputFile=/tmp/$WINDOW_MANAGER.out.$(echo $DISPLAY | tr -d ":")
+outputFile=/tmp/$WINDOW_MANAGER.out.${DISPLAY#:}
 [ -f "$outputFile" ] && mv "$outputFile" "$outputFile.bk"
 #$TERMINAL
 exec "$WINDOW_MANAGER" > "$outputFile" 2>&1
