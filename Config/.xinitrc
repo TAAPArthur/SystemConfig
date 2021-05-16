@@ -26,6 +26,8 @@ xset s 1200 180
 [ -x /usr/bin/xmouse-control ] && xmouse-control &
 
 [ -x /usr/bin/sgestures ] && sgestures-libinput-writer | sgestures &
+[ -x /usr/bin/ringd ] && ringd &
+[ -x /usr/bin/smsd ] && smsd &
 
 #vim -c "mkspell! ~/SystemConfig/Config/vim-spell-programs.add" +qall
 
