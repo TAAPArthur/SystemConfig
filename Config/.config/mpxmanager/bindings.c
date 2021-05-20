@@ -57,12 +57,12 @@ Binding customBindings[] = {
     {Mod4Mask | ShiftMask, XK_v, {spawn,  .arg = {.str = "clip-history select -w $_WIN_ID && xsel --clipboard | xvkbd -window $_WIN_ID -file - 2>/dev/null"}} },
 
     {Mod4Mask, XK_p, {spawn,  .arg = {.str = "dmenu_run"}} },
-    {0, XF86XK_PowerOff, {spawn,  .arg = {.str = "nmenu"}} },
+    {0, XF86XK_PowerOff, {spawn,  .arg = {.str = "nmenu"}} , {.noKeyRepeat = 1} },
 
     {0, XK_Print, {spawn,  .arg = {.str = "screenshot maim -s"}} },
-    {ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $PICTURES_DIR/$(date +%s).png"}} },
+    {ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $PICTURES_DIR/$(date -Is).png"}} },
     {Mod4Mask, XK_Print, {spawn,  .arg = {.str = "maim -i $_WIN_ID| xclip -selection clipboard -t image/png"}} },
-    {Mod4Mask | ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $_WIN_ID $PICTURES_DIR/$(date +%s).png"}} },
+    {Mod4Mask | ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $_WIN_ID $PICTURES_DIR/$(date -Is).png"}} },
     {ControlMask, XK_Print, {spawn,  .arg = {.str = "screenshot maim -i $_WIN_ID"}} },
 
     {0, XF86XK_Eject, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
@@ -122,7 +122,9 @@ Binding customBindings[] = {
     {Mod4Mask| ControlMask, XK_t, {containTablessWindows}, },
     {Mod4Mask , XK_z, {containWindowAndActivate},  {.windowToPass = FOCUSED_WINDOW}},
     {Mod4Mask | ShiftMask, XK_z, {releaseAllWindows}},
-    {Mod3Mask, XK_t, {toggleContainer},  {.windowToPass = FOCUSED_WINDOW}},
+    {Mod4Mask, XK_semicolon, {toggleContainer},  {.windowToPass = FOCUSED_WINDOW}},
+    {Mod3Mask, XK_semicolon, {toggleContainer},  {.windowToPass = FOCUSED_WINDOW}},
+    {Mod4Mask| ShiftMask, XK_colon, {containTablessWindows}},
     {Mod4Mask | Mod1Mask | ShiftMask, XK_z, {clearAllFakeMonitors}},
 
 
