@@ -1,15 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 prompt(){
-    dmenu -p "$1" </dev/null 
+    dmenu -p "$1" </dev/null
 }
 
 execute(){
     previousValue="$1"
-    [ -z $1 ] && previousValue=0
+    [ -z "$1" ] && previousValue=0
     result="$(prompt $previousValue)"
-    
-    result=$(python <(cat << EOF
+
+    result=$(python << EOF
 _=$previousValue;
 result="$result"
 if result.strip()[0] in ['*','/','-','+','^','%']:
@@ -17,10 +17,10 @@ if result.strip()[0] in ['*','/','-','+','^','%']:
 eval(result)
 print(eval(result))
 EOF
-))
-    echo "$result" | xsel 
+)
+    echo "$result" | xsel
     execute "$result"
 }
 execute
-    
-    
+
+

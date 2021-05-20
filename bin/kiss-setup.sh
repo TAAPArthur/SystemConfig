@@ -1,21 +1,21 @@
 #!/bin/sh -e
 
 KISS_REPO_DIR=${KISS_REPO_DIR:-/etc/repo}
-mkdir -p $KISS_REPO_DIR
+mkdir -p "$KISS_REPO_DIR"
 
 cd /etc/repo
 
 # https://github.com/kisslinux/community
 while read -r url name; do
-    [ -n "$name" ] || name=$(basename $url .git)
+    [ -n "$name" ] || name="$(basename "$url" .git)"
     if [ ! -e "$name" ]; then
-        git clone $url $name
+        git clone "$url" "$name"
     else
         (
-        cd $name
+        cd "$name"
         if [ "$(git remote get-url origin)" != "$url" ]; then
             git remote remove origin
-            git remote add origin $url
+            git remote add origin "$url"
             git fetch
             git stash
             git reset --hard origin/master || git reset --hard origin/main

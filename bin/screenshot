@@ -1,5 +1,5 @@
-#!/bin/sh
-set -xe
+#!/bin/sh -e
+
 if [ "$#" -eq 0 ]; then
     set -- maim -s
 fi

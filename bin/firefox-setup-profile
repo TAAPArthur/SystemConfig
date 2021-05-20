@@ -1,15 +1,14 @@
-#!/bin/bash
+#!/bin/sh -e
+
 FILE=~/SystemConfig/PseudoPatches/firefox-prefs.txt
+path="$HOME/.mozilla/firefox/*.${1:-default}/prefs.js"
 
-path=$HOME/.mozilla/firefox/*.${1:-default}/prefs.js
+[ -f "$path" ]
 
-set -e
-[ -f $path ]
-
-while read key value; do
-    if grep -q $key $path; then
-        sed -i "s/user_pref($key, .*);/user_pref($key, $value);/g" $path
+while read -r key value; do
+    if grep -q "$key" "$path"; then
+        sed -i "s/user_pref($key, .*);/user_pref($key, $value);/g" "$path"
     else
-        echo "user_pref($key, $value);" >> $path
+        echo "user_pref($key, $value);" >> "$path"
     fi
-done < <(cat $FILE)
+done <$FILE
