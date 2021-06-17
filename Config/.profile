@@ -21,6 +21,7 @@ export TASKDATA=~/Documents/Tasks/.task
 export TASKRC=~/Documents/Tasks/.taskrc
 export TERMINAL=st
 export VIDEO_PAYER=mpv
+export VIMINIT="source ~/.config/vim/vimrc"
 export WINDOW_MANAGER=mpxmanager
 
 #shell vars
