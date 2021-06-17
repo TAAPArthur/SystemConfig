@@ -102,7 +102,7 @@ command! -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\|:\)/\
 
 function! GenerateTags()
     if &filetype == "c"
-        !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort -V | uniq | ctags -R -L - --c++-kinds=+p
+        !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort | uniq | ctags -R -L - --c-kinds=+p
     else
         !ctags -R --exclude="*cov*" --exclude="*doc*" .
     endif
