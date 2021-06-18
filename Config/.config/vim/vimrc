@@ -91,7 +91,7 @@ augroup project
   autocmd!
   autocmd BufRead,BufNewFile *.h,*.c set filetype=c
   autocmd FileType c setlocal makeprg=tcc\ -c\ %
-  autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090,SC2068,SC2086,SC2048\ -f\ gcc\ %
+  autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090\ -f\ gcc\ %
   autocmd FileType python setlocal makeprg=python-linter
   autocmd FileType json setlocal formatprg=jq\ -r\ .
   autocmd BufWritePost * if &makeprg != "make" | silent make! % | silent redraw!
