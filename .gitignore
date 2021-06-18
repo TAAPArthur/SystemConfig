@@ -1,11 +1,7 @@
 *.spl
 Config/vim-spell-programs.add
-Config/.config/mpxmanager/mpxmanager
 *.o
 *tags
 *TAGS
 GPATH
-*.last_compiled_verision
-packages/bootstrap/*/*/*
-packages/normal/*/*/*
-*.tar.gz
+Config/.config/navboard/volume.c
