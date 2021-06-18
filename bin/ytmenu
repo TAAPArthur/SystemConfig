@@ -1,0 +1,17 @@
+#!/bin/sh -e
+# shellcheck disable=SC2086
+
+# Inspired by https://github.com/pystardust/ytfzf
+
+VIDEO_PLAYER=${VIDEO_PLAYER-mpv}
+YT_MENU_VIDEO_PLAYER_OPTIONS=${YT_MENU_VIDEO_PLAYER_OPTIONS---ytdl-raw-options=write-auto-sub=,sub-lang=en}
+DMENU=${DMENU:-dmenu}
+YT_MENU_OPTIONS=${YT_MENU_OPTIONS--i -l 30 -p Search:}
+
+query=$1
+
+video_id=$(curl "https://www.youtube.com/results" -s       -G --data-urlencode "search_query=$query" -G -L --compressed | sed -n '/var *ytInitialData/,$p' | tr -d '\n' | sed -E ' s_^.*var ytInitialData ?=__ ; s_;</script>.*__ ;' | jq -r '.contents| ..|.videoRenderer? | select(. !=null) | .videoId + " " + .publishedTimeText.simpleText + " " + .lengthText.simpleText + " " + .title.runs[0].text' | $DMENU $YT_MENU_OPTIONS | cut -d" " -f 1)
+
+[ -n "$video_id" ]
+echo Playing: "$VIDEO_PLAYER $YT_MENU_VIDEO_PLAYER_OPTIONS https://www.youtube.com/watch?v=$video_id"
+$VIDEO_PLAYER $YT_MENU_VIDEO_PLAYER_OPTIONS https://www.youtube.com/watch?v=$video_id
