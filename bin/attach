@@ -1,0 +1,3 @@
+#!/bin/sh
+
+NESTED_SHELL_LEVEL="" SESSION_NAME="$1:" exec abduco -A $1;
