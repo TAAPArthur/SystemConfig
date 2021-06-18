@@ -11,8 +11,8 @@ safeLn() {
     if [ ! -e "$target" ] || diff -q "$srcFile" "$target"; then
         ln -sf "$srcFile" "$linkTarget"
     else
-        diff -Nu "$srcFile" "$target" || true
-        echo "Override and link $target to $srcFile ? Y/n"
+        diff -u $srcFile $target || true
+        echo "Override  and link $target to $srcFile ? Y/n"
         read -r ans
         if [ "$ans" = Y ] || [ "$ans" = y ]; then
             [ -d "$target" ] && rmdir "$target"
