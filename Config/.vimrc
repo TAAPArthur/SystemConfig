@@ -11,8 +11,6 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-"Plugin 'ajh17/VimCompletesMe'
 Plugin 'akhaku/vim-java-unused-imports'
 Plugin 'iamcco/markdown-preview.vim'
 call vundle#end()            " required
@@ -128,6 +126,24 @@ noremap gk k
 
 map ;; <C-w>T
 noremap <Space> <C-w>w
+
+
+function! GitBlame()
+    let pos = getpos(".")
+    10new | 0r! git blame #
+    call setpos(".", pos)
+    set filetype=git
+    let &l:modifiable=0
+    let &l:modified=0
+endfunction
+command! Gblame call GitBlame()
+command! Gshow !git show <cword> #
+command! Gdiff !git diff %
+
+noremap <leader>gd :Gdiff<CR>
+noremap <leader>gb :Gblame<CR>
+noremap <leader>gs :Gshow<CR>
+noremap <leader>ga :!git add %<CR>
 
 noremap <leader>gcd :cd %:p:h<CR>
 noremap <leader>lcd :lcd %:p:h<CR>
