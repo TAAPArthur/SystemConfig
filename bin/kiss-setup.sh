@@ -23,7 +23,7 @@ while read -r url name; do
         )
     fi
 done <<EOF
-https://github.com/kisslinux/repo
+https://github.com/kiss-community/repo
 https://github.com/kiss-community/repo-community community
-https://github.com/TAAPArthur/mykiss-repo.git
+https://github.com/TAAPArthur/mykiss-repo
 EOF
