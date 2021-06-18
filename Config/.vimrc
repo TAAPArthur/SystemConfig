@@ -154,7 +154,7 @@ noremap <silent> <leader>PP :r !xsel -p<CR>
 
 inoremap <c-z> <esc>:suspend<cr>
 
-inoremap <A-Space> <C-x><C-o>
+inoremap kk <C-x><C-o>
 
 noremap H ^
 noremap L $
