@@ -1,4 +1,5 @@
 #!/bin/sh -e
+# shellcheck disable=SC2086
 
 if [ -"${1#-}" = "$1" ]; then
     arg=$1
@@ -15,4 +16,4 @@ case $2 in
     c|cyan) color=36;;
     *) [ -n "$2" ] && [ "$2" -gt 0 ] 2>/dev/null && color=$2 || color=31;;
 esac
-exec sed "$arg" "$(/bin/printf %b "s/$word/\e[1;${color}m&\e[0m/g")"
+exec sed $arg "$(/bin/printf %b "s/$word/\e[1;${color}m&\e[0m/g")"
