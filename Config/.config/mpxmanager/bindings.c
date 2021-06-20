@@ -67,8 +67,8 @@ Binding customBindings[] = {
 
     {0, XF86XK_Eject, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
     {0, XF86XK_Calculator, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
-    {Mod4Mask, XK_Delete, {raiseOrRun2,  .arg = {.str = "gt5"}, .arg2.str = "$TERMINAL -c gt5 -e gt5 /"} },
-    {Mod4Mask | ShiftMask, XK_Delete, {raiseOrRun2,  .arg = {.str = "gt5"}, .arg2.str = "$TERMINAL -c gt5 -e gt5 ~"} },
+    {Mod4Mask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu /"} },
+    {Mod4Mask | ShiftMask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu ~"} },
 
     {ControlMask | Mod1Mask, XK_Delete, {spawn,  .arg = {.str = "notify-send -t 20000  CPU \"}$(ps -Ao pid,pcpu,pmem,comm --sort=-pcpu --cols=27 | head -n 6)\" && notify-send -t 20000  MEM \"$(ps -Ao pid,pcpu,pmem,comm --sort=-pmem --cols=27 | head -n 6)\" "}}, { .noKeyRepeat = 1}},
 
