@@ -60,9 +60,9 @@ Binding customBindings[] = {
     {0, XF86XK_PowerOff, {spawn,  .arg = {.str = "nmenu"}} , {.noKeyRepeat = 1} },
 
     {0, XK_Print, {spawn,  .arg = {.str = "screenshot maim -s"}} },
-    {ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $PICTURES_DIR/$(date -Is).png"}} },
+    {ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $PICTURES_DIR/$(date -u +%F_%H:%M:%S).png"}} },
     {Mod4Mask, XK_Print, {spawn,  .arg = {.str = "maim -i $_WIN_ID| xclip -selection clipboard -t image/png"}} },
-    {Mod4Mask | ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $_WIN_ID $PICTURES_DIR/$(date -Is).png"}} },
+    {Mod4Mask | ShiftMask, XK_Print, {spawn,  .arg = {.str = "maim -i $_WIN_ID $PICTURES_DIR/$(date -u +%F_%H:%M:%S).png"}} },
     {ControlMask, XK_Print, {spawn,  .arg = {.str = "screenshot maim -i $_WIN_ID"}} },
 
     {0, XF86XK_Eject, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
