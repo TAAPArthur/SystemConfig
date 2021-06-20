@@ -23,7 +23,7 @@ exec > ~/.xinitrc.out 2> ~/.xinitrc.err
 [ -x /usr/bin/smsd ] && exec smsd &
 [ -x /usr/bin/xmouse-control ] && exec xmouse-control &
 
-# [ -f ~/.xprofile ] && ~/.xprofile
+[ -x ~/.xprofile ] && ~/.xprofile
 export NESTED_SHELL_LEVEL=""
 outputFile=/tmp/$WINDOW_MANAGER.out.${DISPLAY#:}
 [ -f "$outputFile" ] && mv "$outputFile" "$outputFile.bk"
