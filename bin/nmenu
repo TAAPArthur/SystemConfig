@@ -10,6 +10,7 @@ else
 fi
 
 show_menu() {
+    # shellcheck disable=SC2086
     {
         if [ -x menu ]; then
             ./menu
@@ -18,7 +19,7 @@ show_menu() {
         else
             find . -type d
         fi
-    } | dmenu
+    } | dmenu $NMENU_MENU_ARGS
 }
 run_menu() {
     item=$(show_menu)

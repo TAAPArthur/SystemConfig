@@ -7,3 +7,5 @@ printf "screenshot\tmaim %s.png\n" "$PICTURES_DIR/$(date -u +%F_%H:%M:%S)"
 printf "restart WM\tmpxmanager restart\n"
 echo navboard
 pidfile -e brownnoise && printf "stop brownnoise\tpidfile -k brownnoise\n" || printf "brownnoise\tpidfile -r brownnoise\n"
+printf "reboot\tsudo reboot\n"
+printf "shutdown\tsudo poweroff\n"
