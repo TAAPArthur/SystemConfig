@@ -4,8 +4,8 @@
 PATH=~/.local/bin:$PATH:~/SystemConfig/bin
 
 # global variables
-export ABDUCO_CMD=bash
-export ABDUCO_SOCKET_DIR=~/.config
+export ABDUCO_CMD="bash -l"
+export ABDUCO_SOCKET_DIR=/tmp/.abduco
 export BASH_COMPLETION_USER_FILE=~/SystemConfig/bash_completion.d
 export BROWSER=vimb
 export BROWSER_ALT=firefox

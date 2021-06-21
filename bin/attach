@@ -1,3 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
-NESTED_SHELL_LEVEL="" SESSION_NAME="$1:" exec abduco -A $1;
+[ -z "$ABDUCO_SOCKET_DIR" ] ||  mkdir -p "$ABDUCO_SOCKET_DIR"
+NESTED_SHELL_LEVEL="" SESSION_NAME="$1:" exec abduco -A "$1";
