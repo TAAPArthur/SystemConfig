@@ -85,8 +85,7 @@ void onXConnectionStart() {
 
 void addNormalBindings();
 void loadSettings() {
-    if(getenv("MPX_DEBUG"))
-        setLogLevel(LOG_LEVEL_DEBUG);
+    setLogLevel(LOG_LEVEL_DEBUG);
     SET_FROM_ENV(HIDE_WM_STATUS);
     DEFAULT_BORDER_COLOR = 0x00FF00;
     ASSUME_PRIMARY_MONITOR = 1;
