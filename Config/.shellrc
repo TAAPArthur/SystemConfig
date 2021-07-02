@@ -18,8 +18,7 @@ cd_back() {
     for path in $CD_HISTORY; do
         CD_HISTORY=${CD_HISTORY#$path:}
         CD_REV_HISTORY="$PWD:$CD_REV_HISTORY"
-        builtin cd "$path"
-        break
+        builtin cd "$path" && break
     done
     unset IFS
 }
@@ -29,8 +28,7 @@ cd_forward() {
     for path in $CD_REV_HISTORY; do
         CD_REV_HISTORY=${CD_REV_HISTORY#$path:}
         CD_HISTORY="$PWD:$CD_HISTORY"
-        builtin cd "$path"
-        break
+        builtin cd "$path" && break
     done
     unset IFS
 }
