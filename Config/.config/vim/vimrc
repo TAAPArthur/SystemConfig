@@ -101,11 +101,10 @@ augroup project
 augroup END
 
 command! -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\|:\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\|?\|:\)\([^ ,/!+=\-<>]\)/\1 \2/ge
-"command! GenTags !tcc -E *.c **/*.c | grep "^\# .*\.[ch]" | awk '{print $3}' | tr -d '"' | sort -u |  xargs -I{} realpath --relative-to=. {} | sed -E "s|^(../)+|/|g" |sort -u |  ctags --kinds-c=+p -R -L -
 
 function! GenerateTags()
     if &filetype == "c"
-        !gcc -M *.[ch] | grep -E "^\s*/"  | sed -e 's/[\\ ]/\n/g' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | sort | uniq | ctags -R -L - --c-kinds=+p
+        !find . -name "*.[c,h]" -exec tcc -M {} \; 2>/dev/null | sed -e 's/ \\//' -e '/\.o/d' | sort -u | { while read -r F; do realpath "$F" | sed "s:^$PWD/::"; done }  |  ctags --C-kinds=+p -R -L -
     else
         !ctags -R --exclude="*cov*" --exclude="*doc*" .
     endif
