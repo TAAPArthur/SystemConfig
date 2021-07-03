@@ -22,7 +22,11 @@ safeLn() {
 }
 
 SYSTEM_CONFIG_DIR=${SYSTEM_CONFIG_DIR:-~/SystemConfig}
-cd "$SYSTEM_CONFIG_DIR/Config"
+if [ -z "$1" ]; then
+    cd "$SYSTEM_CONFIG_DIR/Config"
+else
+    cd "$SYSTEM_CONFIG_DIR/$1"*
+fi
 for dotFile in .*; do
     if [ "$dotFile" = "." ] || [ "$dotFile" = ".." ]; then
         continue
