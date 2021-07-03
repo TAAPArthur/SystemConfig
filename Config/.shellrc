@@ -1,8 +1,9 @@
 #!/bin/sh
 # shellcheck disable=2164,SC2034
 
-alias oneline="git log --oneline"
-alias git-branch-recent="git branch --sort=-committerdate |head -n10"
+alias oneline='git log --oneline'
+alias git-branch-recent='git branch --sort=-committerdate |head -n10'
+alias git-push-new='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
 export CD_HISTORY=
 export CD_REV_HISTORY=
