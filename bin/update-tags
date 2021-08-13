@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+fileName="$1"
+tempFile=/tmp/tags-$$
+TAG_FILE=${2:-tags}
+trap 'rm -f $tempFile' EXIT
+grep -vw "$fileName" "$TAG_FILE" > $tempFile
+ctags -a -f "$tempFile" "$fileName"
+mv "$tempFile" "$TAG_FILE"

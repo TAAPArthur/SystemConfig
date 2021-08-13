@@ -4,11 +4,7 @@ let mapleader = ";"
 autocmd!
 
 set runtimepath+=$HOME/.local/share/vim
-" set the runtime path to include Vundle and initialize
-set rtp+=$HOME/.local/share/vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call vundle#begin('~/.local/share/vim')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -26,7 +22,7 @@ set backspace=indent,eol,start
 set encoding=utf-8
 set expandtab
 set foldlevelstart=99 " code folding
-set foldmethod=syntax
+set foldmethod=indent
 set hidden
 set laststatus=2
 set noshowmode
@@ -47,6 +43,8 @@ set wildignore=*.gc??,*.o
 set wildmode=list:longest,full
 set viminfo+=n~/.local/share/vim/viminfo
 
+let g:c_syntax_for_h = 1
+
 let g:vundle#bundle_dir = expand('$HOME/.local/share/vim/bundle', 1)
 let &titlestring=$SESSION_NAME . "%f"
 
@@ -56,7 +54,6 @@ let g:mkdp_auto_close = 0
 function! OpenBrowser(url)
         execute "! $BROWSER " a:url "& "
 endfunction
-
 
 augroup resCur
   autocmd!
@@ -89,18 +86,21 @@ command! Recover execute "1,$d|0r" expand("~/.cache/backup/%:t")
 
 augroup project
   autocmd!
-  autocmd BufRead,BufNewFile *.h,*.c set filetype=c
-  autocmd FileType c setlocal makeprg=tcc\ -c\ %
-  autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090\ -f\ gcc\ %
+  autocmd FileType c setlocal makeprg=tcc\ -c\ -o\ /dev/null
+  autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090\ -f\ gcc
   autocmd FileType python setlocal makeprg=python-linter
   autocmd FileType json setlocal formatprg=jq\ -r\ .
   autocmd BufWritePost * if &makeprg != "make" | silent make! % | silent redraw!
-  autocmd BufWritePost *.py,*.c,*.h silent !ctags -a %
-  autocmd BufWritePost *.py edit | call setpos(".", getpos("'\""))
+  autocmd BufWritePost *.py,*.c,*.h silent !update-tags %
   autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 
-command! -bar -range PadOperand s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\|:\)/\1 \2/ge | s/\([/+-=><!{}]=\|=\|,\|}\|?\|:\)\([^ ,/!+=\-<>]\)/\1 \2/ge
+function! PadOperand ()
+    '<,'>s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\)/\1 \2/ge
+    '<,'>s/\([/+-=><!{}]=\|=\|,\|}\|?\)\([^ ,/!+=\-<>:;]\)/\1 \2/ge
+    '<,'>s/\([A-z0-9)]\)\([*\-+|&]\)\([(A-z0-9]\)/\1 \2 \3/ge
+endfunction
+command! -bar -range PadOperand call PadOperand() | call PadOperand()
 
 function! GenerateTags()
     if &filetype == "c"
@@ -147,16 +147,26 @@ noremap <leader>gb :Gblame<CR>
 noremap <leader>gs :Gshow<CR>
 noremap <leader>ga :!git add %<CR>
 
+set grepprg=git\ grep\ -wn\ $*
+noremap <leader>gg :silent execute "grep! " . shellescape(expand("<cword>"))<CR>:silent redraw!<CR>
+
 noremap <leader>gcd :cd %:p:h<CR>
 noremap <leader>lcd :lcd %:p:h<CR>
 
 noremap <silent> <leader>yy :w !xsel -i -b <CR>
 noremap <silent> <leader>pp :r !xsel -b<CR>
 noremap <silent> <leader>PP :r !xsel -p<CR>
+noremap <silent> <leader>ap :setlocal paste!<CR>:setlocal paste?<CR>
 
 inoremap <c-z> <esc>:suspend<cr>
-
 inoremap kk <C-x><C-o>
+
+onoremap p i(
+onoremap b i{
+
+
+noremap z<space> z=
+noremap <leader>z :spellr<CR>
 
 noremap H ^
 noremap L $
@@ -167,3 +177,28 @@ nnoremap gI `.
 imap jj <Esc>
 nnoremap ff gT
 nnoremap fg gt
+
+" Function and helpers to print heads of every containing scopes
+function! FindScopeHeaderHelper(line)
+    let current_line = a:line
+    let line_level = indent(current_line)
+    while current_line > 1 && line_level
+        let current_line -= 1
+        if !empty(getline(current_line)) && getline(current_line) != "{" && line_level > indent(current_line)
+            return current_line
+        endif
+    endwhile
+endfunction
+
+function! FindScopeHeader()
+    let current_line = line(".")
+    let dest = ""
+    while current_line
+        let current_line = FindScopeHeaderHelper(current_line)
+        if current_line
+            let dest = getline(current_line) . dest
+        endif
+    endwhile
+    return dest
+endfunction
+nnoremap <leader>w   :echom FindScopeHeader()<cr>
