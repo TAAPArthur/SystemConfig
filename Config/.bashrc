@@ -4,12 +4,12 @@
 for path in /usr/share/bash-completion/completions ~/.local/completions/bash; do
     if [ -d $path ]; then
         for file in "$path"/*; do
-            source "$file"
+            [ -r "$file" ] && source "$file" 2>/dev/null
         done
     fi
 done
 
-[ -f ~/.shellrc ] && source ~/.shellrc
+[ -r ~/.shellrc ] && source ~/.shellrc
 
 PROMPT_COMMAND='_EXIT_CODE=$?;history -a;printf "\033]0;%s\007" "$NESTED_SHELL_LEVEL_STR$SESSION_NAME$PWD"'
 PS1="$CYAN$NESTED_SHELL_LEVEL_STR$END"'$(get_branch)'"$CYAN$SESSION_NAME$BLUE\u@\h$END:"'$( [ "$_EXIT_CODE" -eq 0 ] && echo -en $GREEN || echo -en $RED"($_EXIT_CODE)")'"\w$END$ "
