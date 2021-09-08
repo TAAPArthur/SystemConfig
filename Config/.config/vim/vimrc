@@ -35,7 +35,6 @@ set spellfile=~/SystemConfig/Config/vim-spell.utf-8.add,~/SystemConfig/Config/vi
 set spelloptions=camel
 set tabpagemax=100
 set tabstop=4
-set tags=./tags;,tags;
 set title
 set tw=0
 set updatetime=1000
@@ -90,8 +89,9 @@ augroup project
   autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090\ -f\ gcc
   autocmd FileType python setlocal makeprg=python-linter
   autocmd FileType json setlocal formatprg=jq\ -r\ .
+  autocmd BufEnter * let &l:tags = "tags_" . &filetype
   autocmd BufWritePost * if &makeprg != "make" | silent make! % | silent redraw!
-  autocmd BufWritePost *.py,*.c,*.h silent !update-tags %
+  autocmd BufWritePost *.py,*.c,*.h silent execute "!update-tags -f tags_" . &filetype . " " . expand("%") . " --python-kinds=-i --C++-kinds=+p --C-kinds=+p"
   autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 
@@ -104,9 +104,9 @@ command! -bar -range PadOperand call PadOperand() | call PadOperand()
 
 function! GenerateTags()
     if &filetype == "c"
-        !find . -name "*.[c,h]" -exec tcc -M {} \; 2>/dev/null | sed -e 's/ \\//' -e '/\.o/d' | sort -u | { while read -r F; do realpath "$F" | sed "s:^$PWD/::"; done }  |  ctags --C-kinds=+p -R -L -
+        !find . -name "*.[c,h]" -exec tcc -M {} \; 2>/dev/null | sed -e 's/ \\//' -e '/\.o/d' | sort -u | { while read -r F; do realpath "$F" | sed "s:^$PWD/::"; done }  |  ctags -f tags_c --C-kinds=+p -R -L -
     else
-        !ctags -R --exclude="*cov*" --exclude="*doc*" .
+        execute "!ctags -R --languages=" . &filetype . " -f tags_" . &filetype . " --python-kinds=-i --C++-kinds=+p --exclude='*cov*' --exclude='*doc*' ."
     endif
 endfunction
 command! GenTags call GenerateTags()

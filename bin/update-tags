@@ -1,9 +1,14 @@
 #!/bin/sh -e
 
+TAG_FILE=${TAG_FILE:-tags}
+if [ "$1" = -f ]; then
+    TAG_FILE="$2"
+    shift 2
+fi
 fileName="$1"
+shift
 tempFile=/tmp/tags-$$
-TAG_FILE=${2:-tags}
 trap 'rm -f $tempFile' EXIT
-grep -vw "$fileName" "$TAG_FILE" > $tempFile
-ctags -a -f "$tempFile" "$fileName"
+[ -e "$TAG_FILE" ] && grep -vw "$fileName" "$TAG_FILE" > $tempFile
+ctags -a -f "$tempFile" "$@" "$fileName"
 mv "$tempFile" "$TAG_FILE"
