@@ -3,3 +3,7 @@ set page-right-to-left true
 set guioptions ""
 map <C-Space> set "first-page-column 1:2"
 map <A-Space> set "first-page-column 1:1"
+
+set window-title-basename true
+set window-title-page true
+set window-title-home-tilde true
