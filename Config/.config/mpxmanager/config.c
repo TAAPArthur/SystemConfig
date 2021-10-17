@@ -63,6 +63,9 @@ void configureWindowsByName(WindowInfo* winInfo) {
         //if(winInfo->getCreationTime())
         //    winInfo->moveToWorkspace(3);
     }
+    if(matchesClass(winInfo, "firefox")) {
+        strcpy(winInfo->role, "browser");
+    }
     if(matchesClass(winInfo, "st-256color")) {
         strcpy(winInfo->role, "terminal");
         setWindowClass(winInfo->id, "st", "st");
