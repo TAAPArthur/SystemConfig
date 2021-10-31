@@ -1,0 +1,19 @@
+s/Big Sister ([A-Z]\w*)/\1 onee-san/g
+s/Big Sister/Onee-san/g
+s/Big Brother ([A-Z]\w*)/\1 onii-san/g
+s/Big Brother/Onii-san/g
+
+s/Big Sis ([A-Z]\w*)/\1 nee-chan/g
+s/Big Sis/Nee-chan/g
+s/Big Bro ([A-Z]\w*)/\1 nii-chan/g
+s/Big Bro/Nii-chan/g
+
+s/Little Sister/Imouto-san/g
+s/Little Sister ([A-Z]\w*)/\1 Imouto-san/g
+
+s/(Young|Little) Miss ([A-Z]\w*)/\2-chan/g
+s/Bro([\W])/Aniki\1/g
+
+s/(Sir|Madam) (([A-Z]\w*)( ?[A-Z]\w*)*)/\2-dono/g
+s/(Lord|Lady) (([A-Z]\w*)( ?[A-Z]\w*)*)/\2-sama/g
+s/(Ms\.|Miss|Mr\.|Mrs\.) (([A-Z]\w*)( ?[A-Z]\w*)*)/\2-san/g
