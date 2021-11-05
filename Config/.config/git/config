@@ -1,0 +1,12 @@
+[user]
+	email = taaparthur@disroot.org
+	name = Arthur Williams
+[pull]
+	ff = only
+
+[sendemail]
+    chainreplyto = false
+    smtpencryption = tls
+    smtpserverport = 587
+    smtpuser = taaparthur@disroot.org
+    smtpserver = disroot.org
