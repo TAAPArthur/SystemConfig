@@ -4,7 +4,7 @@
 # Inspired by https://github.com/pystardust/ytfzf
 
 VIDEO_PLAYER=${VIDEO_PLAYER-mpv}
-YT_MENU_VIDEO_PLAYER_OPTIONS=${YT_MENU_VIDEO_PLAYER_OPTIONS---ytdl-raw-options=write-auto-sub=,sub-lang=en}
+YT_MENU_VIDEO_PLAYER_OPTIONS=${YT_MENU_VIDEO_PLAYER_OPTIONS---ytdl-raw-options=write-auto-sub=,sub-lang=en,format=worst}
 DMENU=${DMENU:-dmenu}
 YT_MENU_OPTIONS=${YT_MENU_OPTIONS--i -l 30 -p Search:}
 
