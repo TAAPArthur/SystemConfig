@@ -1,13 +1,60 @@
-#!/bin/sh -e
+#!/bin/sh -ex
+# shellcheck disable=SC2046
 
-if [ "$#" -eq 0 ]; then
-    set -- maim -s
+firstArg="$1"
+shift
+case "$firstArg" in
+
+    -g)
+        IFS=:+ read -r WIDTH HEIGHT X Y
+        ;;
+    -a)
+        X=$1
+        Y=$2
+        WIDTH=$3
+        HEIGHT=$4
+        shift 4
+        ;;
+    -e)
+        ;;
+    -s)
+        exec $0 -a $(xrectsel "%x %y %w %h") "$@"
+        ;;
+    -i)
+        exec env $(xdotool getwindowgeometry --shell "$(xdotool selectwindow)") "$0" -e "$@"
+        ;;
+    -f)
+        exec env $(xdotool getwindowgeometry --shell "$(xdotool getwindowfocus)") "$0" -e "$@"
+        ;;
+    -w)
+        window=$2
+        shift
+        exec env $(xdotool getwindowgeometry --shell "$window") "$0" -e "$@"
+esac
+
+echo "$WIDTH:$HEIGHT:$X:$Y" >&2
+
+defaultExt=png
+take_video=0
+if [ "$(basename "$0")" = screencast ] || [ "$2" = screencast ]; then
+    defaultExt=mp4
+    take_video=1
+elif [ "$(basename "$0")" = screencastaudio ] || [ "$2" = screencastaudio ]; then
+    defaultExt=mp4
+    take_video=2
 fi
-cd "$PICTURES_DIR"
 
-TEMP_FILE=/tmp/$(date -u +%s)_$$.png
+[ -n "$1" ] && fileName=$1 || fileName="$(date -u +%s)_$$.$defaultExt"
+[ "$fileName" = "?" ] && fileName=$(zenity --file-selection --save --confirm-overwrite)
+[ -d "$fileName" ] && fileName="$fileName/$(date -u +%s)_$$.$defaultExt"
 
-"$@" "$TEMP_FILE"
-fileName=$(zenity --file-selection --save --confirm-overwrite)
-mv "$TEMP_FILE" "$fileName"
-xclip -selection clipboard -t image/png < "$fileName"
+if [ "$take_video" -eq 0 ]; then
+    ffmpeg -video_size "$WIDTH"x"$HEIGHT" -f x11grab -i ":0.0+$X,$Y" -vframes 1 "$fileName"
+elif [ "$take_video" -eq 1 ]; then
+    ffmpeg -video_size "$WIDTH"x"$HEIGHT" -framerate 25 -f x11grab -i ":0.0+$X,$Y" "$fileName"
+
+elif [ "$take_video" -eq 2 ]; then
+    ffmpeg -video_size "$WIDTH"x"$HEIGHT" -framerate 25 -f x11grab -i ":0.0+$X,$Y" -f alsa -ac 2 -i hw:0 "$fileName"
+fi
+
+echo "$fileName"
