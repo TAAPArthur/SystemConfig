@@ -32,3 +32,10 @@ export HISTTIMEFORMAT="[%F %T]"
 for file in ~/.profile.d/*.sh; do
     [ -r "$file" ] && . "$file"
 done
+
+if [ -z "$DISPLAY" ] && [ -x /usr/bin/xinit ] && [ "$(tty)" = "/dev/tty1" ]; then
+    tty=$(tty)
+    num=${tty#/dev/tty}
+    display=$((num-1))
+    exec xinit ~/.xinitrc  -- ~/.xserverrc :$display "vt$num" -keeptty
+fi

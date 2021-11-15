@@ -11,7 +11,3 @@ shopt -s histappend
 if [ -f ~/.bashrc ] && [ -n "$PS1" ]; then
     source ~/.bashrc
 fi
-
-if [ -z "$DISPLAY" ] && [ "$SHLVL" -eq 1 ] && [ -x /bin/startx ] && [ "$(tty)" = "/dev/tty1" ]; then
-  exec startx
-fi
