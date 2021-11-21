@@ -38,10 +38,10 @@ void raiseOrRunTerminal(int dir) {
 }
 
 Binding customBindings[] = {
-    {Mod4Mask, XK_F6, {raiseOrRun,  .arg = {.str = "arandr"}} },
+    {Mod4Mask, XK_F6, {spawn,  .arg = {.str = "autorandr common"}} },
     {0, XF86XK_Display, {spawn,  .arg = {.str = "autorandr -c"}} },
     {ShiftMask, XF86XK_Display, {spawn,  .arg = {.str = "xsane-xrandr -i configure"}} },
-    {Mod4Mask, XF86XK_Display, {raiseOrRun,  .arg = {.str = "arandr"}} },
+    {Mod4Mask, XF86XK_Display, {raiseOrRun,  .arg = {.str = "autorandr clone-largest"}} },
 
     {0, XF86XK_MonBrightnessUp, {spawn,  .arg = {.str = "brightnessctl s +1"}} },
     {0, XF86XK_MonBrightnessDown, {spawn,  .arg = {.str = "brightnessctl s 1-"}} },
@@ -65,14 +65,10 @@ Binding customBindings[] = {
     {Mod4Mask | ShiftMask, XK_Print, {spawn,  .arg = {.str = "screenshot -w $_WIN_ID $PICTURES_DIR/$(date -u +%F_%H:%M:%S).png"}} },
     {ControlMask, XK_Print, {spawn,  .arg = {.str = "screenshot -w $_WIN_ID ?"}} },
 
-    {0, XF86XK_Eject, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
-    {0, XF86XK_Calculator, {spawn,  .arg = {.str = "dmenu-pycalc"}} },
     {Mod4Mask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu /"} },
     {Mod4Mask | ShiftMask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu ~"} },
 
-    {ControlMask | Mod1Mask, XK_Delete, {spawn,  .arg = {.str = "notify-send -t 20000  CPU \"}$(ps -Ao pid,pcpu,pmem,comm --sort=-pcpu --cols=27 | head -n 6)\" && notify-send -t 20000  MEM \"$(ps -Ao pid,pcpu,pmem,comm --sort=-pmem --cols=27 | head -n 6)\" "}}, { .noKeyRepeat = 1}},
 
-    {Mod4Mask, XK_Escape, {spawn,  .arg = {.str = "xtrlock"}}, {.noKeyRepeat = 1} },
     {ControlMask | Mod1Mask, XK_Escape, {spawn, .arg.str = SUSPEND_CMD}, {.noKeyRepeat = 1} },
     {Mod4Mask | ControlMask | Mod1Mask, XK_Escape, {spawn, .arg.str = SHUTDOWN_CMD}, {.noKeyRepeat = 1} },
 
