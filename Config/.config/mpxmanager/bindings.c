@@ -28,9 +28,12 @@ void containTablessWindows() {
     containWindows(getWorkspace(4), (WindowFunctionArg) {matchesClass,  .arg = {.str = "st"}}, "st");
 }
 
-
 void raiseOrRunBrowser(int dir) {
     raiseOrRunFunc("browser", "$BROWSER", dir, matchesRole);
+}
+
+void raiseOrRunMediaView(int dir) {
+    raiseOrRunFunc("media_player", "exit 0", dir, matchesRole);
 }
 
 void raiseOrRunTerminal(int dir) {
@@ -97,6 +100,7 @@ Binding customBindings[] = {
     {Mod4Mask | ControlMask, XK_s, {spawn,  .arg = {.str = "$TERMINAL"}} },
 
     CYCLE_BINDINGS(Mod4Mask, ShiftMask, XK_w, raiseOrRunBrowser, XK_Super_L),
+    CYCLE_BINDINGS(Mod4Mask, ShiftMask, XK_e, raiseOrRunMediaView, XK_Super_L),
     {Mod4Mask | Mod1Mask, XK_w, {spawn,  .arg = {.str = "$BROWSER_ALT"}} },
     {Mod4Mask | ControlMask | ShiftMask, XK_w, {spawn,  .arg = {.str = "$BROWSER"}} },
     {Mod4Mask | ControlMask, XK_w, {spawn,  .arg = {.str = "firefox"}} },
