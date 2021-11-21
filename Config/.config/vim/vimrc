@@ -89,8 +89,8 @@ augroup project
   autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090\ -f\ gcc
   autocmd FileType python setlocal makeprg=python-linter
   autocmd FileType json setlocal formatprg=jq\ -r\ .
-  autocmd BufEnter * let &l:tags = "tags_" . &filetype
-  autocmd BufWritePost * if &makeprg != "make" | silent make! % | silent redraw!
+  autocmd BufEnter * let &l:tags = "./tags_" . &filetype . ";"
+  autocmd BufEnter *.c,*.h,*.cpp let &l:tags = "./tags_cpp,./tags_c,tags_c"
   autocmd BufWritePost *.py,*.c,*.h silent execute "!update-tags -f tags_" . &filetype . " " . expand("%") . " --python-kinds=-i --C++-kinds=+p --C-kinds=+p"
   autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
