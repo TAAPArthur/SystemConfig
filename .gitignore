@@ -2,6 +2,5 @@
 Config/vim-spell-programs.add
 *.o
 *tags
-*TAGS
-GPATH
+tags_*
 Config/.config/navboard/volume.c
