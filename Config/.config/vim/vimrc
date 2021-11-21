@@ -102,14 +102,17 @@ function! PadOperand ()
 endfunction
 command! -bar -range PadOperand call PadOperand() | call PadOperand()
 
-function! GenerateTags()
-    if &filetype == "c"
-        !find . -name "*.[c,h]" -exec tcc -M {} \; 2>/dev/null | sed -e 's/ \\//' -e '/\.o/d' | sort -u | { while read -r F; do realpath "$F" | sed "s:^$PWD/::"; done }  |  ctags -f tags_c --C-kinds=+p -R -L -
+function! GenerateTags(...)
+    if &filetype == "c" && !(a:0 == 1 && a:1 == 1)
+        !find . -name "*.[c,h]" -exec tcc -M {} \; | sed -e 's/ \\//' -e '/\.o/d' | sort -u | { while read -r F; do realpath "$F" | sed "s:^$PWD/::"; done }  |  ctags -f tags_c --C-kinds=+p -R -L -
     else
-        execute "!ctags -R --languages=" . &filetype . " -f tags_" . &filetype . " --python-kinds=-i --C++-kinds=+p --exclude='*cov*' --exclude='*doc*' ."
+        let type = &filetype
+        if type == "cpp" | let type = "c++" | endif
+        execute "!ctags -R --languages=" . type . " -f tags_" . &filetype . " --C-kinds=+p  --python-kinds=-i --C++-kinds=+p --exclude='*cov*' --exclude='*doc*' ."
     endif
 endfunction
 command! GenTags call GenerateTags()
+command! GenTagsF call GenerateTags(1)
 
 
 command! -bar -range FlipEquals s/\([^=>< ]\+\)\(\s*\)=\(\s*\)\([^;]*\)/\4\2=\3\1
