@@ -77,6 +77,12 @@ void configureWindowsByName(WindowInfo* winInfo) {
     if(!hasMask(winInfo, INPUT_MASK) && winInfo->type == ewmh->_NET_WM_WINDOW_TYPE_NORMAL) {
         addMask(winInfo, INPUT_MASK);
     }
+
+    if(winInfo->transientFor) {
+        addMask(winInfo, X_CENTERED_MASK|Y_CENTERED_MASK);
+        setTilingOverrideEnabled(winInfo, 1 | 2 | 32 | 64);
+        setTilingOverride(winInfo, (Rect) {-winInfo->geometry.width/2, -winInfo->geometry.height/2});
+    }
     if(winInfo->dock) {
         removeMask(winInfo, ABOVE_MASK);
         setTilingOverrideEnabled(winInfo, 16);
