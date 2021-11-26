@@ -48,7 +48,10 @@ elif [ "$(basename "$0")" = screencastaudio ] || [ "$2" = screencastaudio ]; the
 fi
 
 [ -n "$1" ] && fileName=$1 || fileName="$(date -u +%s)_$$.$defaultExt"
-[ "$fileName" = "?" ] && fileName=$(zenity --file-selection --save --confirm-overwrite)
+if [ "$fileName" = "?" ]; then
+    cd "${PICTURES_DIR:-~}"
+    fileName=$(dmenu -p 'Enter file name' </dev/null)
+fi
 [ -d "$fileName" ] && fileName="$fileName/$(date -u +%s)_$$.$defaultExt"
 
 if [ "$take_video" -eq 0 ]; then
