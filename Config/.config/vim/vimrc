@@ -92,6 +92,7 @@ augroup project
   autocmd BufEnter * let &l:tags = "./tags_" . &filetype . ";"
   autocmd BufEnter *.c,*.h,*.cpp let &l:tags = "./tags_cpp,./tags_c,tags_c"
   autocmd BufWritePost *.py,*.c,*.h silent execute "!update-tags -f tags_" . &filetype . " " . expand("%") . " --python-kinds=-i --C++-kinds=+p --C-kinds=+p"
+  autocmd BufWritePost * if &makeprg != "make" | silent make! % | redraw!
   autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 
