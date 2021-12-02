@@ -32,6 +32,9 @@ case "$firstArg" in
         exec env $(xdotool getwindowgeometry --shell "$window") "$0" -e "$@"
 esac
 
+if [ "$WIDTH" -eq 0 ] || [ "$HEIGHT" -eq 0 ] ; then
+    exit 1
+fi
 echo "$WIDTH:$HEIGHT:$X:$Y" >&2
 
 defaultExt=png
