@@ -42,7 +42,7 @@ void windowTitle() {
 }
 
 void sort(int arg) {
-    sortImages(state.image_context, arg);
+    image_loader_sort(state.image_context, arg);
     open_images();
     state.dirty=1;
 }
