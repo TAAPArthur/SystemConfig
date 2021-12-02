@@ -87,7 +87,7 @@ augroup project
   autocmd!
   autocmd FileType c setlocal makeprg=tcc\ -c\ -o\ /dev/null
   autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090\ -f\ gcc
-  autocmd FileType python setlocal makeprg=python-linter
+  autocmd FileType python setlocal makeprg=python-linter | setlocal autoread
   autocmd FileType json setlocal formatprg=jq\ -r\ .
   autocmd BufEnter * let &l:tags = "./tags_" . &filetype . ";"
   autocmd BufEnter *.c,*.h,*.cpp let &l:tags = "./tags_cpp,./tags_c,tags_c"
