@@ -15,7 +15,7 @@ exec > ~/.local/share/xorg/.xinitrc.out 2> ~/.local/share/xorg/.xinitrc.err
 [ -x /usr/bin/xhost ] && [ -x /usr/bin/steam ] && xhost +
 
 [ -x /usr/bin/xset ] && xset s 1200 180 && xset b off
-[ -x /usr/bin/apples ] && [ -x /usr/bin/mpxlocker ] && exec apples "mpxlocker" "/bin/suspend" &
+[ -x /usr/bin/apples ] && [ -x /usr/bin/mpxlocker ] && exec apples "mpxlocker" "power-save" &
 [ -x /usr/bin/clip-history ] && exec clip-history monitor &
 [ -x /usr/bin/dzen2 ] && [ -x /usr/bin/mystatusbar ] && mystatusbar | status-bar -title-name "mystatusbar" &
 [ -x /usr/bin/ringd ] && exec ringd &

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# if active ssh session
+if ! ps -ef | grep "sshd:.*pts" | grep -qv grep; do
+    /bin/suspend
+fi
