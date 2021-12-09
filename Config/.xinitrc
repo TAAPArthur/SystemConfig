@@ -1,5 +1,5 @@
 #!/bin/sh
-exec > ~/.local/share/xorg/.xinitrc.out 2> ~/.local/share/xorg/.xinitrc.err
+exec > ~/.local/share/xorg/xinitrc.out 2> ~/.local/share/xorg/xinitrc.err
 
 [ -x /usr/bin/xsetroot ] && xsetroot -cursor_name left_ptr
 
