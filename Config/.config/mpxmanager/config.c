@@ -66,7 +66,7 @@ void configureWindowsByName(WindowInfo* winInfo) {
     if(matchesClass(winInfo, "firefox")) {
         strcpy(winInfo->role, "browser");
     }
-    if(matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div")) {
+    if(matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div") || matchesClass(winInfo, "Zathura")) {
         strcpy(winInfo->role, "media_player");
     }
     if(matchesClass(winInfo, "st-256color")) {
