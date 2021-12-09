@@ -80,11 +80,30 @@ void customScaleFunc(const char* buf, uint32_t original_width, uint32_t original
     }
     nearestNeighbourScale(buf, original_width,original_height,out_buf,width,height,num_channels);
 }
+
+void defaultOpenImages();
+void customOpenImages() {
+    static char largePage;
+    if(largePage) {
+        state.cols = 2;
+        largePage = false;
+    }
+    defaultOpenImages();
+    if(getNumActiveImages() == 2) {
+        for (int i = 0; i < getNumActiveImages(); i++) {
+            if(image_holders[i].image_data && image_holders[i].image_width >= 2048) {
+                largePage = true;
+                state.cols = 1;
+            }
+        }
+    }
+}
 void onStartup(){
     state.xevent_mask |= XCB_EVENT_MASK_BUTTON_PRESS ;
     events[SET_TITLE] = windowTitle;
     events[XCB_BUTTON_RELEASE] = events[XCB_KEY_PRESS];
     events[XCB_BUTTON_PRESS] = events[XCB_KEY_PRESS];
     events[XCB_KEY_RELEASE] = events[XCB_KEY_PRESS];
+    events[OPEN_IMAGES] = customOpenImages,
     scaleFunc = customScaleFunc;
 }
