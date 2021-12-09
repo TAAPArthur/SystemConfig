@@ -1,4 +1,4 @@
-#!/bin/sh -ex
+#!/bin/sh -e
 # shellcheck disable=SC2046
 
 firstArg="$1"
