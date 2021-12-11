@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+prompt(){
+    dmenu -p "$1" </dev/null
+}
+
+previousValue="${1:-0}"
+while :; do
+    result="$(prompt "$previousValue")"
+    case "$result" in
+        '*'*|'/'*|'-'*|'+'*|'^'*|'%'*|'<'*|'>'*)
+            result="$previousValue $result"
+            ;;
+        "")
+            return
+            ;;
+    esac
+    previousValue="$(echo "$result" | bc)"
+    [ -x /usr/bin/xsel ] && echo "$previousValue" | xsel -p
+done
