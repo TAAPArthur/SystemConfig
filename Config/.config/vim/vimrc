@@ -9,7 +9,6 @@ call vundle#begin('~/.local/share/vim')
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'akhaku/vim-java-unused-imports'
-Plugin 'iamcco/markdown-preview.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -47,12 +46,12 @@ let g:c_syntax_for_h = 1
 let g:vundle#bundle_dir = expand('$HOME/.local/share/vim/bundle', 1)
 let &titlestring=$SESSION_NAME . "%f"
 
-let g:mkdp_browserfunc = 'OpenBrowser'
-let g:mkdp_auto_close = 0
-
-function! OpenBrowser(url)
-        execute "! $BROWSER " a:url "& "
+function! PreviewFile()
+    if &filetype == "markdown"
+        silent execute "! markdown-open " . expand("%") . " & "
+    endif
 endfunction
+command! Preview call PreviewFile()
 
 augroup resCur
   autocmd!

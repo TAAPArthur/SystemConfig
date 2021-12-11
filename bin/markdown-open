@@ -1,0 +1,6 @@
+#!/bin/sh
+
+DEST=$(mktemp -p "$PWD").html
+markdown "$*" > "$DEST"
+trap 'rm $DEST' EXIT
+$BROWSER "$DEST"
