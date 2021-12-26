@@ -1,26 +1,32 @@
 #!/bin/ksh
+# shellcheck disable=SC2046
 
 set -o csh-history
 has_python_arg_complete(){
     [ -r "$1" ] && grep -q "PYTHON_ARGCOMPLETE_OK" "$1"
 }
 complete_helper() {
-    COMP_CMD="${COMP_CMD%% *}"
-    unset COMPREPLY
+    COMP_CMD="${COMP_LINE%% *}"
     case "$COMP_CMD" in
+        amt)
+            IFS=$(echo -e '\v') set -A COMPREPLY -- $(_ARGCOMPLETE_SHELL=fish _ARGCOMPLETE_IFS="$IFS" COMP_POINT=$COMP_POINT COMP_LINE="$COMP_LINE" _ARGCOMPLETE=1 _ARGCOMPLETE_SUPPRESS_SPACE=1 "$COMP_CMD" 8>&1 9>&2 1>/dev/null 2>&1)
+            ;;
+        attach)
+            set -A COMPREPLY -- $(abduco | tail -n +2 | grep -v "\*" | awk '{print $4}')
+            ;;
         cpm)
             set -A COMPREPLY -- "${CPM_PASSWORD_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/cpm}"/*
+            ;;
+        fg)
+            set -A COMPREPLY -- $(jobs | sed "s/\[\(\d\)\].*/%\1/")
             ;;
         git)
             if [ "$COMP_CWORD" -eq 1 ]; then
                 set -A COMPREPLY --  $(git help -a | sed -En "s/^\s+([A-z0-9-]*).*/\1/p")
+            elif [ "$COMP_LINE" != "${COMP_LINE#git rebase}" ]; then
+                set -A COMPREPLY --  -i --autosquash $(git branch --list | tr -d ":* ")
             elif [ "$COMP_CWORD" -eq 2 ]; then
                 set -A COMPREPLY --  $(git branch --list | tr -d ":* ")
-            fi
-            ;;
-        *)
-            if whence "$COMP_CMD" 1>/dev/null 2>&1 && has_python_arg_complete "$(whence "$COMP_CMD")"; then
-                IFS=$(echo -e '\v') set -A COMPREPLY -- $(_ARGCOMPLETE_IFS="$IFS" COMP_POINT=$COMP_POINT COMP_LINE="$COMP_LINE" _ARGCOMPLETE=1 _ARGCOMPLETE_SUPPRESS_SPACE=1 "$COMP_CMD" 8>&1 9>&2 1>/dev/null 2>&1)
             fi
             ;;
     esac
