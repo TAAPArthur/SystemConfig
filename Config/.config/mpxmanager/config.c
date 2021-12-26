@@ -58,18 +58,13 @@ void configureWindowsByName(WindowInfo* winInfo) {
     if(matchesClass(winInfo, "tabbed")) {
         addMask(winInfo, INPUT_MASK);
     }
-    if(matchesClass(winInfo, "vimb")) {
-        strcpy(winInfo->role, "browser");
-        //if(winInfo->getCreationTime())
-        //    winInfo->moveToWorkspace(3);
-    }
-    if(matchesClass(winInfo, "firefox")) {
+    if(matchesClass(winInfo, "vimb") || matchesClass(winInfo, "firefox") || matchesClass(winInfo, "browser")) {
         strcpy(winInfo->role, "browser");
     }
-    if(matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div") || matchesClass(winInfo, "Zathura")) {
+    else if(matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div") || matchesClass(winInfo, "Zathura")) {
         strcpy(winInfo->role, "media_player");
     }
-    if(matchesClass(winInfo, "st-256color")) {
+    else if(matchesClass(winInfo, "st-256color")) {
         strcpy(winInfo->role, "terminal");
         setWindowClass(winInfo->id, "st", "st");
         loadWindowProperties(winInfo);
