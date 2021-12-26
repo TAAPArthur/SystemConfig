@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sudo iw dev wlan0 scan | grep -i -e SSID: -e signal | {
+    while read -r _ signal units && read -r _ ssid; do
+        [ -n "$ssid" ] && printf "%s\t%s %s\n" "$ssid" "$signal" "$units"
+    done
+} | sort -k2
