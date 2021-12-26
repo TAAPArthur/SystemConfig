@@ -2,7 +2,7 @@
 # shellcheck disable=2164,SC2034
 
 alias oneline='git log --oneline'
-alias git-branch-recent='git branch --sort=-committerdate |head -n10'
+alias git-branch-recent='git branch --sort=-committerdate'
 alias git-push-new='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
 export CD_HISTORY=
@@ -36,6 +36,10 @@ cd_forward() {
 alias bk=cd_back
 alias tg=cd_forward
 alias cd=smart_cd
+alias F="fg %-" # Cycle between last stopped jobs
+
+
+[ -n "$KSH_VERSION" ] && . ~/.config/shell/kshrc
 
 #interactive shell specific aliases
 find_replace() {
@@ -48,15 +52,14 @@ find_replace_dryrun() {
 
 export NESTED_SHELL_LEVEL=$((${NESTED_SHELL_LEVEL:--1}+1));
 
-RED='\001\e[1;31m\002'
-GREEN='\001\e[1;32m\002'
-BLUE='\001\e[1;34m\002'
-CYAN='\001\e[1;36m\002'
-END='\001\e[0m\002'
+RED='\[\001\e[1;31m\002\]'
+GREEN='\[\001\e[1;32m\002\]'
+BLUE='\[\001\e[1;34m\002\]'
+CYAN='\[\001\e[1;36m\002\]'
+END='\[\001\e[0m\002\]'
 [ "$NESTED_SHELL_LEVEL" -eq 0 ] || NESTED_SHELL_LEVEL_STR="$NESTED_SHELL_LEVEL"
 #interactive shell specific variables
 # shellcheck disable=SC2154
 alias get_branch='branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) && echo -en $GREEN[$branch]'
 
-# Allow C-S to cycle forward the command history
-stty -ixon
+PS1='\[\033]0;$NESTED_SHELL_LEVEL_STR$SESSION_NAME$PWD\007\]'"$CYAN$NESTED_SHELL_LEVEL_STR$END"'$(get_branch)'"$CYAN$SESSION_NAME$BLUE\u@\h$END:"'$( export E=$?; [ "$E" -eq 0 ] && printf "%s" "$GREEN" || printf "%s" "$RED($E)")'"\w$END$ "

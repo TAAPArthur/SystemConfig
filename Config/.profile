@@ -4,7 +4,7 @@
 PATH=~/.local/bin:$PATH:~/SystemConfig/bin
 
 # global variables
-export ABDUCO_CMD="bash -l"
+export ABDUCO_CMD="ksh"
 export ABDUCO_SOCKET_DIR=/tmp/.abduco
 export BASH_COMPLETION_USER_FILE=~/SystemConfig/bash_completion.d
 export BROWSER=vimb
@@ -24,9 +24,11 @@ export WINDOW_MANAGER=mpxmanager
 
 #shell vars
 export HISTCONTROL=ignoredups
+export HISTFILE=~/.local/share/sh_history
 export HISTSIZE=
 export HISTFILESIZE=               # big big history
 export HISTTIMEFORMAT="[%F %T]"
+export ENV=~/.config/shell/shellrc
 
 # Load profiles from /etc/profile.d
 for file in ~/.profile.d/*.sh; do

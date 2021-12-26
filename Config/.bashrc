@@ -11,8 +11,16 @@ done
 
 [ -r ~/.shellrc ] && source ~/.shellrc
 
+# Allow C-S to cycle forward the command history
+stty -ixon
+
+RED='\001\e[1;31m\002'
+GREEN='\001\e[1;32m\002'
+BLUE='\001\e[1;34m\002'
+CYAN='\001\e[1;36m\002'
+END='\001\e[0m\002'
 PROMPT_COMMAND='_EXIT_CODE=$?;history -a;printf "\033]0;%s\007" "$NESTED_SHELL_LEVEL_STR$SESSION_NAME$PWD"'
-PS1="$CYAN$NESTED_SHELL_LEVEL_STR$END"'$(get_branch)'"$CYAN$SESSION_NAME$BLUE\u@\h$END:"'$( [ "$_EXIT_CODE" -eq 0 ] && echo -en $GREEN || echo -en $RED"($_EXIT_CODE)")'"\w$END$ "
+PS1="$CYAN$NESTED_SHELL_LEVEL_STR$END"'$(get_branch)'"$CYAN$SESSION_NAME$BLUE\u@\h$END:"'$( [ "$_EXIT_CODE" -eq 0 ] && printf "$GREEN" || echo -en $RED"($_EXIT_CODE)")'"\w$END$ "
 
 # If there are multiple matches for completion, Tab should cycle through them
 
