@@ -107,7 +107,7 @@ function! GenerateTags(...)
         !find . -name "*.[c,h]" -exec tcc -M {} \; | sed -e 's/ \\//' -e '/\.o/d' | sort -u | { while read -r F; do realpath "$F" | sed "s:^$PWD/::"; done }  |  ctags -f tags_c --C-kinds=+p -R -L -
     else
         let type = &filetype
-        if type == "cpp" | let type = "c++" | endif
+        if type == "cpp" || type == "c" | let type = "c++,c" | endif
         execute "!ctags -R --languages=" . type . " -f tags_" . &filetype . " --C-kinds=+p  --python-kinds=-i --C++-kinds=+p --exclude='*cov*' --exclude='*doc*' ."
     endif
 endfunction
