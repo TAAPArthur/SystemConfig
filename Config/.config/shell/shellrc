@@ -50,6 +50,10 @@ find_replace_dryrun() {
     find . -name "$1" -exec sed -En "$2" {} \;
 }
 
+kiss_goto() {
+    cd "$(kiss s "${1:-${PWD##*/}}" | head -n1 )"
+}
+
 export NESTED_SHELL_LEVEL=$((${NESTED_SHELL_LEVEL:--1}+1));
 
 RED='\[\001\e[1;31m\002\]'
