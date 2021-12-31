@@ -50,6 +50,12 @@ find_replace_dryrun() {
     find . -name "$1" -exec sed -En "$2" {} \;
 }
 
+git_clone() {
+    repo=$1
+    shift
+    git clone "https://github.com/TAAPArthur/$repo" "$@"
+}
+
 kiss_goto() {
     cd "$(kiss s "${1:-${PWD##*/}}" | head -n1 )"
 }
