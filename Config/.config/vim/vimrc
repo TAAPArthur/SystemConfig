@@ -85,6 +85,36 @@ augroup END
 " Command to recover file created with above
 command! Recover execute "1,$d|0r" expand("~/.cache/backup/%:t")
 
+function SortImports()
+    let startingpos = getpos(".")
+    let current_line = 0
+    let import_prefixes = ["#include", "import", "from"]
+    let last_prefix = ""
+    let start_line = 0
+    let need_sort = 0
+    while 1 && current_line < line('$')
+        let current_line += 1
+        if getline(current_line) != "" | let prefix = split(getline(current_line))[0] | else | let prefix = "" | endif
+        if prefix == "" || index(import_prefixes, prefix) >= 0
+            if ! start_line && (last_prefix == "" || last_prefix == prefix) && prefix != ""
+                let start_line = current_line
+            elseif start_line && last_prefix != prefix
+                if need_sort == 1 | exec "keepjumps   " . start_line . "," . (current_line - 1) . " sort" | endif
+                if prefix == "" | let start_line = 0 | else | let start_line = current_line | endif
+                let need_sort = 0
+            elseif start_line && getline(current_line) < getline(current_line - 1)
+                let need_sort = 1
+            endif
+            let last_prefix = prefix
+        elseif prefix[0] == "#"
+            continue
+        else
+            break
+        endif
+    endwhile
+    call setpos(".", startingpos )
+endfunction
+command! SortImports call SortImports()
 
 augroup project
   autocmd!
@@ -94,6 +124,8 @@ augroup project
   autocmd FileType json setlocal formatprg=jq\ -r\ .
   autocmd BufEnter * let &l:tags = "./tags_" . &filetype . ";"
   autocmd BufEnter *.c,*.h,*.cpp let &l:tags = "./tags_cpp,./tags_c,tags_c"
+
+  autocmd BufWritePre *.py,*.c,*.h,*.java SortImports
   autocmd BufWritePost *.py,*.c,*.h silent execute "!update-tags -f tags_" . &filetype . " " . expand("%") . " --python-kinds=-i --C++-kinds=+p --C-kinds=+p"
   autocmd BufWritePost * if &makeprg != "make" | silent make! % | redraw!
   autocmd QuickFixCmdPost [^l]* cwindow
