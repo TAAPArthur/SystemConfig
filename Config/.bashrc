@@ -9,7 +9,7 @@ for path in /usr/share/bash-completion/completions ~/.local/completions/bash; do
     fi
 done
 
-[ -r ~/.shellrc ] && source ~/.shellrc
+[ -r ~/.config/shell/shellrc ] && . ~/.config/shell/shellrc
 
 # Allow C-S to cycle forward the command history
 stty -ixon
