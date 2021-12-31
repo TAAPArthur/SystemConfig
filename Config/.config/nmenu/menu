@@ -3,6 +3,8 @@ printf "suspend\tdelay 2 xsuspend\n"
 printf "lock\tdelay 2 xset s activate \n"
 echo contact
 echo camera
+printf "BROWSER\t%s" "$BROWSER"
+printf "TERMINAL\t%s" "$TERMINAL"
 printf "screenshot\tmaim %s.png\n" "$PICTURES_DIR/$(date -u +%F_%H:%M:%S)"
 printf "restart WM\tmpxmanager restart\n"
 echo navboard
