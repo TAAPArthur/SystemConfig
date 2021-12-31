@@ -1,17 +1,24 @@
-#!/bin/sh
+#!/bin/sh -e
 
-set -e
-newValue=1
-case "$1" in
-    +*|-*)
-        newValue=$(echo "$(xrandr --verbose | grep -m 1 -i brightness | cut -f2 -d ' ')" "$1" |bc)
-        ;;
-    "")
-        newValue=1
-        ;;
-    *)
-        newValue=$1
-        ;;
-esac
-echo "$newValue"
-xrandr --output "$(xrandr |grep primary |cut -d" " -f1)" --brightness "$newValue"
+for backlight in /sys/class/backlight/*; do
+    [ -d "$backlight" ]
+    read -r brightness < "$backlight/brightness"
+    case "$1" in
+        "")
+            echo "$brightness"
+            exit 0
+            ;;
+        *%)
+            read -r maxBrightness < "$backlight/max_brightness"
+            brightness=$((${1%%%} * maxBrightness / 100 + brightness ))
+            ;;
+        =*)
+            brightness=${1#=}
+            ;;
+        *)
+            brightness=$((brightness + $1))
+            ;;
+    esac
+    echo "$brightness" > "$backlight/brightness"
+    break
+done
