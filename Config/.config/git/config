@@ -13,3 +13,6 @@
 
 [credential]
     helper = "!f() { test \"$1\" = get && echo \"password=$(cpm smart-show disroot | tail -n1)\"; }; f"
+
+[core]
+	excludesFile = ~/.config/git/gitignore
