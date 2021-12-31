@@ -78,6 +78,11 @@ void configureWindowsByName(WindowInfo* winInfo) {
         setTilingOverrideEnabled(winInfo, 1 | 2 | 32 | 64);
         setTilingOverride(winInfo, (Rect) {-winInfo->geometry.width/2, -winInfo->geometry.height/2});
     }
+
+    if(matchesClass(winInfo, "navboard")) {
+        addMask(winInfo, PRIMARY_MONITOR_MASK);
+    }
+
     if(winInfo->dock) {
         removeMask(winInfo, ABOVE_MASK);
         setTilingOverrideEnabled(winInfo, 16);
