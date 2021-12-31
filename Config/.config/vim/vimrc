@@ -127,6 +127,7 @@ augroup project
 
   autocmd BufWritePre *.py,*.c,*.h,*.java SortImports
   autocmd BufWritePost *.py,*.c,*.h silent execute "!update-tags -f tags_" . &filetype . " " . expand("%") . " --python-kinds=-i --C++-kinds=+p --C-kinds=+p"
+  autocmd BufWritePost vimrc so %
   autocmd BufWritePost * if &makeprg != "make" | silent make! % | redraw!
   autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
