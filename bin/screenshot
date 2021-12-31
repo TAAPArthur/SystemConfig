@@ -45,6 +45,10 @@ if [ "$(basename "$0")" = screencast ] || [ "$2" = screencast ]; then
 elif [ "$(basename "$0")" = screencastaudio ] || [ "$2" = screencastaudio ]; then
     defaultExt=mp4
     take_video=2
+elif [ "$(basename "$0")" = screenrecord ] || [ "$2" = screenrecord ]; then
+    defaultExt=mp4
+    take_video=2
+    ALSA_INPUT_DEVICE=${ALSA_INPUT_DEVICE:-hw:Loopback,0,0}
 fi
 
 [ -n "$1" ] && fileName=$1 || fileName="$(date -u +%s)_$$.$defaultExt"
@@ -60,7 +64,8 @@ elif [ "$take_video" -eq 1 ]; then
     ffmpeg -video_size "$WIDTH"x"$HEIGHT" -framerate 25 -f x11grab -i ":0.0+$X,$Y" "$fileName"
 
 elif [ "$take_video" -eq 2 ]; then
-    ffmpeg -video_size "$WIDTH"x"$HEIGHT" -framerate 25 -f x11grab -i ":0.0+$X,$Y" -f alsa -ac 2 -i hw:0 "$fileName"
+    echo "$ALSA_INPUT_DEVICE"
+    ffmpeg -video_size "$WIDTH"x"$HEIGHT" -framerate 25 -f x11grab -i ":0.0+$X,$Y" -f alsa -ac 2 -i "${ALSA_INPUT_DEVICE:-hw:0}" "$fileName"
 fi
 
 echo "$fileName"
