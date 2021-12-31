@@ -66,6 +66,10 @@ augroup Misc
   autocmd BufRead * let &l:modifiable = !&readonly
   autocmd BufRead * if &readonly | set nospell
   autocmd BufWritePre * Strip
+  " When given a file with a colon (like the from the output of grep -n), goto
+  " the given line number as opposed to complaining the file doesn't exist.
+  " This only runs if the specified file name doesn't exist.
+  autocmd BufNewFile  *:[0-9]\\\{0,\}	let args=split(expand("%"), ":") | exec "silent! e" args[0] | call setpos(".", [0, args[1], 0,0])
 augroup END
 
 function! UpdateFile()
