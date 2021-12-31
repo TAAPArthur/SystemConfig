@@ -1,0 +1,4 @@
+#!/bin/sh
+printf "help\t%s\n" "$TERMINAL sh -c 'pstree -p; nmenu $PWD'"
+[ -z "$SIGNAL" ] && echo "sigkill"
+ps -a | tail -n +2 | awk '{print $4, $1, "\t", "kill", '"\"${SIGNAL:-TERM}\""', $1}'
