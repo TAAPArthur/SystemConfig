@@ -3,11 +3,13 @@ printf "suspend\tdelay 2 xsuspend\n"
 printf "lock\tdelay 2 xset s activate \n"
 echo contact
 echo camera
-printf "BROWSER\t%s" "$BROWSER"
-printf "TERMINAL\t%s" "$TERMINAL"
-printf "screenshot\tmaim %s.png\n" "$PICTURES_DIR/$(date -u +%F_%H:%M:%S)"
+printf "BROWSER\t%s\n" "$BROWSER"
+printf "TERMINAL\t%s\n" "$TERMINAL"
+printf "screenshot\tscreenshot -f\n"
 printf "restart WM\tmpxmanager restart\n"
+printf "wifi select\twifi_list -s\n"
 echo navboard
 pidfile -e brownnoise && printf "stop brownnoise\tpidfile -k brownnoise\n" || printf "brownnoise\tpidfile -r brownnoise\n"
+printf "kill X\tpkill X\n"
 printf "reboot\tsudo reboot\n"
 printf "shutdown\tsudo poweroff\n"
