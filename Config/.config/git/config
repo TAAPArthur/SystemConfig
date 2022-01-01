@@ -10,3 +10,6 @@
     smtpserverport = 587
     smtpuser = taaparthur@disroot.org
     smtpserver = disroot.org
+
+[credential]
+    helper = "!f() { test \"$1\" = get && echo \"password=$(cpm smart-show disroot | tail -n1)\"; }; f"
