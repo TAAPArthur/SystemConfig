@@ -1,6 +1,6 @@
 #!/bin/sh
 
 # if active ssh session
-if ! ps -ef | grep "sshd:.*pts" | grep -qv grep; do
+if [ "$(pgrep sshd | wc -l)" -le 1 ] ; then
     /bin/suspend
 fi
