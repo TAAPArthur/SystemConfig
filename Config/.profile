@@ -26,7 +26,7 @@ export WINDOW_MANAGER=mpxmanager
 #shell vars
 export HISTCONTROL=ignoredups
 export HISTFILE=~/.local/share/sh_history
-export HISTSIZE=
+export HISTSIZE=200000
 export HISTFILESIZE=               # big big history
 export HISTTIMEFORMAT="[%F %T]"
 export ENV=~/.config/shell/shellrc
