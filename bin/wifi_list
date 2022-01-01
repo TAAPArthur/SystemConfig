@@ -1,7 +1,18 @@
-#!/bin/sh
+#!/bin/sh -e
 
+list() {
 sudo iw dev wlan0 scan | grep -i -e SSID: -e signal | {
     while read -r _ signal units && read -r _ ssid; do
         [ -n "$ssid" ] && printf "%s\t%s %s\n" "$ssid" "$signal" "$units"
     done
 } | sort -k2
+}
+
+if [ "$1" = -s ]; then
+    SSID=$(list | dmenu -l 4 -g 4 | cut -f1)
+    [ -n "$SSID" ]
+    dmenu -p "Password" <&- | iwd_passphrase "$SSID" > "/var/lib/iwd/$SSID.psk"
+else
+    list
+fi
+
