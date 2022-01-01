@@ -1,2 +1,0 @@
-#!/bin/sh
-exec /bin/sudo -u nonfree /bin/steam;
