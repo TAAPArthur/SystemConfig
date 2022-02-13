@@ -18,13 +18,19 @@
 void windowTitle() {
     static char buffer[255];
     const char* pwd = getenv("PWD");
+    const char* home = getenv("HOME");
+    const char* prefix = "";
     const char* name = image_holders->name;
     if(pwd && name && strncmp(pwd, name, strlen(pwd)) ==0)
         name += strlen(pwd) + 1;
+    if(home && name && strncmp(home, name, strlen(home)) ==0) {
+        name += strlen(home);
+        prefix = "~";
+    }
     if(getNumActiveImages() == 1)
-        snprintf(buffer, sizeof(buffer) - 1, "%s %s %d/%d", state.user_title, name, state.file_index + 1, state.num_files);
+        snprintf(buffer, sizeof(buffer) - 1, "%s %s%s %d/%d", state.user_title, prefix, name, state.file_index + 1, state.num_files);
     else
-        snprintf(buffer, sizeof(buffer) - 1, "%s %s %d-%d of %d", state.user_title, name, state.file_index + 1, state.file_index + 1 + getNumActiveImages() - 1, state.num_files);
+        snprintf(buffer, sizeof(buffer) - 1, "%s %s%s %d-%d of %d", state.user_title, prefix, name, state.file_index + 1, state.file_index + 1 + getNumActiveImages() - 1, state.num_files);
     setWindowTitle(buffer);
 }
 
