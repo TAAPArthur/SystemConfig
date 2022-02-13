@@ -2,7 +2,6 @@
 #include <X11/keysym.h>
 #include <stdlib.h>
 
-#include "config.h"
 #include <mpxmanager/Extensions/containers.h>
 #include <mpxmanager/Extensions/extra-rules.h>
 #include <mpxmanager/Extensions/mpx.h>
@@ -64,11 +63,6 @@ Binding customBindings[] = {
 
     {Mod4Mask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu /"} },
     {Mod4Mask | ShiftMask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu ~"} },
-
-
-    {ControlMask | Mod1Mask, XK_Escape, {spawn, .arg.str = SUSPEND_CMD}, {.noKeyRepeat = 1} },
-    {Mod4Mask | ControlMask | Mod1Mask, XK_Escape, {spawn, .arg.str = SHUTDOWN_CMD}, {.noKeyRepeat = 1} },
-
 
     {0, XF86XK_Bluetooth, {spawn,  .arg = {.str = "rfkill unblock bluetooth"}} },
     {ShiftMask, XF86XK_Bluetooth, {spawn,  .arg = {.str = "rfkill block bluetooth"}} },
