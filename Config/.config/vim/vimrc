@@ -229,15 +229,30 @@ function! FindScopeHeader()
     let current_line = line(".")
     let dest = ""
     let ifdef_counter = 0
+    let in_sibiling_if_block = 0
     let last_index_level = indent(current_line)
     let first_label = 0
-    while current_line > 1 && last_index_level
+    while current_line > 1
         let current_line -= 1
         let line_level = indent(current_line)
-        if !empty(getline(current_line)) && getline(current_line) != "{" && line_level < last_index_level || getline(current_line)[0] == "#"
+        if !empty(getline(current_line)) && getline(current_line) != "{" && line_level < last_index_level || getline(current_line)[0:2] == "#if" || getline(current_line)[0:2] == "#el" || getline(current_line)[0:5] == "#endif"
             if getline(current_line)[0] == "#"
-                let ifdef_counter += (getline(current_line) == "#endif") *-2 +1
-                if ifdef_counter <= 0 | continue | endif
+                let marker = split(getline(current_line), " ")[0]
+                "echom ifdef_counter . " " . getline(current_line) . " " . in_sibiling_if_block
+                if marker == "#endif"
+                    let ifdef_counter -= 1
+                    continue
+                elseif marker == "#if" && ifdef_counter < 0
+                    let ifdef_counter += 1
+                    continue
+                elseif marker == "#if" && in_sibiling_if_block
+                    let in_sibiling_if_block = 0
+                    continue
+                elseif ifdef_counter < 0 || in_sibiling_if_block
+                    continue
+                elseif marker == "#elif"
+                    let in_sibiling_if_block = 1
+                endif
             elseif getline(current_line) !~ " " && getline(current_line)[-1:] == ":"
                 if first_label == 0 && line_level == 0
                     let first_label = 1
