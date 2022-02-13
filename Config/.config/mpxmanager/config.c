@@ -23,20 +23,6 @@
 #include <mpxmanager/wmfunctions.h>
 #include <mpxmanager/xutil/window-properties.h>
 
-xcb_atom_t STEAM_GAME;
-void loadCustomAtoms() {
-    STEAM_GAME = getAtom("STEAM_GAME");
-    INFO("Loading steam atom %d\n", STEAM_GAME);
-}
-bool isSteamGame(WindowID win) {
-    return getWindowPropertyValueInt(win, STEAM_GAME, XCB_ATOM_CARDINAL);
-}
-void handleSteamGame(WindowInfo* winInfo) {
-    if(isSteamGame(winInfo->id)) {
-        addMask(winInfo, FULLSCREEN_MASK);
-    }
-}
-
 void configureWindowsByName(WindowInfo* winInfo) {
     if(matchesTitle(winInfo, "mystatusbar")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | X_CENTERED_MASK);
@@ -91,10 +77,6 @@ void configureWindowsByName(WindowInfo* winInfo) {
         addMask(winInfo, ABOVE_MASK);
 }
 
-void onXConnectionStart() {
-    loadCustomAtoms();
-}
-
 void addNormalBindings();
 void loadSettings() {
     setLogLevel(LOG_LEVEL_DEBUG);
@@ -111,15 +93,6 @@ void loadSettings() {
     setWorkspaceName(4, "St");
     setWorkspaceName(6, "7Gaming");
     addWorkspaceMask(getWorkspace(6), FLOATING_MASK);
-    addEvent(X_CONNECTION, USER_EVENT(onXConnectionStart, HIGH_PRIORITY));
-    /*
-    getEventRules(CLIENT_MAP_ALLOW).add({
-        +[](WindowInfo * winInfo) {
-            if(matchesTitle(winInfo, "Steam - News"))
-                winInfo->moveToWorkspace(8);
-        }, "HideSteamNews"});
-    */
-    addEvent(CLIENT_MAP_ALLOW, USER_EVENT(handleSteamGame));
     addEvent(CLIENT_MAP_ALLOW, USER_EVENT(configureWindowsByName));
     //getEventRules(CLIENT_MAP_ALLOW).add([](WindowInfo*winInfo){addMask(winInfo,INPUT_MASK);}, HIGH_PRIORITY);
     //getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT_P(configureWindows, LOW_PRIORITY));
