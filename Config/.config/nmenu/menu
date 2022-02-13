@@ -9,6 +9,7 @@ printf "screenshot\tscreenshot -f\n"
 printf "restart WM\tmpxmanager restart\n"
 printf "wifi select\twifi_list -s\n"
 echo navboard
+printf 'ip\tnotify-ip-addr\n'
 pidfile -e brownnoise && printf "stop brownnoise\tpidfile -k brownnoise\n" || printf "brownnoise\tpidfile -r brownnoise\n"
 printf "kill X\tpkill X\n"
 printf "reboot\tsudo reboot\n"
