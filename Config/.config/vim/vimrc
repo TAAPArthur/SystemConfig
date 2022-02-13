@@ -194,9 +194,12 @@ noremap <leader>gcd :cd %:p:h<CR>
 noremap <leader>lcd :lcd %:p:h<CR>
 
 noremap <silent> <leader>yy :w !xsel -i -b <CR>
-noremap <silent> <leader>pp :r !xsel -b<CR>
-noremap <silent> <leader>PP :r !xsel -p<CR>
+noremap <silent> <leader>pp :r !xsel -o -b<CR>
+noremap <silent> <leader>PP :r !xsel -o -p<CR>
 noremap <silent> <leader>ap :setlocal paste!<CR>:setlocal paste?<CR>
+
+noremap <silent> <leader>i :!indent-sort 0<CR>
+noremap <silent> <leader>x :!chmod +x %<CR>
 
 inoremap <c-z> <esc>:suspend<cr>
 inoremap kk <C-x><C-o>
