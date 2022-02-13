@@ -1,10 +1,10 @@
-#include <stdlib.h>
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>
+#include <stdlib.h>
 
 #include <mpxmanager/Extensions/compatibility-rules.h>
-#include <mpxmanager/Extensions/env-injector.h>
 #include <mpxmanager/Extensions/containers.h>
+#include <mpxmanager/Extensions/env-injector.h>
 #include <mpxmanager/Extensions/ewmh.h>
 #include <mpxmanager/Extensions/extra-rules.h>
 #include <mpxmanager/Extensions/mpx.h>
@@ -132,7 +132,7 @@ void loadSettings() {
     addFloatRule();
     addMoveNonTileableWindowsToWorkspaceBounds();
     addPrintStatusRule();
-    addResumeContainerRules();
+    addContainerRules();
     addResumeCustomStateRules();
     addStickyPrimaryMonitorRule();
 }

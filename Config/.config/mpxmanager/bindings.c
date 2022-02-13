@@ -1,32 +1,26 @@
-#include <stdlib.h>
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>
+#include <stdlib.h>
 
+#include "config.h"
 #include <mpxmanager/Extensions/containers.h>
+#include <mpxmanager/Extensions/extra-rules.h>
 #include <mpxmanager/Extensions/mpx.h>
 #include <mpxmanager/Extensions/session.h>
 #include <mpxmanager/bindings.h>
 #include <mpxmanager/boundfunction.h>
-#include <mpxmanager/util/debug.h>
-#include <mpxmanager/xutil/device-grab.h>
-#include <mpxmanager/Extensions/extra-rules.h>
 #include <mpxmanager/functions.h>
 #include <mpxmanager/globals.h>
 #include <mpxmanager/layouts.h>
-#include <mpxmanager/util/logger.h>
 #include <mpxmanager/settings.h>
 #include <mpxmanager/system.h>
-#include <mpxmanager/xutil/window-properties.h>
+#include <mpxmanager/util/debug.h>
+#include <mpxmanager/util/logger.h>
 #include <mpxmanager/windows.h>
 #include <mpxmanager/wm-rules.h>
 #include <mpxmanager/wmfunctions.h>
-#include "config.h"
-
-
-void containTablessWindows() {
-    containWindows(getWorkspace(3), (WindowFunctionArg) {matchesClass,  .arg = {.str = "vimb"}}, "vimb");
-    containWindows(getWorkspace(4), (WindowFunctionArg) {matchesClass,  .arg = {.str = "st"}}, "st");
-}
+#include <mpxmanager/xutil/device-grab.h>
+#include <mpxmanager/xutil/window-properties.h>
 
 void raiseOrRunBrowser(int dir) {
     raiseOrRunFunc("browser", "$BROWSER", dir, matchesRole);
@@ -119,14 +113,8 @@ Binding customBindings[] = {
     {Mod4Mask | ShiftMask, XK_x, {killAllClones}},
     */
 
-    {Mod4Mask| ControlMask, XK_t, {containTablessWindows}, },
-    {Mod4Mask , XK_z, {containWindowAndActivate},  {.windowToPass = FOCUSED_WINDOW}},
-    {Mod4Mask | ShiftMask, XK_z, {releaseAllWindows}},
     {Mod4Mask, XK_semicolon, {toggleContainer},  {.windowToPass = FOCUSED_WINDOW}},
     {Mod3Mask, XK_semicolon, {toggleContainer},  {.windowToPass = FOCUSED_WINDOW}},
-    {Mod4Mask| ShiftMask, XK_colon, {containTablessWindows}},
-    {Mod4Mask | Mod1Mask | ShiftMask, XK_z, {clearAllFakeMonitors}},
-
 
     SPLIT_MASTER_BINDING(Mod4Mask | Mod1Mask, XK_d),
 
