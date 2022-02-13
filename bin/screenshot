@@ -51,7 +51,7 @@ elif [ "$(basename "$0")" = screenrecord ] || [ "$2" = screenrecord ]; then
     ALSA_INPUT_DEVICE=${ALSA_INPUT_DEVICE:-hw:Loopback,0,0}
 fi
 
-[ -n "$1" ] && fileName=$1 || fileName="$(date -u +%s)_$$.$defaultExt"
+[ -n "$1" ] && fileName=$1 || fileName="$(date -u +%F_%H:%M:%S)_$$.$defaultExt"
 if [ "$fileName" = "?" ]; then
     cd "${PICTURES_DIR:-~}"
     fileName=$(dmenu -p 'Enter file name' </dev/null)
