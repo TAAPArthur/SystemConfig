@@ -9,15 +9,18 @@ export CD_HISTORY=
 export CD_REV_HISTORY=
 
 smart_cd() {
-    CD_HISTORY="$PWD:$CD_HISTORY"
-    CD_REV_HISTORY=
-    builtin cd "$@"
+    if builtin cd "$@"; then
+        CD_HISTORY="$OLDPWD:$CD_HISTORY"
+        CD_REV_HISTORY=
+        return 0
+    fi
+    return 1
 }
 
 cd_back() {
     IFS=:
     for path in $CD_HISTORY; do
-        CD_HISTORY=${CD_HISTORY#$path:}
+        CD_HISTORY=${CD_HISTORY#"$path":}
         CD_REV_HISTORY="$PWD:$CD_REV_HISTORY"
         builtin cd "$path" && break
     done
@@ -27,7 +30,7 @@ cd_back() {
 cd_forward() {
     IFS=:
     for path in $CD_REV_HISTORY; do
-        CD_REV_HISTORY=${CD_REV_HISTORY#$path:}
+        CD_REV_HISTORY=${CD_REV_HISTORY#"$path":}
         CD_HISTORY="$PWD:$CD_HISTORY"
         builtin cd "$path" && break
     done
