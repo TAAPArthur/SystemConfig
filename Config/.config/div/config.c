@@ -1,4 +1,5 @@
 #include <X11/X.h>
+#include <X11/XF86keysym.h>
 #include <X11/keysym.h>
 #include <div/div.h>
 #include <div/functions.h>
@@ -68,6 +69,9 @@ void buttonNavigate() {
 }
 
 Binding user_bindings[] = {
+    {0, XF86XK_AudioRaiseVolume, next_image, +1},
+    {0, XF86XK_AudioLowerVolume, next_image, -1},
+
     {0, XK_s, sort, IMG_SORT_SIZE},
     {ShiftMask, XK_s, sort, -IMG_SORT_SIZE},
     {0, XK_n, sort, IMG_SORT_NAME},
