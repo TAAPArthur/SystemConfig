@@ -97,7 +97,7 @@ void customOpenImages() {
     defaultOpenImages();
     if(getNumActiveImages() == 2) {
         for (int i = 0; i < getNumActiveImages(); i++) {
-            if(image_holders[i].image_data && image_holders[i].image_width >= 1024 + 256 && image_holders[i].image_width != image_holders[!i].image_width) {
+            if(image_holders[i].image_data && image_holders[i].image_width >= 1024 && image_holders[i].image_width > image_holders[i].image_height) {
                 largePage = true;
                 state.cols = 1;
             }
