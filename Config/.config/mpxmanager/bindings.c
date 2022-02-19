@@ -34,6 +34,8 @@ void raiseOrRunTerminal(int dir) {
 }
 
 Binding customBindings[] = {
+
+    {0, 0, {replayKeyboardEvent}, .flags = {.mode=KEYBOARD_PASSTHROUGH_MODE, .mask=XCB_INPUT_XI_EVENT_MASK_KEY_PRESS}},
     {Mod4Mask, XK_F6, {spawn,  .arg = {.str = "autorandr common"}} },
     {0, XF86XK_Display, {spawn,  .arg = {.str = "autorandr -c"}} },
     {ShiftMask, XF86XK_Display, {spawn,  .arg = {.str = "xsane-xrandr -i configure"}} },
@@ -47,11 +49,31 @@ Binding customBindings[] = {
     {ShiftMask, XF86XK_MonBrightnessDown, {spawn,  .arg = {.str = "brightness -10"}} },
     {0, XF86XK_Tools, {spawn,  .arg = {.str = "xrandr-invert-colors"}} },
 
+    {0, XF86XK_Bluetooth, {spawn,  .arg = {.str = "rfkill unblock bluetooth"}} },
+    {ShiftMask, XF86XK_Bluetooth, {spawn,  .arg = {.str = "rfkill block bluetooth"}} },
+
+    {0, XF86XK_AudioLowerVolume, {spawn,  .arg = {.str = "vol -d 1"}} },
+    {0, XF86XK_AudioRaiseVolume, {spawn,  .arg = {.str = "vol -i 1"}} },
+    {0, XF86XK_AudioMute, {spawn,  .arg = {.str = "vol -t"}} },
+    {Mod4Mask, XF86XK_AudioLowerVolume, {spawn,  .arg = {.str = "vol -d 1"}} },
+    {Mod4Mask, XF86XK_AudioRaiseVolume, {spawn,  .arg = {.str = "vol -i 1"}} },
+    {Mod4Mask, XF86XK_AudioMute, {spawn,  .arg = {.str = "vol -t"}} },
+    {ShiftMask, XF86XK_AudioLowerVolume, {spawn,  .arg = {.str = "vol --default-source -d 1"}} },
+    {ShiftMask, XF86XK_AudioRaiseVolume, {spawn,  .arg = {.str = "vol --default-source -i 1"}} },
+    {ShiftMask, XF86XK_AudioMute, {spawn,  .arg = {.str = "vol --default-source -t"}} },
+    {0, XF86XK_AudioMicMute, {spawn,  .arg = {.str = "vol --default-source -t"}} },
+
+
+    {0, XF86XK_PowerOff, {spawn,  .arg = {.str = "nmenu"}} , {.noKeyRepeat = 1} },
+    {Mod4Mask, XF86XK_PowerOff, {spawn,  .arg = {.str = "nmenu"}} , {.noKeyRepeat = 1} },
+
+    {Mod4Mask, XK_p, {spawn,  .arg = {.str = "dmenu_run"}} },
+    {Mod4Mask|ShiftMask, XK_p, {spawn,  .arg = {.str = "dmenu-calc"}} },
+
+
     {Mod4Mask, XK_v, {spawn,  .arg = {.str = "clip-history select -w $_WIN_ID"}} },
     {Mod4Mask | ShiftMask, XK_v, {spawn,  .arg = {.str = "clip-history select -w $_WIN_ID && xsel --clipboard | xvkbd -window $_WIN_ID -file - 2>/dev/null"}} },
 
-    {Mod4Mask, XK_p, {spawn,  .arg = {.str = "dmenu_run"}} },
-    {0, XF86XK_PowerOff, {spawn,  .arg = {.str = "nmenu"}} , {.noKeyRepeat = 1} },
 
     {0, XK_Print, {spawn,  .arg = {.str = "cd $PICTURES_DIR; screenshot -s ?"}} },
     {ShiftMask, XK_Print, {spawn,  .arg = {.str = "screenshot -a $_VIEW_X $_VIEW_Y $_VIEW_WIDTH $_VIEW_HEIGHT $PICTURES_DIR/$(date -u +%F_%H:%M:%S).png"}} },
@@ -61,26 +83,6 @@ Binding customBindings[] = {
 
     {Mod4Mask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu /"} },
     {Mod4Mask | ShiftMask, XK_Delete, {raiseOrRun2,  .arg = {.str = "ncdu"}, .arg2.str = "$TERMINAL -c ncdu -e ncdu ~"} },
-
-    {0, XF86XK_Bluetooth, {spawn,  .arg = {.str = "rfkill unblock bluetooth"}} },
-    {ShiftMask, XF86XK_Bluetooth, {spawn,  .arg = {.str = "rfkill block bluetooth"}} },
-
-    {0, XF86XK_AudioLowerVolume, {spawn,  .arg = {.str = "vol -d 1"}} },
-    {0, XF86XK_AudioRaiseVolume, {spawn,  .arg = {.str = "vol -i 1"}} },
-    {0, XF86XK_AudioMute, {spawn,  .arg = {.str = "vol -t"}} },
-    {ShiftMask, XF86XK_AudioLowerVolume, {spawn,  .arg = {.str = "vol --default-source -d 1"}} },
-    {ShiftMask, XF86XK_AudioRaiseVolume, {spawn,  .arg = {.str = "vol --default-source -i 1"}} },
-    {ShiftMask, XF86XK_AudioMute, {spawn,  .arg = {.str = "vol --default-source -t"}} },
-    {0, XF86XK_AudioMicMute, {spawn,  .arg = {.str = "vol --default-source -t"}} },
-    {Mod3Mask, XF86XK_AudioLowerVolume, {spawn,  .arg = {.str = "omnivolctrl clear"}} },
-    {Mod3Mask, XF86XK_AudioRaiseVolume, {spawn,  .arg = {.str = "omnivolctrl clear"}} },
-    {Mod4Mask, XF86XK_AudioLowerVolume, {spawn,  .arg = {.str = "omnivolctrl -1%"}} },
-    {Mod4Mask, XF86XK_AudioRaiseVolume, {spawn,  .arg = {.str = "omnivolctrl +1%"}} },
-    {Mod4Mask, XF86XK_AudioMute, {spawn,  .arg = {.str = "omnivolctrl sink-input-mute toggle"}} },
-    {Mod4Mask, XF86XK_AudioPrev, {spawn,  .arg = {.str = "omnivolctrl sink-inputs"}} },
-    {0, XF86XK_AudioPrev, {spawn,  .arg = {.str = "omnivolctrl sinks"}} },
-
-    {Mod4Mask, XK_Menu, {raiseOrRun,  .arg = {.str = "pavucontrol"}} },
 
     CYCLE_BINDINGS(Mod4Mask, ShiftMask, XK_s, raiseOrRunTerminal, XK_Super_L),
     {Mod4Mask | ControlMask, XK_s, {spawn,  .arg = {.str = "$TERMINAL"}} },

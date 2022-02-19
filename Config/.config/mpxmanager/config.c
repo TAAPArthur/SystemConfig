@@ -23,6 +23,16 @@
 #include <mpxmanager/wmfunctions.h>
 #include <mpxmanager/xutil/window-properties.h>
 
+#define MEDIA_PLAYER "media_player"
+
+void updateActiveMode(WindowInfo* winInfo) {
+    if(getFocusedWindow() && getFocusedWindow()->role && strcmp(getFocusedWindow()->role, MEDIA_PLAYER) == 0) {
+        addActiveMode(KEYBOARD_PASSTHROUGH_MODE);
+    } else {
+        removeActiveMode(KEYBOARD_PASSTHROUGH_MODE);
+    }
+
+}
 void configureWindowsByName(WindowInfo* winInfo) {
     if(matchesTitle(winInfo, "mystatusbar")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | X_CENTERED_MASK);
@@ -47,8 +57,8 @@ void configureWindowsByName(WindowInfo* winInfo) {
     if(matchesClass(winInfo, "vimb") || matchesClass(winInfo, "firefox") || matchesClass(winInfo, "browser")) {
         strcpy(winInfo->role, "browser");
     }
-    else if(matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div") || matchesClass(winInfo, "Zathura")) {
-        strcpy(winInfo->role, "media_player");
+    else if(matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div") || matchesClass(winInfo, "mupdf") || matchesClass(winInfo, "Zathura")) {
+        strcpy(winInfo->role, MEDIA_PLAYER);
     }
     else if(matchesClass(winInfo, "st-256color")) {
         strcpy(winInfo->role, "terminal");
@@ -94,6 +104,8 @@ void loadSettings() {
     setWorkspaceName(6, "7Gaming");
     addWorkspaceMask(getWorkspace(6), FLOATING_MASK);
     addEvent(CLIENT_MAP_ALLOW, USER_EVENT(configureWindowsByName));
+    addEvent(WINDOW_FOCUS, USER_EVENT(updateActiveMode));
+
     //getEventRules(CLIENT_MAP_ALLOW).add([](WindowInfo*winInfo){addMask(winInfo,INPUT_MASK);}, HIGH_PRIORITY);
     //getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT_P(configureWindows, LOW_PRIORITY));
     addSuggestedRules();
