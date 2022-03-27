@@ -89,9 +89,9 @@ Binding customBindings[] = {
 
     CYCLE_BINDINGS(Mod4Mask, ShiftMask, XK_w, raiseOrRunBrowser, XK_Super_L),
     CYCLE_BINDINGS(Mod4Mask, ShiftMask, XK_e, raiseOrRunMediaView, XK_Super_L),
-    {Mod4Mask | Mod1Mask, XK_w, {spawn,  .arg = {.str = "$BROWSER_ALT"}} },
-    {Mod4Mask | ControlMask | ShiftMask, XK_w, {spawn,  .arg = {.str = "$BROWSER"}} },
-    {Mod4Mask | ControlMask, XK_w, {spawn,  .arg = {.str = "firefox"}} },
+    {Mod4Mask | Mod1Mask, XK_w, {spawnSilent,  .arg = {.str = "$BROWSER_ALT"}} },
+    {Mod4Mask | ControlMask | ShiftMask, XK_w, {spawnSilent,  .arg = {.str = "$BROWSER"}} },
+    {Mod4Mask | ControlMask, XK_w, {spawnSilent,  .arg = {.str = "firefox"}} },
 
     {Mod4Mask | ControlMask, XK_d, {raiseOrRun,  .arg = {.str = "dolphin-emu"}} },
 
