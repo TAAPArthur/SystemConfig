@@ -77,6 +77,7 @@ function! UpdateFile()
 endfunction
 augroup Backup
   autocmd!
+    autocmd VimEnter * silent execute "!mkdir -p " . expand("~/.cache/backup/")
     " remove temp file on save
     autocmd BufWritePost * silent execute "!rm -f " . expand("~/.cache/backup/%:t")
     " Auto backup on leaving insert
