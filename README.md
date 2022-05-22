@@ -14,6 +14,7 @@ Some highlights:
 * [delay](bin/delay) -- sleep some specified time then run specified command
 * [highlight](bin/highlight) -- highlight selected text
 * [kiss-setup.sh](bin/kiss-setup.sh) -- sets up system wide kiss repros
+* [led](bin/led) -- activate leds in a priority queue
 * [link_dot_files.sh](bin/link_dot_files.sh) -- links the files in Config/ to ~/.config/
 * [nmenu](bin/nmenu) -- an interactive menu selection based on config files; intended as a primary UI for mobile devices with few buttons
 * [screenshot](bin/screenshot) -- take a screenshot/video

@@ -1,0 +1,86 @@
+#!/bin/sh -e
+
+# The intended usecase is to supplement a notification system. Say for example you
+# received an email from person A. You may get some on screen notification, but
+# for most of us that will disappear after a while. So if you weren't looking at
+# the screen that moment, you may have missed it. Instead you can run `led push
+# blue email-A on` and a blue (if available) led will turn on. When you finally get
+# to checking your email `led pop email-A` to unset the led. If in between you also
+# received an email from B and ran `led push blue email-B on` then the led would
+# remain on until pop was run for this id. If you didn't care about the specific
+# user, you could just run `led push blue email on` and only 1 pop would be needed
+
+LED_SYS_DIR=${LED_SYS_DIR:-/sys/class/leds}
+LED_PATH=$(echo "$LED_SYS_DIR"/*"$2"*)
+
+if [ -z "$1" ] || [ "$1" = "list" ]; then
+    if  [ -n "$2" ]; then
+        printf "on off "
+        cat "$LED_PATH/trigger"
+    else
+        ls "$LED_SYS_DIR"
+    fi
+    exit 0
+elif [ "$1" = "get" ]; then
+    sed "s/.*\[\(.*\)\].*/\1 $(cat "$LED_PATH/brightness")/" < "$LED_PATH/trigger"
+fi
+
+LED_DATA_DIR=${LED_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/led}
+
+mkdir -p "$LED_DATA_DIR"
+[ "0$LED_LOCK" -eq 1 ] || LED_LOCK=1 exec flock "$LED_DATA_DIR/.lock" "$0" "$@"
+
+SUBCOMMAND=$1
+LABEL="${3:-default}"
+LED_ACTION="${4:-on}"
+LED_PRIORITY="${5:-1}"
+LED_INFO_DIR="$LED_DATA_DIR/$(basename "$LED_PATH")"
+LED_INFO_FILE="$LED_INFO_DIR/$LABEL"
+
+setLED() {
+    case "$1" in
+        on)
+            echo 1 > "$LED_PATH/brightness"
+            ;;
+        off)
+            echo 0 > "$LED_PATH/brightness"
+            ;;
+        *)
+            echo "$1" > "$LED_PATH/trigger"
+            ;;
+    esac
+}
+
+if [ "$SUBCOMMAND" = "push" ]; then
+    mkdir -p "$LED_INFO_DIR"
+    priority="$LED_PRIORITY$(date -u +%C%y%m%d%H%M%S)"
+    echo "$priority $LED_ACTION" > "$LED_INFO_FILE"
+    for f in "$LED_INFO_DIR"/*; do
+        read -r p _ < "$f"
+        [ "$priority" -lt "${p:-1}" ] && exit 0
+    done
+    setLED "$LED_ACTION"
+elif [ "$SUBCOMMAND" = "pop" ]; then
+    [ -d "$LED_INFO_DIR" ] || exit 0
+    rm -f "$LED_INFO_FILE" || true
+    sort -r "$LED_INFO_DIR"/* 2>/dev/null | {
+        while read -r _ action; do
+           setLED "$action" && exit 0
+       done
+       exit 1
+    } || {
+        rm -r "$LED_INFO_DIR"
+        setLED off
+    }
+elif [ "$SUBCOMMAND" = "clear" ]; then
+    rm -f "$LED_INFO_FILE"
+    setLED off
+else
+    echo "$0 push led_name [label [action [priority]]]"
+    echo "$0 pop led_name [label]"
+    echo "$0 clear led_name"
+    echo "$0 list led_name"
+    echo "$0"
+    [ "$SUBCOMMAND" != -h ] && [ "$SUBCOMMAND" != --help ] && exit 2
+    exit 0
+fi
