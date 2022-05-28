@@ -1,0 +1,49 @@
+#!/bin/sh
+
+LOG_DIR=~/.local/share/notify_log/
+[ -d "$LOG_DIR" ] || mkdir -p "$LOG_DIR"
+
+clear_notification() {
+    label="$1"
+    sh "$LOG_DIR/$label/OFF_CMD" || true
+    rm -r "${LOG_DIR:?}/$label"
+}
+
+show_notification() {
+    label="$1"
+    notify-send "$label" "$(cat "$LOG_DIR/$label/MSG")"
+    clear_notification "$label"
+}
+
+DIR="$LOG_DIR/$2"
+if [ $# -eq 0 ]; then
+    ls "$LOG_DIR"
+elif [ "$1" = "check" ]; then
+    find "$LOG_DIR" -type f | read -r _
+elif [ "$1" = "add" ]; then
+    [ -n "$2" ] || exit 2
+    mkdir -p "$DIR"
+    echo "$3" >> "$DIR/MSG"
+    echo "$4" >> "$DIR/ON_CMD"
+    echo "$5" >> "$DIR/OFF_CMD"
+    sh "$DIR/ON_CMD"
+elif [ "$1" = "show" ]; then
+    if [ -z "$2" ]; then
+        cd "$LOG_DIR" || exit 1
+        for label in *; do
+            show_notification "$label"
+        done
+    else
+        show_notification "$2"
+    fi
+elif [ "$1" = "clear" ]; then
+    if [ -z "$2" ]; then
+        cd "$LOG_DIR" || exit 1
+        for label in *; do
+            clear_notification "$label"
+        done
+    else
+        clear_notification "$2"
+    fi
+fi
+

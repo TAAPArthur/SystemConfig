@@ -1,0 +1,4 @@
+#!/bin/sh -e
+echo "__SHOW_ALL__"
+echo "__CLEAR_ALL__"
+notify_log
