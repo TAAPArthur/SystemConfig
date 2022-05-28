@@ -3,6 +3,7 @@ printf "suspend\tdelay 2 xsuspend\n"
 printf "lock\tdelay 2 xset s activate \n"
 echo notifications
 echo contact
+echo flashlight
 echo camera
 printf "BROWSER\t%s\n" "$BROWSER"
 printf "TERMINAL\t%s\n" "$TERMINAL"

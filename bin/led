@@ -23,6 +23,13 @@ if [ -z "$1" ] || [ "$1" = "list" ]; then
     exit 0
 elif [ "$1" = "get" ]; then
     sed "s/.*\[\(.*\)\].*/\1 $(cat "$LED_PATH/brightness")/" < "$LED_PATH/trigger"
+    exit 0
+elif [ "$1" = "check" ]; then
+    read -r value _ < "$LED_PATH/trigger"
+    [ "$value" = "[none]" ]
+    read -r brightness _ <"$LED_PATH/brightness"
+    [ "$brightness" -eq 0 ]
+    exit
 fi
 
 LED_DATA_DIR=${LED_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/led}
