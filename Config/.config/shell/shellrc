@@ -59,8 +59,8 @@ git_clone() {
     git clone "https://github.com/TAAPArthur/$repo" "$@"
 }
 
-kiss_goto() {
-    cd "$(kiss s "${1:-${PWD##*/}}" | head -n1 )"
+pkgman_goto() {
+    cd "$(pkgman s "${1:-${PWD##*/}}" | head -n1 )"
 }
 
 export NESTED_SHELL_LEVEL=$((${NESTED_SHELL_LEVEL:--1}+1));
