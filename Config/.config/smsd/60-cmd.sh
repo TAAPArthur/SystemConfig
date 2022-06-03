@@ -3,15 +3,15 @@
 
 case "$MSG" in
     /ping)
-        send-sms "$NUMBER" "pong"
+        send-sms "$NUMBER" "#pong"
         exit
         ;;
     /uname)
-        uname -a | send-sms "$NUMBER"
+        send-sms "$NUMBER" "#$(uname -a)"
         exit
         ;;
     /uptime)
-        uptime | send-sms "$NUMBER"
+        send-sms "$NUMBER" "#$(uptime)"
         exit
         ;;
 esac

@@ -7,6 +7,7 @@ $(contacts get-group "$NAME")
 EOF
 
 LABEL="sms-$NUMBER"
+HUMAN_LABEL="sms-$NAME"
 if [ "$SENT" = 1 ]; then
     HEADER="SMS to $NAME"
 else
