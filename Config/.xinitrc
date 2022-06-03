@@ -23,6 +23,7 @@ exec > ~/.local/share/xorg/xinitrc.out 2> ~/.local/share/xorg/xinitrc.err
 [ -x /usr/bin/sgestures ] && sgestures-libinput-writer | sgestures &
 [ -x /usr/bin/smsd ] && exec smsd &
 [ -x /usr/bin/xmouse-control ] && exec xmouse-control &
+which notify_log >/dev/null 2>&1 && notify_log resume &
 
 for file in ~/.xprofile.d/*.sh; do
     [ -r "$file" ] && . "$file"

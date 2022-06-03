@@ -45,5 +45,10 @@ elif [ "$1" = "clear" ]; then
     else
         clear_notification "$2"
     fi
+elif [ "$1" = "resume" ]; then
+    cd "$LOG_DIR" || exit 1
+    for label in *; do
+        sh "$label/ON_CMD"
+    done
 fi
 
