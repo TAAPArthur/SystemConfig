@@ -2,7 +2,7 @@
 
 if [ "$1" =  __SHOW_ALL__ ]; then
     notify_log show
-elif [ "$2" =  __CLEAR_ALL__ ]; then
+elif [ "$1" =  __CLEAR_ALL__ ]; then
     notify_log clear
 else
     notify_log show "$*"
