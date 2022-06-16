@@ -38,10 +38,12 @@ void windowTitle() {
 void sort(int arg) {
     image_loader_sort(state.image_context, arg);
     open_images();
-    state.dirty=1;
 }
 
 extern xcb_generic_event_t* event;
+/**
+ * Print and copy the selected image's name
+ */
 void printSelectedImage() {
     static char buffer[] = "printf %s \"$FILENAME\" | xsel -b";
     xcb_button_press_event_t* bevent = (xcb_button_press_event_t*)event;
@@ -56,6 +58,12 @@ void printSelectedImage() {
     }
 }
 
+/**
+ * Goto the next page depending in the click happened on the right/left edge. The exact translation depends on
+ * state.right_to_left.
+ * For example, clicking on the left edge, when reading right-to-left, would progress to the next page but if reading
+ * left-to-right, it would go back to the previous page
+ */
 void buttonNavigate() {
     xcb_button_press_event_t* bevent = (xcb_button_press_event_t*)event;
     int index = state.file_index;
@@ -69,21 +77,25 @@ void buttonNavigate() {
 }
 
 Binding user_bindings[] = {
+    // Navigate with volume buttons; useful on mobile
     {0, XF86XK_AudioRaiseVolume, next_image, +1},
     {0, XF86XK_AudioLowerVolume, next_image, -1},
 
+    // Basic sorting on file properties
     {0, XK_s, sort, IMG_SORT_SIZE},
     {ShiftMask, XK_s, sort, -IMG_SORT_SIZE},
     {0, XK_n, sort, IMG_SORT_NAME},
     {ShiftMask, XK_n, sort, -IMG_SORT_NAME},
     {ShiftMask, XK_a, sort, IMG_SORT_MOD},
     {0, XK_a, sort, -IMG_SORT_MOD},
+
     {0, Button1, printSelectedImage, .type=XCB_BUTTON_PRESS},
     {0, Button1, buttonNavigate, .type=XCB_BUTTON_RELEASE},
     {0}
 };
 
 void customScaleFunc(const char* buf, uint32_t original_width, uint32_t original_height, char* out_buf, uint32_t width, uint32_t height, int num_channels) {
+    // Use a higher quality scale function when viewing few images
     if(getNumActiveImages() < 4) {
         stbir_resize_uint8(buf, original_width, original_height, 0, out_buf, width, height, 0, num_channels);
         return;
@@ -91,7 +103,6 @@ void customScaleFunc(const char* buf, uint32_t original_width, uint32_t original
     nearestNeighbourScale(buf, original_width,original_height,out_buf,width,height,num_channels);
 }
 
-void defaultOpenImages();
 void customOpenImages() {
     static char largePage;
     if(largePage) {
@@ -99,6 +110,8 @@ void customOpenImages() {
         largePage = false;
     }
     defaultOpenImages();
+    // If we are in a dual-page view and see a relatively large image, assume that image is dual image
+    // let it take up the entire window
     if(getNumActiveImages() == 2) {
         for (int i = 0; i < getNumActiveImages(); i++) {
             if(image_holders[i].image_data && image_holders[i].image_width >= 1024 && image_holders[i].image_width > image_holders[i].image_height) {
@@ -108,7 +121,8 @@ void customOpenImages() {
         }
     }
 }
-void onStartup(){
+
+void onStartup() {
     state.xevent_mask |= XCB_EVENT_MASK_BUTTON_PRESS | XCB_EVENT_MASK_BUTTON_RELEASE;
     events[SET_TITLE] = windowTitle;
     events[XCB_BUTTON_RELEASE] = events[XCB_KEY_PRESS];
