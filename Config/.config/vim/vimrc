@@ -58,6 +58,12 @@ augroup resCur
   autocmd BufReadPost * call setpos(".", getpos("'\""))
 augroup END
 
+augroup Template
+  autocmd!
+  autocmd BufNewFile *.sh silent 0r ~/.config/vim/templates/skeleton.sh
+  autocmd BufNewFile *.h silent 0r ~/.config/vim/templates/skeleton.h | %s/__PLACEHOLDER__/\=toupper(expand('%:p:t:r'))/ge
+augroup END
+
 augroup Misc
   autocmd!
   " Resize splits when the window is resized
@@ -134,6 +140,13 @@ augroup project
   autocmd BufWritePost vimrc so %
   autocmd BufWritePost * if &makeprg != "make" | silent make! % | redraw!
   autocmd QuickFixCmdPost [^l]* cwindow
+augroup END
+
+augroup AutoCreateDir
+  autocmd!
+  " Auto create the directory when saving a file
+  autocmd BufNewFile  * let b:new_file = 1
+  autocmd BufWritePre * if exists("b:new_file") | execute "!mkdir -p $(dirname %)" | unlet b:new_file
 augroup END
 
 function! PadOperand ()
