@@ -19,9 +19,7 @@ exec > ~/.local/share/xorg/xinitrc.out 2> ~/.local/share/xorg/xinitrc.err
 [ -x /usr/bin/apples ] && [ -x /usr/bin/mpxlocker ] && exec apples "mpxlocker" "power-save" &
 [ -x /usr/bin/clip-history ] && exec clip-history monitor &
 [ -x /usr/bin/dzen2 ] && [ -x /usr/bin/mystatusbar ] && mystatusbar | status-bar -title-name "mystatusbar" &
-[ -x /usr/bin/ringd ] && exec ringd &
 [ -x /usr/bin/sgestures ] && sgestures-libinput-writer | sgestures &
-[ -x /usr/bin/smsd ] && exec smsd &
 [ -x /usr/bin/xmouse-control ] && exec xmouse-control &
 which notify_log >/dev/null 2>&1 && notify_log resume &
 
