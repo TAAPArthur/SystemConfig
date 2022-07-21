@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+case "$1" in
+    normal|0) VALUE=0;;
+    right|1) VALUE=1;;
+    inverted|2) VALUE=2;;
+    left|3) VALUE=3;;
+esac
+echo "$VALUE" | sudo tee /sys/class/graphics/fbcon/rotate_all

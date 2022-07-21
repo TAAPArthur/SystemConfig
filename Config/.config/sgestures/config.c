@@ -66,7 +66,7 @@ typedef struct {
     GestureBindingArg bindingArg;
 } GestureBinding ;
 
-#define ROTATE_CMD(X) "xsane-xrandr -a rotate " # X "; xsane-xrandr -a rotate-touchscreen"
+#define ROTATE_CMD(X) "xsane-xrandr -a rotate " # X "; xsane-xrandr -a rotate-touchscreen; rotate_terminal " # X
 GestureBinding gestureBindings[] = {
     // normal
     {spawn,  {"mpxmanager swap-down"},            {{GESTURE_NORTH}, {.fingers = 3}}},
