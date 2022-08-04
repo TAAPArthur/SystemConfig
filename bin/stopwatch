@@ -1,0 +1,41 @@
+#!/bin/tcc -run -lc
+
+#include <stdio.h>
+#include <poll.h>
+#include <time.h>
+#include <unistd.h>
+
+static inline unsigned long diff_time(struct timespec start, struct timespec end) {
+    unsigned long startTime = start.tv_sec * ((long)1e9) + start.tv_nsec;
+    unsigned long endTime = end.tv_sec * ((long)1e9) + end.tv_nsec;
+    unsigned long diff = (endTime - startTime);
+    return diff;
+}
+
+int main() {
+    struct timespec start, current;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    struct pollfd fds[] = {{.fd = STDIN_FILENO, .events = POLLIN}};
+    int interactive = 0;
+    if (isatty(STDERR_FILENO)) {
+        interactive = 1;
+    }
+    while(1) {
+        int ret = poll(fds, 1, 25);
+        clock_gettime(CLOCK_MONOTONIC, &current);
+        unsigned long delta = diff_time(start, current);
+        if (ret > 0) {
+            char c = 0;
+            read(fds[0].fd, &c, 1);
+            if (c == '\n') {
+                dprintf(STDOUT_FILENO, "%8.3f s\n", delta/1e9);
+            }
+        } else if(ret < 0) {
+            return 0;
+        }
+        if (interactive) {
+            dprintf(STDERR_FILENO, "\r\033[0K%8.3f s", delta/1e9);
+        }
+    }
+    return 0;
+}
