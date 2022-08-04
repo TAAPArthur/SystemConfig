@@ -16,9 +16,9 @@ while read -r url name; do
             rm -r "$name"
         fi
     fi
-    git clone "$url" "$name"
+    git clone --single-branch "$url" "$name"
 done <<EOF
-https://github.com/kisslinux/repo
+https://github.com/kiss-community/repo
 https://github.com/kiss-community/repo-community community
 https://github.com/ehawkvu/kiss-xorg
 https://github.com/TAAPArthur/mykiss-repo
