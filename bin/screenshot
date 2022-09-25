@@ -27,7 +27,7 @@ case "$firstArg" in
         exec env $(xdotool getwindowgeometry --shell "$(xdotool getwindowfocus)") "$0" -e "$@"
         ;;
     -w)
-        window=$2
+        window=$1
         shift
         exec env $(xdotool getwindowgeometry --shell "$window") "$0" -e "$@"
 esac
