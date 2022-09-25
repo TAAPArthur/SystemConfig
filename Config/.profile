@@ -1,22 +1,19 @@
 #!/bin/sh
 
 # PATH adjustments
-PATH=~/.local/bin:$PATH:~/SystemConfig/bin
+PATH=~/.local/bin:~/SystemConfig/bin:$PATH
 
 # global variables
 export ABDUCO_CMD="ksh"
 export ABDUCO_SOCKET_DIR=/tmp/.abduco
-export BASH_COMPLETION_USER_FILE=~/SystemConfig/bash_completion.d
 export BROWSER="st -c browser elinks"
 export BROWSER_ALT=firefox
 export EDITOR=vim
 export ELINKS_CONFDIR=~/.config/elinks
 export LEDGER_FILE=~/Documents/Accounting/ledger
 export MOZ_USE_XINPUT2=1
-export NMENU_MENU_ARGS="-l 4 -g 4"
-export PASSWORD_STORE_DIR=~/.config/tpm
+export NMENU_MENU_ARGS="-i -l 4 -g 4"
 export PICTURES_DIR=~/Pictures
-export PKG_MANAGER=pacaur
 export QT_STYLE_OVERRIDE=adwaita-dark
 export TERMINAL=st
 export VIDEO_PAYER=mpv
