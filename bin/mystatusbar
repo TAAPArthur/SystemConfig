@@ -201,8 +201,18 @@ void sleepRemainingInterval(struct timespec* start) {
         nanosleep(&wait, NULL);
 }
 
-int main() {
+char* const* _argv;
+void restart() {
+    execv(_argv[0], _argv);
+}
+int main(int argc, char* const* argv) {
     signal(SIGCHLD, SIG_IGN);
+    _argv = argv;
+    struct sigaction sa;
+    sa.sa_handler = restart;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART | SA_NODEFER;
+    sigaction(SIGHUP, &sa, NULL);
     size_t i;
     uint32_t counter = 0;
     char status[255];
