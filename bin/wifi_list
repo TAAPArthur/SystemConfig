@@ -1,18 +1,61 @@
 #!/bin/sh -e
 
 list() {
-sudo iw dev wlan0 scan | grep -i -e SSID: -e signal | {
-    while read -r _ signal units && read -r _ ssid; do
-        [ -n "$ssid" ] && printf "%s\t%s %s\n" "$ssid" "$signal" "$units"
-    done
-} | sort -k2
+    sudo iw dev wlan0 scan | grep -i -e SSID: -e signal -e "Authentication suites:" | uniq |
+        sed "/suites:/{s/.*suites: /AUTH:/g; s/\s/,/}" | tr '\n' '\r' |
+        sed -e "s/signal:\([^\r]*\)\r/\1 /g" -e "s/\s*SSID:\([^\r]*\)\rAUTH:\([^\r]*\)/ \2 \1/g" -e "s/SSID://g" | tr '\r' '\n' |
+        {
+            while read -r signal units encryption ssid; do
+                [ -n "$ssid" ] && printf "%s\t%s\t%s %s\n" "$ssid" "$encryption" "$signal" "$units"
+            done
+        } | sort -k1 | rev | uniq -f 3 | rev | sort -k2
+}
+
+save() {
+    SSID=$1
+    prefix="/var/lib/iwd/$SSID"
+    case "$2" in
+        PSK)
+            dmenu -p "Password" <&- | iwd_passphrase "$SSID" > "$prefix.psk"
+            ;;
+        802.1X)
+            {
+                echo "[Security]"
+                printf EAP-Method=
+                echo "AKA,AKA',MSCHAPV2,PEAP,PWD,SIM,TLS,TTLS" | tr "," "\n" | dmenu -p "EAP-Method"
+                printf EAP-Identity=
+                echo "<anonymous identity>" | dmenu -p "EAP-Identity"
+                printf EAP-PEAP-Phase2-Method=
+                echo "AKA,AKA',MSCHAPV2,PEAP,PWD,SIM,TLS,TTLS" | tr "," "\n" | dmenu -p "EAP-PEAP-Phase2-Method"
+
+                printf EAP-PEAP-Phase2-Identity=
+                dmenu -p "EAP-PEAP-Phase2-Identity" -it "$USER" <&-
+
+                printf EAP-PEAP-Phase2-Password-Hash=
+                dmenu -P -p "EAP-PEAP-Phase2-Password" <&- | tr -d "\n" |
+                    # Hack convert to utf16 little endian
+                    xxd -p | sed "s/../\000/g" | xxd -rp |
+                        # Generate the md4 hash
+                        openssl md4 | cut -d" " -f2
+            } > "$prefix.8021x"
+            ;;
+        "")
+            : > "$prefix.open"
+            ;;
+        *)
+            return 1
+    esac
 }
 
 if [ "$1" = -s ]; then
-    SSID=$(list | dmenu -l 4 -g 4 | cut -f1)
+    resp=$(list | dmenu -l 4 -g 4)
+    SSID=$(echo "$resp" | cut -f1)
     [ -n "$SSID" ]
-    dmenu -p "Password" <&- | iwd_passphrase "$SSID" > "/var/lib/iwd/$SSID.psk"
+
+    echo "$resp" | cut -f2 | tr "," "\n" |
+         while read -r encryption; do
+            save "$SSID" "$encryption" && break
+        done
 else
     list
 fi
-
