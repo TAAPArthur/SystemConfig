@@ -16,3 +16,7 @@
 
 [core]
 	excludesFile = ~/.config/git/gitignore
+
+[rebase]
+    instructionFormat = "%s (%an) %d"
+    abbreviateCommands = true
