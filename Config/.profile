@@ -39,4 +39,6 @@ if [ -z "$DISPLAY" ] && [ -x /usr/bin/xinit ] && [ "$(tty)" = "/dev/tty1" ]; the
     num=${tty#/dev/tty}
     display=$((num-1))
     exec xinit ~/.xinitrc  -- ~/.xserverrc :$display "vt$num" -keeptty
+elif [ -z "$DISPLAY" ]; then
+    export DISPLAY=:0
 fi
