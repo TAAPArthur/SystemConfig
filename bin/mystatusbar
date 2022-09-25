@@ -169,13 +169,13 @@ const char* read_file(const char*file, char* buffer) {
 
 static const struct arg args[] = {
     /* function format          argument */
-    { datetime,            "^fg(#FCD862)%H:%M:%S|%a %d^fg()|", 1},
-    { cpu_perc,            "^fg(cyan)%02d%%"},
-    { cpu_freq_formatted, ";%02.1f^fg()|"},
-    { ram_status,         "^fg(green)%.2fG;%02d%%^fg()|"},
-    { battery_status,     "^fg(%s)%s%d%%^fg()|"},
-    { read_file,          "/tmp/.weather",                      600},
     { run_command_silent, "weather.sh",                         3600},
+    { read_file,          "/tmp/.weather",                      600},
+    { battery_status,     "|^fg(%s)%s%02d%%^fg()"},
+    { ram_status,         "|^fg(green)%04.1fG;%02d%%^fg()"},
+    { cpu_freq_formatted, "|^fg(cyan)%02.1f;"},
+    { cpu_perc,            "%02d%%^fg()"},
+    { datetime,            "^fg(#FCD862)|%a %d|%H:%M:%S^fg()", 1},
 };
 char cache[LEN(args)][64];
 #define DEFAULT_CACHE 10
