@@ -26,7 +26,7 @@
 #define MEDIA_PLAYER "media_player"
 
 void updateActiveMode(WindowInfo* winInfo) {
-    if(getFocusedWindow() && getFocusedWindow()->role && strcmp(getFocusedWindow()->role, MEDIA_PLAYER) == 0) {
+    if (getFocusedWindow() && getFocusedWindow()->role && strcmp(getFocusedWindow()->role, MEDIA_PLAYER) == 0) {
         addActiveMode(KEYBOARD_PASSTHROUGH_MODE);
     } else {
         removeActiveMode(KEYBOARD_PASSTHROUGH_MODE);
@@ -34,11 +34,11 @@ void updateActiveMode(WindowInfo* winInfo) {
 
 }
 void configureWindowsByName(WindowInfo* winInfo) {
-    if(matchesTitle(winInfo, "mystatusbar")) {
-        addMask(winInfo, PRIMARY_MONITOR_MASK | X_CENTERED_MASK);
+    if (matchesTitle(winInfo, "mystatusbar")) {
+        addMask(winInfo, PRIMARY_MONITOR_MASK);
         removeMask(winInfo, ABOVE_MASK);
-        setTilingOverrideEnabled(winInfo, 1 | 4 | 32);
-        setTilingOverride(winInfo, (Rect) {-30, 0, 520, 0});
+        setTilingOverrideEnabled(winInfo, (1 | 4 | 16 ) );
+        setTilingOverride(winInfo, (Rect) {-450, 0, 450, 0});
     }
     else if(matchesClass(winInfo, "dzen2")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | BELOW_MASK);
