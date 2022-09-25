@@ -133,6 +133,9 @@ const char* battery_status(const char* fmt, char*buffer) {
     if(pscanf(path, "%d", &perc) != 1) {
         return NULL;
     }
+    if (perc == 100) {
+        return map[0].symbol;
+    }
     char* color = perc > 90 ? "green" : perc < 3 ? "red" : "cyan";
     sprintf(buffer, fmt, color, map[i].symbol, perc);
     return buffer;
