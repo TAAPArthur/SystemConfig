@@ -14,7 +14,7 @@ for backlight in /sys/class/backlight/*; do
             exit 0
             ;;
         max)
-            echo maxBrightness
+            echo "$maxBrightness"
             exit 0
             ;;
         =*%)
