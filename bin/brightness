@@ -3,13 +3,25 @@
 for backlight in /sys/class/backlight/*; do
     [ -d "$backlight" ]
     read -r brightness < "$backlight/brightness"
+    read -r maxBrightness < "$backlight/max_brightness"
     case "$1" in
         "")
             echo "$brightness"
             exit 0
             ;;
+        %)
+            echo $((brightness * 100 / maxBrightness))
+            exit 0
+            ;;
+        max)
+            echo maxBrightness
+            exit 0
+            ;;
+        =*%)
+            percent=${1#=}
+            brightness=$((${percent%%%} * maxBrightness / 100))
+            ;;
         *%)
-            read -r maxBrightness < "$backlight/max_brightness"
             brightness=$((${1%%%} * maxBrightness / 100 + brightness ))
             ;;
         =*)
@@ -19,6 +31,12 @@ for backlight in /sys/class/backlight/*; do
             brightness=$((brightness + $1))
             ;;
     esac
+    if [ "$brightness" -gt "$maxBrightness" ];then
+        brightness="$maxBrightness"
+    elif [ "$brightness" -lt 0 ]; then
+        brightness=0
+    fi
     echo "$brightness" > "$backlight/brightness"
+    notify-send -c BRIGHTNESS -r "$backlight" "Brightness: $brightness $((brightness * 100 / maxBrightness ))%" &
     break
 done
