@@ -16,7 +16,7 @@ export NMENU_MENU_ARGS="-i -l 4 -g 4"
 export PICTURES_DIR=~/Pictures
 export QT_STYLE_OVERRIDE=adwaita-dark
 export TERMINAL=st
-export VIDEO_PAYER=mpv
+export VIDEO_PLAYER=mpv
 export VIMINIT="source ~/.config/vim/vimrc"
 export WINDOW_MANAGER=mpxmanager
 
