@@ -40,6 +40,7 @@ alias bk=cd_back
 alias tg=cd_forward
 alias cd=smart_cd
 alias F="fg %-" # Cycle between last stopped jobs
+alias xssh="ssh -R /tmp/.X11-unix/X2222:/tmp/.X11-unix/X\${DISPLAY#:}"
 
 
 [ -n "$KSH_VERSION" ] && . ~/.config/shell/kshrc
