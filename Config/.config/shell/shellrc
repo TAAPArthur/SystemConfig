@@ -5,8 +5,8 @@ alias oneline='git log --oneline'
 alias git-branch-recent='git branch --sort=-committerdate'
 alias git-push-new='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
-export CD_HISTORY=
-export CD_REV_HISTORY=
+CD_HISTORY=
+CD_REV_HISTORY=
 
 smart_cd() {
     if builtin cd "$@"; then
