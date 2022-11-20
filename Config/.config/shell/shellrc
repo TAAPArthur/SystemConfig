@@ -42,23 +42,7 @@ alias cd=smart_cd
 alias F="fg %-" # Cycle between last stopped jobs
 alias xssh="ssh -R /tmp/.X11-unix/X2222:/tmp/.X11-unix/X\${DISPLAY#:}"
 
-
 [ -n "$KSH_VERSION" ] && . ~/.config/shell/kshrc
-
-#interactive shell specific aliases
-find_replace() {
-    find . -name "$1" -exec sed -Ei "$2" {} \;
-}
-
-find_replace_dryrun() {
-    find . -name "$1" -exec sed -En "$2" {} \;
-}
-
-git_clone() {
-    repo=$1
-    shift
-    git clone "https://github.com/TAAPArthur/$repo" "$@"
-}
 
 pkgman_goto() {
     cd "$(pkgman s "${1:-${PWD##*/}}" | head -n1 )"
