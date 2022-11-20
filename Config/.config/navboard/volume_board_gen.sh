@@ -1,9 +1,18 @@
 #!/bin/sh -e
 
 generateRow() {
+    set_pressed_cmd="amixer set \\\"\$KEY_LABEL\\\" \$([ \$KEY_PRESSED -eq 0 ] && echo mute || echo unmute)"
+    load_pressed_cmd="amixer get \\\"\$KEY_LABEL\\\" | grep -F -q '[on]'";
+
+    set_value_cmd="ALSA_DEVICE=\\\"\$KEY_LABEL\\\" vol -s \$KEY_VALUE%";
+    load_value_cmd="amixer get \\\"$KEY_LABEL\\\" | sed -nE 's/.* .([0-9]+)%.*/\\1/p'"
+
+    pressed_cmd="if [ \$READING -eq 0 ]; then $set_pressed_cmd; else $load_pressed_cmd; fi"
+    value_cmd="if [ \$READING -eq 0 ]; then $set_value_cmd; else $load_value_cmd; fi"
+
     cat - <<EOF
-    { .label="$LAST_NAME", .loadValue = setPressedStateFromMuteStatus, .onPress = spawnCmd, .arg.s="amixer set \"\$KEY_LABEL\" \$([ \"\$KEY_PRESSED\" -eq 0 ] && echo mute || echo unmute)", .flags=$SWITCH_FLAGS|LATCH},
-    { .label="$LAST_NAME", .max=100, .loadValue = setValueFromVolume, .onDrag = spawnCmd, .arg.s="ALSA_DEVICE=\"\$KEY_LABEL\" vol -s \$KEY_VALUE% &", .flags=$VOLUME_FLAGS},
+    { .label="$LAST_NAME", .loadValue = readValueFromCmd, .onPress = spawnCmd, .arg.s="$pressed_cmd", .flags=$SWITCH_FLAGS|LATCH},
+    { .label="$LAST_NAME", .max=100, .loadValue = readValueFromCmd, .onDrag = spawnCmd, .arg.s="$value_cmd", .flags=$VOLUME_FLAGS},
     {0},
 EOF
 }
@@ -12,10 +21,9 @@ cat - <<EOF
 // Generated File Do Not Manually Edit
 #include <navboard/navboard.h>
 #include <navboard/functions.h>
-#include "volume.h"
 #undef DEFAULT_THICKNESS
 #define DEFAULT_THICKNESS 70
-Key __keys[] = {
+static Key __keys[] = {
 EOF
 
 amixer controls | grep Playback | grep -v Route | sed -E 's/^.*name=.([A-z0-9 ]+) Playback (.*).$/\1,\2/g' | sort -t, -k1,1 | {
