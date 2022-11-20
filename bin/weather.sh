@@ -16,11 +16,12 @@ updateTimeStamp() {
 main () {
     checkCache
 
-    if (curl -s 'wttr.in?m&format=%t&lang=uk' && curl -s 'wttr.in?u&format=%t&lang=uk') > $tmpfile; then
+    if { curl -s 'wttr.in?m&format=%t&lang=uk' && curl -s 'wttr.in?u&format=%t&lang=uk'; } > $tmpfile && grep "F" "$tmpfile" && grep "C" "$tmpfile"; then
         sed "s/[^CF0-9]//g" $tmpfile | tee $file
         rm $tmpfile
         updateTimeStamp
     else
+        rm $tmpfile
         [ -r "$file" ] || cat $file
         printf '*'
         updateTimeStamp
