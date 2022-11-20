@@ -5,8 +5,10 @@
 #include <div/functions.h>
 #include <div/image_view.h>
 #include <div/x.h>
+#include <fcntl.h>
 #include <img_loader/img_loader.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -72,7 +74,16 @@ void buttonNavigate() {
     if(bevent->event_x > state.win_width * 2 / 3)
         next_page(!state.right_to_left ? 1 : -1);
     if(state.file_index && index == state.file_index) {
-        exit(0);
+        // Quit if quadrupled clicked (time window 1s)
+        static int count;
+        static int lastTime;
+        if(bevent->time - lastTime > 1000) {
+            count = 0;
+        }
+        lastTime = bevent->time;
+        count++;
+        if(count == 4)
+            exit(0);
     }
 }
 
@@ -122,8 +133,31 @@ void customOpenImages() {
     }
 }
 
+const char* state_name = ".div_state";
+void save_position() {
+    int fd = open(state_name, O_WRONLY | O_CREAT, 0644);
+    if(fd != -1) {
+        dprintf(fd, "%d", state.file_index);
+        close(fd);
+    }
+}
+
+void load_position() {
+    if(getenv("DIV_RESUME")) {
+        char buffer[16];
+        int fd = open(state_name, O_RDONLY);
+        if(fd != -1) {
+            read(fd, buffer, sizeof(buffer));
+            state.file_index = atoi(buffer);
+            close(fd);
+        }
+        atexit(save_position);
+    }
+}
+
 void onStartup() {
     state.xevent_mask |= XCB_EVENT_MASK_BUTTON_PRESS | XCB_EVENT_MASK_BUTTON_RELEASE;
+    events[POST_XCONNECTION] = load_position;
     events[SET_TITLE] = windowTitle;
     events[XCB_BUTTON_RELEASE] = events[XCB_KEY_PRESS];
     events[XCB_BUTTON_PRESS] = events[XCB_KEY_PRESS];
