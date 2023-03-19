@@ -1,0 +1,44 @@
+#!/bin/sh
+
+OTHER="$1"
+file=$(contacts get-sms-file "$1")
+[ -e "$file" ]
+show_messages() {
+    LAST_DATE_PREFIX=
+    LAST_MIN=0
+    TAB=$(printf "\t")
+    tail -n20 -f "$1" |
+        while IFS="$TAB" read -r date receive_date header _ msg; do
+            #echo "'$date' '$receive_date' '$a' '$msg'";
+            LABEL=ME:
+            if [ "${receive_date%% *}" != 0 ]; then
+                LABEL="$OTHER:"
+                #date="$receive_date"
+            fi
+            # example date 2021-12-30T19:28:48-0600
+            #Y-M-DTH
+            DATE_PREFIX=${date%:*:*}
+            temp=${date#"$DATE_PREFIX":}
+            MIN=${temp%:*}
+            MIN=${MIN#0}
+            if [ "$LAST_DATE_PREFIX" != "$DATE_PREFIX" ] || [ $(((MIN - LAST_MIN + 60) %60)) -gt 1 ] ; then
+                echo "$date ($receive_date)"
+            fi
+            LAST_DATE_PREFIX="$DATE_PREFIX"
+            LAST_MIN="$MIN"
+            if [ "$header" = CALL ]; then
+                LABEL=""
+            fi
+            printf "%10.10s " "$LABEL"
+            echo "$msg" | tr "\v" "\n"
+        done
+}
+
+trap 'kill 0; ' EXIT
+trap 'kill 0; ' INT
+show_messages "$file" &
+
+while read -r msg; do
+    [ -n "$msg" ] && send-sms "$1" "$msg" 1>/dev/null 2>&1
+done
+echo Finished
