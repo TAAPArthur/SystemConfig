@@ -17,23 +17,41 @@
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include <stb/stb_image_resize.h>
 
+static struct {
+    int file_index;
+    int file_index_in_use;
+} alt_state;
 
 void windowTitle() {
-    static char buffer[255];
+    char buffer[255] = {};
     const char* pwd = getenv("PWD");
     const char* home = getenv("HOME");
     const char* prefix = "";
-    const char* name = image_holders->name;
+    const char* name;
+    for(int i = 0; i < getNumActiveImages(); i++)
+        name = image_holders[i].name;
     if(pwd && name && strncmp(pwd, name, strlen(pwd)) ==0)
         name += strlen(pwd) + 1;
     if(home && name && strncmp(home, name, strlen(home)) ==0) {
         name += strlen(home);
         prefix = "~";
     }
+    int ret;
+    int used = 0;
+    if (alt_state.file_index_in_use) {
+        buffer[0] = '!';
+        used++;
+    }
+    ret = snprintf(buffer + used, sizeof(buffer) - 1 - used, "%s %s%s ", state.user_title, prefix, name);
+    if (ret < 0)
+        return;
+    used += ret;
     if(getNumActiveImages() == 1)
-        snprintf(buffer, sizeof(buffer) - 1, "%s %s%s %d/%d", state.user_title, prefix, name, state.file_index + 1, state.num_files);
+        ret = snprintf(buffer + used, sizeof(buffer) - 1 -used, "%d/%d", state.file_index + 1, state.num_files);
     else
-        snprintf(buffer, sizeof(buffer) - 1, "%s %s%s %d-%d of %d", state.user_title, prefix, name, state.file_index + 1, state.file_index + 1 + getNumActiveImages() - 1, state.num_files);
+        ret = snprintf(buffer + used, sizeof(buffer) - 1, "%d-%d of %d", state.file_index + 1, state.file_index + 1 + getNumActiveImages() - 1, state.num_files);
+    if (ret < 0)
+        return;
     setWindowTitle(buffer);
 }
 
@@ -87,6 +105,24 @@ void buttonNavigate() {
     }
 }
 
+void trash_image(int sync_to_disk) {
+    image_loader_remove_image_at_index(state.image_context, state.file_index);
+    if (sync_to_disk) {
+        printf("Unlinking %s\n", image_holders->name);
+        if (image_holders->name)
+            unlink(image_holders->name);
+    }
+    open_images();
+}
+
+void toggle_alt_position() {
+    alt_state.file_index_in_use ^= 1;
+    int temp = state.file_index;
+    state.file_index = alt_state.file_index;
+    alt_state.file_index = temp;
+    open_images();
+}
+
 Binding user_bindings[] = {
     // Navigate with volume buttons; useful on mobile
     {0, XF86XK_AudioRaiseVolume, next_image, +1},
@@ -99,6 +135,10 @@ Binding user_bindings[] = {
     {ShiftMask, XK_n, sort, -IMG_SORT_NAME},
     {ShiftMask, XK_a, sort, IMG_SORT_MOD},
     {0, XK_a, sort, -IMG_SORT_MOD},
+    {0, XK_r, trash_image, 0},
+    {ShiftMask, XK_r, trash_image, 1},
+
+    {0, XK_Return, toggle_alt_position},
 
     {0, Button1, printSelectedImage, .type=XCB_BUTTON_PRESS},
     {0, Button1, buttonNavigate, .type=XCB_BUTTON_RELEASE},
@@ -137,19 +177,24 @@ const char* state_name = ".div_state";
 void save_position() {
     int fd = open(state_name, O_WRONLY | O_CREAT, 0644);
     if(fd != -1) {
-        dprintf(fd, "%d", state.file_index);
+        dprintf(fd, "%d ", state.file_index);
+        dprintf(fd, "%d ", alt_state.file_index);
+        dprintf(fd, "%d ", alt_state.file_index_in_use);
         close(fd);
     }
 }
 
 void load_position() {
     if(getenv("DIV_RESUME")) {
-        char buffer[16];
+        char buffer[256] = {};
         int fd = open(state_name, O_RDONLY);
         if(fd != -1) {
-            read(fd, buffer, sizeof(buffer));
-            state.file_index = atoi(buffer);
+            char* next = buffer;
+            int ret = read(fd, buffer, sizeof(buffer));
             close(fd);
+            state.file_index = strtol(next, &next, 0);
+            alt_state.file_index = strtol(next, &next, 0);
+            alt_state.file_index_in_use = !!strtol(next, &next, 0);
         }
         atexit(save_position);
     }
