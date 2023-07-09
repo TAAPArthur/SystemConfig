@@ -38,16 +38,17 @@ const char* run_command(const char* cmd, char* buffer) {
         exit(1);
     }
     close(fds[1]);
-    int ret = read(fds[0], buffer, BUFFER_SIZE);
-    if(ret > 0)
-        buffer[ret-1] = 0;
+    if (buffer) {
+        int ret = read(fds[0], buffer, BUFFER_SIZE);
+        if(ret > 0)
+            buffer[ret-1] = 0;
+    }
     close(fds[0]);
     return buffer;
 }
 
 const char* run_command_silent(const char* cmd, char* buffer) {
-    run_command(cmd, buffer);
-    return NULL;
+    return run_command(cmd, NULL);
 }
 
 const char* datetime(const char* fmt, char*buffer) {
