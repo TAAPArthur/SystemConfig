@@ -100,6 +100,9 @@ GestureBinding gestureBindings[] = {
     {spawn,  {ROTATE_CMD(inverted)}, {{GESTURE_NORTH, GESTURE_NORTH_WEST, GESTURE_WEST}, {.fingers=1}}},
     {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH}, {.fingers=1}}},
     {spawn,  {ROTATE_CMD(right)   }, {{GESTURE_WEST,  GESTURE_SOUTH_WEST, GESTURE_SOUTH}, {.fingers=1}}},
+
+    {spawn,  {"mpxmanager hide"}, {{GESTURE_PINCH}}},
+    {spawn,  {"mpxmanager unhide"}, {{GESTURE_PINCH_OUT}}},
 };
 
 void triggerGestureBindings(GestureEvent* event) {

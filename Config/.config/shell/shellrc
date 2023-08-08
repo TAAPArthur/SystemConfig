@@ -1,10 +1,6 @@
 #!/bin/sh
 # shellcheck disable=2164,SC2034
 
-alias oneline='git log --oneline'
-alias git-branch-recent='git branch --sort=-committerdate'
-alias git-push-new='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
-
 CD_HISTORY=
 CD_REV_HISTORY=
 
@@ -41,6 +37,10 @@ alias tg=cd_forward
 alias cd=smart_cd
 alias F="fg %-" # Cycle between last stopped jobs
 alias xssh="ssh -R /tmp/.X11-unix/X2222:/tmp/.X11-unix/X\${DISPLAY#:}"
+
+alias oneline='git log --oneline'
+alias git-branch-recent='git branch --sort=-committerdate'
+alias git-push-new='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 
 [ -n "$KSH_VERSION" ] && . ~/.config/shell/kshrc
 

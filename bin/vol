@@ -33,4 +33,4 @@ case $1 in
         amixer --quiet set "$ALSA_DEVICE" toggle
         ;;
 esac
-notify-send -c SOUND -r "$ALSA_DEVICE" "$(amixer get "$ALSA_DEVICE")"
+notify-send -c SOUND -r "$ALSA_DEVICE" "$(amixer get "$ALSA_DEVICE")" &

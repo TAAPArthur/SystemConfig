@@ -91,3 +91,4 @@ VASA
 Passthrough
 vasa
 DESTDIR
+picohash_ctx_t

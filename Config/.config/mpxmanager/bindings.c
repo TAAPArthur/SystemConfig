@@ -13,6 +13,7 @@
 #include <mpxmanager/layouts.h>
 #include <mpxmanager/settings.h>
 #include <mpxmanager/system.h>
+#include <mpxmanager/tile.h>
 #include <mpxmanager/util/debug.h>
 #include <mpxmanager/util/logger.h>
 #include <mpxmanager/windows.h>
@@ -75,9 +76,10 @@ Binding customBindings[] = {
     {Mod4Mask | ShiftMask, XK_v, {spawn,  .arg = {.str = "clip-history select -w $_WIN_ID && xsel --clipboard | xvkbd -window $_WIN_ID -file - 2>/dev/null"}} },
 
 
-    {0, XK_Print, {spawn,  .arg = {.str = "cd $PICTURES_DIR; screenshot -s ?"}} },
+    {Mod1Mask, XK_Print, {spawn,  .arg = {.str = "cd $PICTURES_DIR; screenshot -s ?"}} },
     {ShiftMask, XK_Print, {spawn,  .arg = {.str = "screenshot -a $_VIEW_X $_VIEW_Y $_VIEW_WIDTH $_VIEW_HEIGHT $PICTURES_DIR/$(date -u +%F_%H:%M:%S).png"}} },
-    {Mod4Mask, XK_Print, {spawn,  .arg = {.str = "screenshot -w $_WIN_ID - | xclip -selection clipboard -t image/png"}} },
+    {Mod1Mask | ControlMask, XK_Print, {spawn,  .arg = {.str = "screenshot -s /tmp/$(date -u +%F_%H:%M:%S).png"}} },
+    {Mod4Mask , XK_Print, {spawn,  .arg = {.str = "screenshot -w $_WIN_ID /tmp/$(date -u +%F_%H:%M:%S).png"}} },
     {Mod4Mask | ShiftMask, XK_Print, {spawn,  .arg = {.str = "screenshot -w $_WIN_ID $PICTURES_DIR/$(date -u +%F_%H:%M:%S).png"}} },
     {ControlMask, XK_Print, {spawn,  .arg = {.str = "screenshot -w $_WIN_ID ?"}} },
 

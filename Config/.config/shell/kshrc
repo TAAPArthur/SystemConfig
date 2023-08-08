@@ -20,7 +20,7 @@ complete_helper() {
         fg)
             set -A COMPREPLY -- $(jobs | sed "s/\[\(\d\)\].*/%\1/")
             ;;
-        ssh)
+        *ssh)
             set -A COMPREPLY -- "$(cut -d" " -f1 < /home/arthur/.ssh/known_hosts | sort -u)"
             ;;
         git)

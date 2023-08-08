@@ -22,7 +22,7 @@ updateTimeStamp() {
 }
 trap 'rm "$tmpfile"' EXIT
 
-if curl -m 2 -s 'wttr.in?{m,u}&format=%t&lang=uk' > "$tmpfile" && grep -q "F" "$tmpfile" && grep -q "C" "$tmpfile"; then
+if curl -s 'wttr.in?{m,u}&format=%t&lang=uk' > "$tmpfile" && grep -q "F" "$tmpfile" && grep -q "C" "$tmpfile"; then
     sed "s/[^CF0-9]//g" "$tmpfile" | tee $file
     updateTimeStamp
 else

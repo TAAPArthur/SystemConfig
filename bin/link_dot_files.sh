@@ -39,3 +39,5 @@ for dotFile in .*; do
         safeLn "$PWD/$dotFile" "$HOME/$dotFile"
     fi
 done
+
+[ ! -r dotdirs.txt ] || { cd && xargs mkdir -p ; } < "$PWD/dotdirs.txt"

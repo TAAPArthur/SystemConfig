@@ -9,6 +9,7 @@ call vundle#begin('~/.local/share/vim')
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'akhaku/vim-java-unused-imports'
+Plugin 'Exafunction/codeium.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -61,11 +62,15 @@ augroup END
 augroup Template
   autocmd!
   autocmd BufNewFile *.sh silent 0r ~/.config/vim/templates/skeleton.sh
+  autocmd BufNewFile *.c silent 0r ~/.config/vim/templates/skeleton.c
   autocmd BufNewFile *.h silent 0r ~/.config/vim/templates/skeleton.h | %s/__PLACEHOLDER__/\=toupper(expand('%:p:t:r'))/ge
 augroup END
 
 augroup Misc
   autocmd!
+
+  autocmd BufReadPost * if &ft == "conf" && getline(1) =~ 'tcc' | set ft=c
+
   " Resize splits when the window is resized
   au VimResized * :wincmd =
   " Don't enter insert mode for non-modifiable files
@@ -76,6 +81,7 @@ augroup Misc
   " the given line number as opposed to complaining the file doesn't exist.
   " This only runs if the specified file name doesn't exist.
   autocmd BufNewFile  *:[0-9]\\\{0,\}	let args=split(expand("%"), ":") | exec "silent! e" args[0] | call setpos(".", [0, args[1], 0,0])
+
 augroup END
 
 function! UpdateFile()
@@ -128,13 +134,15 @@ command! SortImports call SortImports()
 
 augroup project
   autocmd!
-  autocmd FileType c setlocal makeprg=tcc\ -c\ -o\ /dev/null
-  autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090\ -f\ gcc
+  autocmd FileType c setlocal makeprg=tcc\ -IThirdParty\ -c\ -o\ /dev/null
+  autocmd FileType sh setlocal makeprg=shellcheck\ -e\ SC1090,SC2016,SC2064\ -f\ gcc
   autocmd FileType python setlocal makeprg=python-linter | setlocal autoread
   autocmd FileType json setlocal formatprg=jq\ -r\ .
   autocmd BufEnter * let &l:tags = "./tags_" . &filetype . ";"
   autocmd BufEnter *.c,*.h,*.cpp let &l:tags = "./tags_cpp,./tags_c,tags_c"
 
+  " autocmd BufWritePre *.py,*.c,*.h,*.java PadIfFor
+  "autocmd BufWritePre *.c,*.h,*.java PadOperand
   autocmd BufWritePre *.py,*.c,*.h,*.java SortImports
   autocmd BufWritePost *.py,*.c,*.h silent execute "!update-tags -f tags_" . &filetype . " " . expand("%") . " --python-kinds=-i --C++-kinds=+p --C-kinds=+p"
   autocmd BufWritePost vimrc so %
@@ -150,9 +158,12 @@ augroup AutoCreateDir
 augroup END
 
 function! PadOperand ()
-    '<,'>s/\([^ /!+=\-<>{}]\)\([/+-=><!]=\|=\|{\|?\)/\1 \2/ge
-    '<,'>s/\([/+-=><!{}]=\|=\|,\|}\|?\)\([^ ,/!+=\-<>:;]\)/\1 \2/ge
-    '<,'>s/\([A-z0-9)]\)\([*\-+|&]\)\([(A-z0-9]\)/\1 \2 \3/ge
+    %s/\([^ /!+=*\-<>&|{}]\)\([*/+-=><!&|]*=\|{\|?\)/\1 \2/ge
+    %s/=\([A-z0-9"']\)/= \1/ge
+    %s/\([*/+-=><!&|{}]*=\,\|}\|?\|;\)\([^ ,/!+=\-<>:;"')]\)/\1 \2/ge
+    %s/\([A-z0-9)]\)\([*\-+|&]\)\([(0-9]\)/\1 \2 \3/ge
+    %s/\([A-z0-9)]\)<\([(A-z0-9][^>]\+\)/\1 < \2/ge
+    %s/\([A-z0-9)]\)>\([(A-z0-9][^<]\+\)/\1 > \2/ge
 endfunction
 command! -bar -range PadOperand call PadOperand() | call PadOperand()
 
@@ -174,6 +185,7 @@ command! -bar -range Strip %s/\s\+$//ge
 command! -nargs=1 -complete=file T tab drop <args>
 command! -nargs=1 -complete=file Tabe tab drop <args>
 command! -bar -range -nargs=1 Renum :let @a=<q-args> | '<,'>s/\d\+/\=(@a+setreg('a',@a+1))/g
+command! -bar -range PadIfFor %s/\(\(^\|\s\)\(if\|for\|while\)\)(/\1 (/ge
 
 
 " It's 2019.
@@ -267,6 +279,8 @@ function! FindScopeHeader()
                 elseif marker == "#elif"
                     let in_sibiling_if_block = 1
                 endif
+            elseif getline(current_line)[0:1] == "//"
+                continue
             elseif getline(current_line) !~ " " && getline(current_line)[-1:] == ":"
                 if first_label == 0 && line_level == 0
                     let first_label = 1
