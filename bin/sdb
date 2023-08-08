@@ -1,0 +1,29 @@
+#!/bin/tcc -run -lbacktrace
+
+#include <unistd.h>
+#include <sys/ptrace.h>
+#include <sys/wait.h>
+#include <backtrace.h>
+
+struct backtrace_state * state;
+int fib(int a) {
+    if(a <= 1) {
+        backtrace_print(state, 0, stdout);
+        return 1;
+    }
+    return fib(a-1) + fib(a-2);
+}
+
+int main(int argc, char* argv[]) {
+    state = backtrace_create_state(argv[0], 0, NULL, NULL);
+    /*
+    pid_t pid;
+    if(!(pid=fork())) {
+        ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+        execvp(argv[0], argv);
+        _exit(1);
+    }
+    waitpid(pid, NULL, -1);
+    */
+    fib(10);
+}

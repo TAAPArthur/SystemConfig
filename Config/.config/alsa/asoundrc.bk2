@@ -1,0 +1,21 @@
+
+pcm.duplex {
+    type asym
+    playback.pcm "dmix"
+    capture.pcm "dsnoop"
+}
+
+pcm.softvol {
+    type            softvol
+	slave.pcm "duplex"
+    control {
+        name        "SoftVol"
+        card        0
+    }
+}
+
+
+pcm.!default {
+	type plug
+	slave.pcm "softvol"
+}

@@ -1,0 +1,7 @@
+#!/bin/sh -xe
+
+if git rev-parse --abbrev-ref HEAD 2>/dev/null; then
+    git grep -wn "$@" .
+else
+    find . -name "*.[c,h]" -exec grep -RHwn "$@" {} \;
+fi

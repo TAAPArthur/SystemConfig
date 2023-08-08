@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+baseurl() {
+    rev | sed -E "s|.*/([^.]{,4})\.([^./]+).*$|\1.\2|g"|rev
+}
+
+HIST_PATH=~/.config/vimb/history
+
+case $1 in
+    search)
+        cut -f 1 < "$HIST_PATH" | baseurl | uniq | dmenu
+        ;;
+    last)
+        url=$(tail -n10 $HIST_PATH | tac| uniq | dmenu | cut -f 1)
+        vimb "$url"
+        ;;
+esac

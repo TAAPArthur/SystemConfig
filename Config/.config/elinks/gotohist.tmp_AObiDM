@@ -1,0 +1,256 @@
+lookAt vector to rotation matrix
+rotation mattrix
+x11 Button1Mask
+convert from left handed cordinate system to right handed
+suckless dynamic website
+CGI
+CVE-2018-18778
+htpasswd
+cgi and cookies
+encryption at rest startup
+iwd connect to temporary wifi access point
+iwd conncet to passwordless access point
+iwd open access points
+iwd connect to ad-hoc networks
+linux radio thermostat can't conncet
+networkmanager connect to ad-hoc network
+iwd IBSS
+supreme court rullings
+how to tell if a collision is elastic or inellsatic
+rpm of a helicopter
+q
+dzen right align
+vim replace text not in string
+test
+posix shell counter number of chars
+curl __builtin_ia32_pause
+musl abort
+https://github.com/curl/curl/issues/7475
+xf86LoadKernelModule
+git rebase show author info
+git config section headers
+mutt mail auto complete recent
+python sort tie breakers
+zillow api
+immolation
+towboot
+tcc attribute  packed
+perserve suid in file in tar
+posix tar
+busybox
+busybox bug 3844
+man tar open groups
+tar IEEE spec
+ustar POSIX
+POSIX.1 ustar man
+ustar man POSIX
+agatha christe
+the art of war
+art of war summary
+posix hash function
+posix number lines
+posix read from 2 input streams
+posix exec open file for reading and writing
+is kinetic friction always less than static friction
+how to build firefox
+minimal depedencies needed to build firefox
+can I  build firefox without nodejs
+last firefox version before rust
+POSIX remove files from tar
+unsupported tar-filetype L
+tar fileformat
+fnu tar file type L
+https://ftp.mozilla.org/pub/firefox/releases/VERSION/source/
+https://ftp.mozilla.org/pub/firefox/releases/105.0/source/
+https://ftp.mozilla.org/pub/firefox/releases/90.0/source/
+when did firefox add rust
+chromium depedencies
+what does firefox esr mean
+gnu tar filetype L
+POSIX remove file from tar
+writting a web browser
+html5 layout engines
+https://www.bittorrent.org/beps/bep_0003.html
+https://en.wikipedia.org/wiki/BitTorrent
+github benencoding
+bittorrent benecoding
+c compute sha256 hash
+pollfd
+linux accept socket
+https://gitlab.freedesktop.org/mesa/mesa/-/issues/966
+glamor vs gbm
+mumble voice chat
+xrandr add mode
+fbdev x11 driver resize screen
+shell disown
+posix what does disown do
+port 0
+x11 forwarding
+how does x11 forwarding work
+POSIX list all open ports
+socat
+busybox socat
+ssh port forwarding example
+arch socat
+openptty
+suckless st
+github.com/TAAPArthur
+viminfo
+local/share/vim
+merge 2 unix domain sockets
+scanf ignore match
+printf wrapper
+linux how long does it take port to eb released
+SO_REUSEADDR
+c99 empty VA_ARGS
+c99 size of member of struct
+c99 create  enum strings
+cntr+c SIGINT vs SIGTERM
+timer_create POSIX
+signchld
+mkstemp
+create a fixed size file
+is /dev/fd portable
+dev/fd
+is dev/fd
+x11 meson build disable unit test
+meson build skip test
+discover neighbors ip command
+lldp insall
+aur lldp
+ssh remote forward delete unix socket on connection close
+ssh forward env variables
+sed print all but the firs tline
+sed skip first line
+python requests get cookie by name
+python session.cookies readthedocs
+python session cookies readthedocs
+python cookies RequestsCookieJar
+vim create viminit dir
+git add empty dir
+vi vs vim
+stripped down vim
+minimal vim
+vi clones
+cackune
+suckless vim clone
+neatvi
+vim tiny
+vim forks
+suckless text editors
+vim tiny plus autocommands
+comparision of vim like text editors
+suckless spellchecker
+get cwd of process
+ignore sigpipe
+stb argparse
+when to use getop
+stb arg
+stb nothings arg
+suckless getopt
+POSIX utility syntax guidlines
+read with timeout
+c ++n++
+mmap file without knowing length
+printf unsigned
+connecting to torrent server connection reset
+socket connect hanging
+set socket timeout
+musl backtrace
+libbacktrace on musl
+gcc libunwind
+libbacktrace tcc musl
+write a debugger
+simple profilier
+using libbacktrace in a debugge
+program counter vs instruction pointer
+ptrace PEEKDATA
+ptrace stack unwinding
+stacking unwinding with ptrace
+awk array splice
+c read next line
+FILE vs fd
+posix c read line
+fscan skip
+http://nothings.org/stb_ds
+fdscanf
+posix getline
+fdopen unbufferred
+c FILE unbufferred
+getline and poll
+file descriptor based getline
+python os.exists
+git blame fixup
+git blame unstaged deletions
+git blame my changes
+git autofixup
+git diff -S
+git -S
+git pickaxe
+popcount
+check to see if pipe is writable
+test if a fd is nonblocking
+regex library POSIX
+suckless regex
+txre regex
+minimial regex libs
+vis editor
+structural regular expresions lib
+c reserved words
+suckless termbox
+terminal rendering lib
+tre
+tre regex lib
+wii
+uii
+wee
+tui libs comparision
+ncruses alternatives
+suckless curses
+musl
+ncurses pai
+st patches
+http://www.tastyfish.cz/
+sh iterate over all args but the first
+python LTS
+tubitv.com
+google.com
+libegl
+dri drivers
+dmalloc
+tsort
+busybox dmalloc
+suid
+tar default behavior restore perfm
+linux kernel sources
+dvtm color problems
+what is /dev/pts
+what is
+bind mount recursive
+umount mount a recurisive bind mount
+mount /dev
+mount dev
+special file system types mount -t
+devfs
+https://xff.cz/kernels/
+https://megous.com/git/linux/tree/README.md?h=orange-pi-5.12
+localhost:8080
+http://localhost:8080
+execlp
+libvpx
+libgbm
+libxshmfence
+is libxshmfence needed to build Xorg
+linux mv text file busy
+dropbear vs openssh
+c test if 2 symlinks are equal
+c test if 2 links are equal
+gbm_bo_destroy
+x11 glamor gbm_bo_destroy
+mesa disable dbm
+ccache
+ccache alternatives
+shell brace expansion
+volleyball jump floate
+elinks default image viewer
+attach to tty of running process

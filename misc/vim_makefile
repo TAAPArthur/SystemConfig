@@ -1,0 +1,4 @@
+-include makefile
+
+$*.lint:
+	tcc $(CFLAGS) -c -o /dev/null $*

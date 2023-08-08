@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+sudo ln -sf "/usr/share/zoneinfo/$(tzselect)" /etc/localtime

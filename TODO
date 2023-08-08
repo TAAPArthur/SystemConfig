@@ -1,0 +1,33 @@
+# In progress
+* bittorrent client
+
+# Trimming needed
+* vim - cut down effective code base
+
+# Polish
+* Scripts for hotspot
+* Scripts for camera
+
+
+# Get working
+* USB tethering
+* better control over wifi switching
+
+# Replace/find existing software
+* Some web-rtc/js enabled browser. Currently using Firefox but want something that can build faster and has less depedencies (ie doesn't suck)
+* General IM client/platform
+* pc bootloader
+* meson alternative with tcc support
+
+# New solutions
+* tool to present an arbitrary input device as another arbitrary input deivce. For example could present 4 usb keyboards as 4 controllers for use in games where normally all keyboards are considered the same device
+* mms support for https://github.com/TAAPArthur/phone
+* gps support for https://github.com/TAAPArthur/phone
+
+# Rough drafts that need decent polish
+* general closed captioning for all audio coming out of my speakers; Have a solution using openblas but it is slow to compile
+
+# Games to play
+* nethack
+* chrono trigger
+* Fire Emblem: Thracia 776

@@ -1,0 +1,53 @@
+#!/bin/sh -e
+
+guess_interface() {
+    ip link | grep "state UP" | while read -r _ name _; do
+        name=${name%:}
+        if [ "$name" = "$2" ]; then
+            continue
+        fi
+        if [ "$1" = in ]; then
+            case "$name" in
+                eth*)
+                    echo "1 $name";;
+                usb*)
+                    echo "2 $name";;
+                wwan*)
+                    echo "4 $name";;
+                *)
+                    echo "3 $name";;
+            esac
+        else
+            case "$name" in
+                wwan*)
+                    echo "0 $name";;
+                wlan*)
+                    echo "1 $name";;
+                usb*)
+                    echo "2 $name";;
+                *)
+                    echo "3 $name";;
+            esac
+
+        fi
+    done | sort -n | {
+        read -r _ name
+        echo "$name"
+    }
+}
+
+IN="${1:-usb0}"
+#OUT="${2:-wwan0}"
+if [ $# -eq 1 ]; then
+    IN=$(guess_interface in)
+else
+    shift
+fi
+OUT="${1:-wlan0}"
+if [ $# -eq 1 ]; then
+    OUT=$(guess_interface out "$IN")
+fi
+
+#sudo iptables -t nat -A POSTROUTING -o "$OUT" -j MASQUERADE
+# sudo iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i "$IN" -o "$OUT" -j ACCEPT
