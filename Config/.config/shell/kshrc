@@ -20,8 +20,8 @@ complete_helper() {
         fg)
             set -A COMPREPLY -- $(jobs | sed "s/\[\(\d\)\].*/%\1/")
             ;;
-        ssh)
-            set -A COMPREPLY -- "$(cut -d" " -f1 < /home/arthur/.ssh/known_hosts | sort -u)"
+        *ssh)
+            set -A COMPREPLY -- $(cut -d" " -f1 < /home/arthur/.ssh/known_hosts | grep -E -v "[^A-z0-9\.-]" | sort -u)
             ;;
         git)
             if [ "$COMP_CWORD" -eq 1 ]; then
@@ -35,7 +35,9 @@ complete_helper() {
                     set -A COMPREPLY --  $(git stash list | cut -d ":" -f1)
                 fi
             elif [ "$COMP_LINE" != "${COMP_LINE#git commit}" ]; then
-                    set -A COMPREPLY -- -m --fixup --squash "--reuse-message=HEAD@{1}"
+                set -A COMPREPLY -- -m --fixup --squash "--reuse-message=HEAD@{1}"
+            elif [ "$COMP_LINE" != "${COMP_LINE#git add}" ]; then
+                :
             elif [ "$COMP_CWORD" -eq 2 ]; then
                 set -A COMPREPLY --  $(git branch --list | tr -d ":* ")
             fi
