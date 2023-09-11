@@ -22,4 +22,5 @@ https://github.com/kiss-community/repo
 https://github.com/kiss-community/repo-community community
 https://github.com/ehawkvu/kiss-xorg
 https://github.com/TAAPArthur/mykiss-repo
+https://github.com/mmatongo/KISS-wine.git wine
 EOF
