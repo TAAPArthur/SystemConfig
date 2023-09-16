@@ -1,0 +1,52 @@
+#!/bin/sh -e
+
+usage() {
+    echo "$0 off"
+    echo "$0 on interface"
+    exit #${1:-0}
+}
+
+set -x
+if [ "$#" -eq 0 ]; then
+    usage
+elif [ "$1" = on ]; then
+    INTERFACE=${2:-wlan0}
+    FORWARD_INTERFACE=${3:-wwan0}
+    SSID="TestSSID"
+    PASSWORD="passpass"
+    FILE=/tmp/config
+cat >$FILE <<EOF
+interface=$INTERFACE
+
+# SSID to be used in IEEE 802.11 management frames
+ssid=$SSID
+# Driver interface type (hostap/wired/none/nl80211/bsd)
+driver=nl80211
+# Country code (ISO/IEC 3166-1)
+country_code=US
+
+# Operation mode (a = IEEE 802.11a (5 GHz), b = IEEE 802.11b (2.4 GHz)
+hw_mode=g
+# Channel number
+channel=7
+# Maximum number of stations allowed
+max_num_sta=5
+
+# Bit field: bit0 = WPA, bit1 = WPA2
+wpa=2
+# Bit field: 1=wpa, 2=wep, 3=both
+auth_algs=1
+
+# Set of accepted cipher suites; disabling insecure TKIP
+wpa_pairwise=CCMP
+# Set of accepted key management algorithms
+wpa_key_mgmt=WPA-PSK
+wpa_passphrase=$PASSWORD
+EOF
+    sudo ip addr flush "$INTERFACE"
+    sudo service-manager stop iwd || true
+    sudo ip addr add 192.168.3.1/24 dev "$INTERFACE"
+    setup_nat "$INTERFACE" "$FORWARD_INTERFACE"
+    sudo hostapd "$FILE"
+fi
+
