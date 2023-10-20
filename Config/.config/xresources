@@ -1,0 +1,3 @@
+st.*.font: Liberation Mono:pixelsize=14
+st.*.shell: ksh
+st.*.scroll: scroll
