@@ -1,40 +1,7 @@
 #!/bin/sh -e
 
-maybe_mount() {
-    if mountpoint -q "$2"; then
-        if [ -d "$1$2" ]; then
-            mount -t "$3" "$4" "$1$2"
-        fi
-    fi
-}
-
-mount_dirs() {
-    mkdir -p "$1/dev" "$1/proc" "$1/run" "$1/sys" "$1/tmp"
-    mount -o bind /dev "$1/dev"
-    maybe_mount "$1" /dev/mqueue mqueue none
-    maybe_mount "$1" /dev/shm tmpfs shmfs
-    maybe_mount "$1" /dev/pts devpts devpts
-    mount -t proc  proc "$1/proc"
-    mount -t tmpfs run "$1/run"
-    mount -t sysfs sys "$1/sys"
-    mount "/tmp" -o bind "$1/tmp"
-    mount /etc/resolv.conf -o bind "$1/etc/resolv.conf"
-}
-
-unmount_dirs() {
-    umount "$1/etc/resolv.conf" || true
-    umount "$1/tmp" || true
-    umount "$1/sys" || true
-    umount "$1/run" || true
-    umount "$1/proc" || true
-    for subdir in mqueue shmfs pts; do
-        ! mountpoint -q "$1/dev/$subdir" || umount "$1/dev/$subdir" || true
-    done
-    umount "$1/dev" || true
-}
-
 [ -d "$1" ]
 DIR="$1"
-trap 'unmount_dirs $DIR' EXIT
-mount_dirs "$DIR"
+trap 'refcount "$DIR/.refcount" -1 rootmount -u "$DIR"' EXIT
+refcount "$DIR/.refcount" +1 rootmount "$DIR"
 chroot "$@"
