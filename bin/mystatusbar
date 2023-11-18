@@ -236,10 +236,10 @@ int main(int argc, char* const* argv) {
             }
             else
                 res = cache[i];
-            statusEnd = stpncpy(statusEnd, res, sizeof(status) - (statusEnd - status));
+            statusEnd = stpncpy(statusEnd, res, sizeof(status) - (statusEnd - status) - 1);
         }
-        puts(status);
-        fflush(stdout);
+        *statusEnd++ = '\n';
+        write(STDOUT_FILENO, status, statusEnd - status);
         sleepRemainingInterval(&start);
         counter++;
     }
