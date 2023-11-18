@@ -1,0 +1,27 @@
+#!/bin/sh -e
+# file delta cmd [args]
+
+usage() {
+    echo "$0 file delta cmd [args]"
+    exit "${1:-1}"
+}
+[ "$1" = -h ] && usage 0
+[ -n "$1" ] || usage
+[ "$HAS_LOCK" = 1 ] || HAS_LOCK=1 exec flock "$1" "$0" "$@"
+file="$1"
+delta=$2
+shift 2
+read -r count boot_id <"$file" || true
+
+read -r current_boot_id </proc/sys/kernel/random/boot_id
+if [ "$current_boot_id" != "$boot_id" ]; then
+    count=0
+fi
+newcount=$((count+delta))
+if [ "$newcount" -lt 0 ]; then
+    newcount=0
+fi
+printf "%d %s" "$newcount" "$current_boot_id" > "$file"
+if [ "$count" -eq 0 ] || [ "$newcount" -eq 0 ]; then
+    exec "$@"
+fi
