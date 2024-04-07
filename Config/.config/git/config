@@ -20,3 +20,6 @@
 [rebase]
     instructionFormat = "%s (%an) %d"
     abbreviateCommands = true
+
+[safe]
+	directory = *
