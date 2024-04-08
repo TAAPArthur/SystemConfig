@@ -1,0 +1,71 @@
+#!/bin/sh -e
+
+set -x
+action="$1"
+DISTRO="$2"
+ROOT=${ROOT:-"/altroot/$DISTRO"}
+shift 2
+CMD=taap-chroot
+export USER
+USER="$(id -n -u 1)"
+export USER_MOUNT=1
+
+case "$DISTRO" in
+    alpine);;
+    *)
+        echo "Unknown distro $DISTRO" >&2
+        exit 1
+        ;;
+esac
+
+run() {
+    [ -d "$ROOT" ]
+    $CMD "$ROOT" "$@"
+}
+
+install() {
+    mkdir -p "$ROOT"
+    case "$1" in
+        alpine)
+            ROOTFS=https://dl-cdn.alpinelinux.org/alpine/v3.18/releases/x86_64/alpine-minirootfs-3.18.4-x86_64.tar.gz ;;
+    esac
+
+    dest=/tmp/"$(basename "$ROOTFS")"
+    [ -e "$dest" ] || wget -P /tmp "$ROOTFS"
+    tar -xaf "$dest" -C "$ROOT"
+
+    sudo cp /etc/group "$ROOT"/etc/
+    sed "s/ksh/sh" /etc/passwd  > "$ROOT"/etc/passwd
+
+    run /bin/sh -l <<EOF
+    case "$1" in
+        alpine)
+            echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+            apk update
+            apk add firefox
+            apt add font-liberation-mono-nerd font-noto
+            apk add apulse
+            apk add tzdata
+        ;;
+    esac
+EOF
+}
+
+update() {
+    case "$1" in
+        alpine)
+            set -- apk update ;;
+    esac
+    run "$@"
+}
+
+case "$action" in
+    install)
+        install "$DISTRO";;
+    update)
+        update "$DISTRO";;
+    run)
+        run /bin/su "$USER" -- "$@";;
+    enter)
+        run /bin/sh -l;;
+esac
