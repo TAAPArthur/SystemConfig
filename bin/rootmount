@@ -34,8 +34,30 @@ unmount_dirs() {
     umount -l "$1/dev" || true
 }
 
+user_mount_dirs() {
+    [ -n "$USER" ] || USER="$(id -n -u 1)"
+    set -x
+    for dir in Downloads Pictures; do
+        dest="$1/home/$USER/$dir"
+        if [ -d "$dest" ]; then
+            mount "$HOME/$dir" -o bind "$dest"
+        fi
+    done
+}
+
+user_unmount_dirs() {
+    [ -n "$USER" ] || USER="$(id -n -u 1)"
+    for dir in Downloads Pictures; do
+        dest="$1/home/$USER/$dir"
+        if [ -d "$dest" ]; then
+            umount "$dest" || true
+        fi
+    done
+}
+
 name=$(basename "$0")
 unmount=0
+usermount=0
 if [ "$1" = -u ]; then
     unmount=1
     shift
@@ -43,13 +65,19 @@ fi
 
 if [ "$name" = rootumount ]; then
     unmount=1
+elif [ "$name" = usermount ]; then
+    usermount=1
+elif [ "$name" = userumount ]; then
+    unmount=1
+    usermount=1
 fi
 
 [ -d "$1" ]
 DIR="$1"
 
-if [ "$unmount" -eq 1 ]; then
-    unmount_dirs "$DIR"
-else
-    mount_dirs "$DIR"
-fi
+case "$unmount$usermount" in
+    00) mount_dirs "$DIR";;
+    01) user_mount_dirs "$DIR";;
+    10) unmount_dirs "$DIR";;
+    11) user_unmount_dirs "$DIR";;
+esac
