@@ -6,7 +6,7 @@ ROOT=${ROOT:-"/altroot/$DISTRO"}
 shift 2
 CMD=taap-chroot
 export USER
-USER="$(id -n -u 1)"
+USER=${USER:-"$(id -n -u 1)"}
 export USER_MOUNT=1
 
 case "$DISTRO" in
@@ -34,7 +34,7 @@ install() {
     tar -xaf "$dest" -C "$ROOT"
 
     sudo cp /etc/group "$ROOT"/etc/
-    sed "s/ksh/sh" /etc/passwd  > "$ROOT"/etc/passwd
+    sed "s/ksh/sh/" /etc/passwd  > "$ROOT"/etc/passwd
 
     run /bin/sh -l <<EOF
     case "$1" in
