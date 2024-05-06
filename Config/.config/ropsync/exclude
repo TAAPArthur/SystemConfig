@@ -1,3 +1,5 @@
 .*
 *.bk
 tags*
+/var/lib/iwd/.*
+/var/lib/iwd/hotspot
