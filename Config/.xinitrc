@@ -13,7 +13,13 @@ which mrandr >/dev/null 2>&1 && mrandr auto
 [ -x /usr/bin/apples ] && [ -x /usr/bin/mpxlocker ] && exec apples "mpxlocker" "power-save" &
 [ -x /usr/bin/clip-history ] && exec clip-history monitor &
 [ -x /usr/bin/dzen2 ] && [ -x /usr/bin/mystatusbar ] && mystatusbar | status-bar -ta r -w 500 -title-name "mystatusbar" &
-[ -x /usr/bin/sgestures ] && sgestures-libinput-writer | sgestures &
+if [ -x /usr/bin/sgestures ]; then
+    if [ -x /usr/bin/mqbus-receive ] && [ -e /dev/mqueue/input ]; then
+        mqbus-receive -u input
+    else
+       sgestures-libinput-writer
+    fi | sgestures &
+fi
 [ -x /usr/bin/xmouse-control ] && exec xmouse-control &
 which notify_log >/dev/null 2>&1 && notify_log resume &
 )
