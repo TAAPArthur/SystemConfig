@@ -4,7 +4,7 @@ exec > ~/.local/share/xorg/xinitrc."${DISPLAY}".out 2> ~/.local/share/xorg/xinit
 # setxkbmap -option compose:ralt
 (
 
-which mrandr >/dev/null 2>&1 && mrandr auto
+[ -x /usr/bin/srandr ] && srandr load
 [ -x /usr/bin/xrdb ] && xrdb ~/.config/xresources
 [ -x /usr/bin/xhost ] && xhost +
 [ -x /usr/bin/xsetroot ] && xsetroot -cursor_name left_ptr
