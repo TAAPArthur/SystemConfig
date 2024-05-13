@@ -20,9 +20,11 @@ mount_dirs() {
     mount "/tmp" -o bind "$1/tmp"
     touch "$1/etc/resolv.conf"
     mount /etc/resolv.conf -o bind "$1/etc/resolv.conf"
+    mount /etc/hosts -o bind "$1/etc/hosts"
 }
 
 unmount_dirs() {
+    umount "$1/etc/hosts" || true
     umount "$1/etc/resolv.conf" || true
     umount "$1/tmp" || true
     umount "$1/sys" || true
@@ -36,7 +38,6 @@ unmount_dirs() {
 
 user_mount_dirs() {
     [ -n "$USER" ] || USER="$(id -n -u 1)"
-    set -x
     for dir in Downloads Pictures; do
         dest="$1/home/$USER/$dir"
         if [ -d "$dest" ]; then
