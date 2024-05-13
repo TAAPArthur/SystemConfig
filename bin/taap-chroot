@@ -1,12 +1,17 @@
-#!/bin/sh -e
+#!/bin/sh
 
 [ -d "$1" ]
 DIR="$1"
-trap 'refcount "$DIR/.refcount" -1 rootmount -u "$DIR"' EXIT
+onExit() {
+    refcount "$DIR/.refcount" -1 rootmount -u "$DIR"
+    [ "${USER_MOUNT:-0}" -eq 0 ] || refcount "$DIR/.refcount_$USER" -1 usermount -u "$DIR"
+}
 if [ "${USER_MOUNT:-0}" -eq 1 ]; then
-    trap 'refcount "$DIR/.refcount_$USER" -1 usermount -u "$DIR"' EXIT
     refcount "$DIR/.refcount_$USER" +1 usermount "$DIR"
 fi
 refcount "$DIR/.refcount" +1 rootmount "$DIR"
+trap 'onExit' EXIT
+trap 'onExit' INT
+trap 'onExit' HUP
 
 chroot "$@"
