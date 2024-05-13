@@ -1,6 +1,5 @@
 #!/bin/sh -e
 
-set -x
 action="$1"
 DISTRO="$2"
 ROOT=${ROOT:-"/altroot/$DISTRO"}
@@ -66,6 +65,8 @@ case "$action" in
         update "$DISTRO";;
     run)
         run /bin/su "$USER" -- "$@";;
+    run-root)
+        run "$@";;
     enter)
         run /bin/sh -l;;
 esac
