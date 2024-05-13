@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+if pgrep -x openconnect; then
+    sudo pkill openconnect
+    sleep 5
+fi
+
+start-work-vpn.sh  -b -s 'vpn-slice 10.0.0.0/8 dev-awilliams.dev.purestorage.com keymaster.sec.cloud-support.purestorage.com'
+sleep 1
+
+exec ssh-agent -a /tmp/supure_agent purelogin_shell

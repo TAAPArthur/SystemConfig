@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+export PATH=/usr/bin:"$PATH"
+
+cpm smart-show purestorage | tail -n1 |
+    tty_wrapper.c sudo altroot run-root alpine /usr/bin/purelogin --username=awilliams
+
+exec ssh -A -D1082  awilliams@dev-awilliams.dev.purestorage.com
