@@ -36,10 +36,10 @@ void raiseOrRunTerminal(int dir) {
 Binding customBindings[] = {
 
     {0, 0, {replayKeyboardEvent}, .flags = {.mode=KEYBOARD_PASSTHROUGH_MODE, .mask=XCB_INPUT_XI_EVENT_MASK_KEY_PRESS}},
-    {Mod4Mask, XK_F6, {spawn,  .arg = {.str = "autorandr common"}} },
-    {0, XF86XK_Display, {spawn,  .arg = {.str = "autorandr -c"}} },
+
+    {0, XF86XK_Display, {spawn,  .arg = {.str = "srandr load"}} },
     {ShiftMask, XF86XK_Display, {spawn,  .arg = {.str = "xsane-xrandr -i configure"}} },
-    {Mod4Mask, XF86XK_Display, {raiseOrRun,  .arg = {.str = "autorandr clone-largest"}} },
+    {Mod4Mask, XF86XK_Display, {raiseOrRun,  .arg = {.str = "xsane-xrandr dup"}} },
 
     {0, XF86XK_MonBrightnessUp, {spawn,  .arg = {.str = "brightness 5%"}} },
     {Mod4Mask, XF86XK_MonBrightnessUp, {spawn,  .arg = {.str = "brightness 5%"}} },
