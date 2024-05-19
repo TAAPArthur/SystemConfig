@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+pyflakes "$1"
+autopep8 -i --ignore E501 "$1"
