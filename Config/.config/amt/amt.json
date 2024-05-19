@@ -1,0 +1,20 @@
+{
+"post_process_cmd.NOVEL" : "/usr/share/amt/auto_replace.sh {files}",
+"password_save_cmd" : "( echo $USERNAME; cat - ) | cpm insert $SERVER_ID",
+"password_load_cmd" : "cpm -q show $SERVER_ID || cpm smart-show $SERVER_ID",
+
+"viewer.MANGA" : "div -r1 -c2 -d -t \"$AMT_TITLE\": {media}",
+"viewer.mangaplus" : "div -n-1 -r1 -c2 -d -t \"$AMT_TITLE\": {media}",
+"viewer.NOVEL": "mupdf-x11 -T \"$AMT_TITLE\" -r 100 {media}",
+"viewer.NOVEL.IMAGE": "div -r1 -c2 -t \"$AMT_TITLE\": {media}",
+
+"fallback_to_insecure_connection" : true,
+"env_list.MANGA" : { "DIV_RESUME": "1"},
+"env_list.ANIME" : { "AMT_EXTRA_ARG": "--watch-later-use-title"},
+
+"torrent_list_cmd" : "nt -l \"$TORRENT_FILE\"",
+"torrent_download_cmd" : "nt -qn -d . \"$TORRENT_FILE\" \"$CHAPTER_ID\"",
+"torrent_stream_cmd" : "nt -F \"../.cache_file\" -e100 -S\"$VIEWER_CMD\" \"$TORRENT_FILE\" \"$CHAPTER_ID\"",
+"torrent_info_cmd" : "nt -I \"$TORRENT_FILE\"",
+"cookies.kobo" : ["../kobo-book-downloader.json"]
+}
