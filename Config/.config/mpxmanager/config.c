@@ -38,7 +38,7 @@ void configureWindowsByName(WindowInfo* winInfo) {
         addMask(winInfo, PRIMARY_MONITOR_MASK);
         removeMask(winInfo, ABOVE_MASK);
         setTilingOverrideEnabled(winInfo, (1 | 4 | 16 ) );
-        setTilingOverride(winInfo, (Rect) {-450, 0, 450, 0});
+        setTilingOverride(winInfo, (Rect) {-500, 0, 500, 0});
     }
     else if (matchesClass(winInfo, "dzen2")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | BELOW_MASK);
@@ -70,7 +70,7 @@ void configureWindowsByName(WindowInfo* winInfo) {
         addMask(winInfo, INPUT_MASK);
     }
 
-    if(winInfo->transientFor) {
+    if (winInfo->transientFor && winInfo->transientFor != root) {
         addMask(winInfo, X_CENTERED_MASK|Y_CENTERED_MASK);
         setTilingOverrideEnabled(winInfo, 1 | 2 | 32 | 64);
         setTilingOverride(winInfo, (Rect) {-winInfo->geometry.width/2, -winInfo->geometry.height/2});
@@ -90,7 +90,6 @@ void configureWindowsByName(WindowInfo* winInfo) {
 
 void addNormalBindings();
 void loadSettings() {
-    setLogLevel(LOG_LEVEL_DEBUG);
     SET_FROM_ENV(HIDE_WM_STATUS);
     DEFAULT_BORDER_COLOR = 0x00FF00;
     ASSUME_PRIMARY_MONITOR = 1;
@@ -100,14 +99,10 @@ void loadSettings() {
     spawnPipe("status-bar -title-name 'wm-status'", REDIRECT_CHILD_INPUT_ONLY);
     loadNormalSettings();
     addNormalBindings();
-    setWorkspaceName(3, "VimB");
-    setWorkspaceName(4, "St");
-    setWorkspaceName(6, "7Gaming");
     addWorkspaceMask(getWorkspace(6), FLOATING_MASK);
-    addEvent(CLIENT_MAP_ALLOW, USER_EVENT(configureWindowsByName));
+    addEvent(CLIENT_MAP_ALLOW, USER_EVENT(configureWindowsByName, LOWEST_PRIORITY));
     addEvent(WINDOW_FOCUS, USER_EVENT(updateActiveMode));
 
-    //getEventRules(CLIENT_MAP_ALLOW).add([](WindowInfo*winInfo){addMask(winInfo,INPUT_MASK);}, HIGH_PRIORITY);
     //getEventRules(CLIENT_MAP_ALLOW).add(USER_EVENT_P(configureWindows, LOW_PRIORITY));
     addSuggestedRules();
     addInsertWindowsAtPositionRule(BEFORE_FOCUSED);
