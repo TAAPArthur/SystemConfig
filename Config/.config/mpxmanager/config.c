@@ -40,32 +40,33 @@ void configureWindowsByName(WindowInfo* winInfo) {
         setTilingOverrideEnabled(winInfo, (1 | 4 | 16 ) );
         setTilingOverride(winInfo, (Rect) {-450, 0, 450, 0});
     }
-    else if(matchesClass(winInfo, "dzen2")) {
+    else if (matchesClass(winInfo, "dzen2")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | BELOW_MASK);
         removeMask(winInfo, ABOVE_MASK);
         setTilingOverrideEnabled(winInfo, 3);
         lowerWindowInfo(winInfo, 0);
     }
-    if(matchesClass(winInfo, "remote")) {
+
+    if (matchesClass(winInfo, "remote")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK | ABOVE_MASK | Y_MAXIMIZED_MASK);
         setTilingOverrideEnabled(winInfo, 3);
         moveToWorkspace(winInfo, getActiveWorkspaceIndex());
     }
-    if(matchesClass(winInfo, "tabbed")) {
+    if (matchesClass(winInfo, "tabbed")) {
         addMask(winInfo, INPUT_MASK);
     }
-    if(matchesClass(winInfo, "vimb") || matchesClass(winInfo, "firefox") || matchesClass(winInfo, "browser")) {
+    if (matchesClass(winInfo, "vimb") || matchesClass(winInfo, "firefox") || matchesClass(winInfo, "browser")) {
         strcpy(winInfo->role, "browser");
     }
-    else if(matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div") || matchesClass(winInfo, "mupdf") || matchesClass(winInfo, "Zathura")) {
+    else if (matchesClass(winInfo, "mpv") || matchesClass(winInfo, "div") || matchesClass(winInfo, "mupdf") || matchesClass(winInfo, "Zathura")) {
         strcpy(winInfo->role, MEDIA_PLAYER);
     }
-    else if(matchesClass(winInfo, "st-256color")) {
+    else if (matchesClass(winInfo, "st-256color")) {
         strcpy(winInfo->role, "terminal");
         setWindowClass(winInfo->id, "st", "st");
         loadWindowProperties(winInfo);
     }
-    if(!hasMask(winInfo, INPUT_MASK) && winInfo->type == ewmh->_NET_WM_WINDOW_TYPE_NORMAL) {
+    if (!hasMask(winInfo, INPUT_MASK) && winInfo->type == ewmh->_NET_WM_WINDOW_TYPE_NORMAL) {
         addMask(winInfo, INPUT_MASK);
     }
 
@@ -75,7 +76,7 @@ void configureWindowsByName(WindowInfo* winInfo) {
         setTilingOverride(winInfo, (Rect) {-winInfo->geometry.width/2, -winInfo->geometry.height/2});
     }
 
-    if(matchesClass(winInfo, "navboard")) {
+    if (matchesClass(winInfo, "navboard")) {
         addMask(winInfo, PRIMARY_MONITOR_MASK);
     }
 
@@ -83,7 +84,7 @@ void configureWindowsByName(WindowInfo* winInfo) {
         removeMask(winInfo, ABOVE_MASK);
         setTilingOverrideEnabled(winInfo, 16);
     }
-    if(winInfo->type == ewmh->_NET_WM_WINDOW_TYPE_NOTIFICATION)
+    if (winInfo->type == ewmh->_NET_WM_WINDOW_TYPE_NOTIFICATION)
         addMask(winInfo, ABOVE_MASK);
 }
 
