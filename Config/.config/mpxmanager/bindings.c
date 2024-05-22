@@ -13,6 +13,7 @@
 #include <mpxmanager/layouts.h>
 #include <mpxmanager/settings.h>
 #include <mpxmanager/system.h>
+#include <mpxmanager/tile.h>
 #include <mpxmanager/util/debug.h>
 #include <mpxmanager/util/logger.h>
 #include <mpxmanager/windows.h>

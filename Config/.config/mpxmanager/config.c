@@ -80,7 +80,7 @@ void configureWindowsByName(WindowInfo* winInfo) {
         addMask(winInfo, PRIMARY_MONITOR_MASK);
     }
 
-    if(winInfo->dock) {
+    if (hasMask(winInfo, DOCK_MASK)) {
         removeMask(winInfo, ABOVE_MASK);
         setTilingOverrideEnabled(winInfo, 16);
     }
