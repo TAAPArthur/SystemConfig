@@ -14,8 +14,9 @@
 #include <unistd.h>
 #include <xcb/xcb.h>
 
+#define STBIR_NO_SIMD
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
-#include <stb/stb_image_resize.h>
+#include <stb/stb_image_resize2.h>
 
 static struct {
     int file_index;
@@ -148,7 +149,7 @@ Binding user_bindings[] = {
 void customScaleFunc(const char* buf, uint32_t original_width, uint32_t original_height, char* out_buf, uint32_t width, uint32_t height, int num_channels) {
     // Use a higher quality scale function when viewing few images
     if(getNumActiveImages() < 4) {
-        stbir_resize_uint8(buf, original_width, original_height, 0, out_buf, width, height, 0, num_channels);
+        stbir_resize_uint8_linear(buf, original_width, original_height, 0, out_buf, width, height, 0, (stbir_pixel_layout)num_channels);
         return;
     }
     nearestNeighbourScale(buf, original_width,original_height,out_buf,width,height,num_channels);
