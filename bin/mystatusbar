@@ -156,7 +156,7 @@ const char* ram_status(const char* fmt, char*buffer) {
     if(total == 0) {
         return NULL;
     }
-    int used = (total - free) - buffers - cached;
+    unsigned long used = (total - free) - buffers - cached;
     sprintf(buffer, fmt, used / 1024 / 1024.0, (int)(100 * (used) / total));
     return buffer;
 }
