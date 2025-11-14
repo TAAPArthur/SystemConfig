@@ -26,6 +26,11 @@ export HISTFILE=~/.local/share/sh_history
 export HISTSIZE=131172 # 128K lines
 export ENV=~/.config/shell/shellrc
 
+if [ ! -e "$HISTFILE" ]; then
+    mkdir -p "$(dirname "$HISTFILE")"
+    touch "$HISTFILE"
+fi
+
 # Load profiles from /etc/profile.d
 for file in ~/.profile.d/*.sh; do
     [ -r "$file" ] && . "$file"
